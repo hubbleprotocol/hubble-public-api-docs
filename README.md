@@ -4,11 +4,6 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
 
 ## Table of contents
 
-- [Development](#development)
-    * [Database](#database)
-    * [Local API Setup](#local-api-setup)
-    * [Tests](#tests)
-    * [Deployment](#deployment)
 - [Usage](#usage)
     * [Metrics](#metrics)
     * [Metrics History](#metrics-history)
