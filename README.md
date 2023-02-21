@@ -1,28 +1,95 @@
 # 🛰 Hubble Public API
 
-Hubble Public API is a TypeScript API (using Express) that serves public data of the Hubble Protocol. 
+Hubble Public API is a TypeScript API (using Express) that serves public data of the Hubble Protocol.
 
 ## Table of contents
 
 - [Usage](#usage)
-    * [Metrics](#metrics)
-    * [Metrics History](#metrics-history)
-    * [Config](#config)
-    * [IDL](#idl)
-    * [Circulating Supply Value (HBB)](#circulating-supply-value-hbb)
-    * [Circulating Supply (HBB)](#circulating-supply-hbb)
-    * [API Version](#api-version)
-    * [Maintenance mode](#maintenance-mode)
-    * [Borrowing version](#borrowing-version)
-    * [Loans](#loans)
-    * [Staking](#staking)
-    * [Stability](#stability)
-    * [Strategies (Kamino)](#strategies-kamino)
-    * [Whirlpools (Kamino)](#whirlpools-kamino)
-    * [Prices](#prices)
-    * [Borrowing Market State](#borrowing-market-state)
-    * [Transactions](#transactions)
-    * [Kamino Market Lending](#kamino-market-lending)
+  * [Metrics](#metrics)
+  * [Metrics History](#metrics-history)
+  * [Config](#config)
+  * [IDL](#idl)
+  * [Circulating Supply Value (HBB)](#circulating-supply-value-hbb)
+  * [Circulating Supply (HBB)](#circulating-supply-hbb)
+  * [API Version](#api-version)
+  * [Maintenance mode](#maintenance-mode)
+  * [Borrowing version](#borrowing-version)
+  * [Loans](#loans)
+  * [Staking](#staking)
+  * [Stability](#stability)
+  * [Strategies (Kamino)](#strategies-kamino)
+  * [Whirlpools (Kamino)](#whirlpools-kamino)
+  * [Prices](#prices)
+  * [Borrowing Market State](#borrowing-market-state)
+  * [Transactions](#transactions)
+  * [Kamino Market Lending](#kamino-market-lending)
+
+## Development
+
+### Database
+
+We use Flyway for database migrations and PostgreSQL for data storage.
+
+Run migrations with docker:
+
+```shell
+# Run postgresql at localhost:5432 and apply flyway migrations
+docker-compose up db flyway
+```
+
+### Local API Setup
+You will need to use [npm](https://www.npmjs.com/) to install the dependencies.
+
+We are using private nodes without rate limit for fetching mainnet-beta and devnet chain data.
+You will have to add an `.env` file in the root of this repository with the correct environment variables inside.
+Please take a look at the example `.env.example` file:
+
+```shell
+cd hubble-public-api
+cp .env.example .env
+# edit .env with actual endpoints with your favorite editor
+# nano .env  
+# code .env
+# ...
+```
+
+We also use Redis for caching API responses from PostgreSQL database. You can use docker-compose to run an instance of Redis locally.
+
+Run the API with yarn (for debugging) and dependencies with docker-compose:
+
+```shell
+cd hubble-public-api
+docker-compose up -d redis db flyway
+yarn start
+```
+
+Run everything with docker-compose:
+
+```shell
+cd hubble-public-api
+docker-compose up -d
+```
+
+API will be available at http://localhost:8888.
+
+Some routes are protected by basic authentication - for local dev API you can use these credentials:
+- user: `hubble`
+- password: `development`
+
+### Tests
+
+We use a test database and migrations for integration tests that needs to be launched before running the tests:
+
+```shell
+docker-compose up -d test-db test-flyway
+yarn test
+```
+
+### Deployment
+
+Deployments are done automatically, everything that gets pushed to the `master` branch will be packaged as a docker container and pushed to Hubble's DockerHub.
+
+## Usage
 
 ### Metrics
 
@@ -86,7 +153,7 @@ GET https://api.hubbleprotocol.io/idl
 ### Circulating Supply Value HBB
 
 #### Get circulating supply value of HBB (number of HBB issued * HBB price).
-This is also included in the `/metrics` endpoint, but we need this for external services like CoinMarketCap. 
+This is also included in the `/metrics` endpoint, but we need this for external services like CoinMarketCap.
 
 ```http request
 GET https://api.hubbleprotocol.io/circulating-supply-value
@@ -123,7 +190,7 @@ GET https://api.hubbleprotocol.io/version
 
 ### Maintenance mode
 
-#### Get maintenance mode parameter that specifies if Hubble webapp/smart contracts are in maintenance mode.  
+#### Get maintenance mode parameter that specifies if Hubble webapp/smart contracts are in maintenance mode.
 
 ```http request
 GET https://api.hubbleprotocol.io/maintenance-mode
@@ -154,7 +221,7 @@ GET https://api.hubbleprotocol.io/loans?env=mainnet-beta
 GET https://api.hubbleprotocol.io/loans/HrwbdQYwSnAyVpVHuGQ661HiNbWmGjDp5DdDR9YMw7Bu
 ```
 
-#### Get a specific user's list of loans by specifying their public key: 
+#### Get a specific user's list of loans by specifying their public key:
 
 ```http request
 // GET https://api.hubbleprotocol.io/owners/:pubkey/loans
@@ -203,7 +270,7 @@ GET https://api.hubbleprotocol.io/staking/usdh/users
 GET https://api.hubbleprotocol.io/staking/lido
 ```
 
-#### Get eligible loans for LIDO staking rewards for a specified month and year. 
+#### Get eligible loans for LIDO staking rewards for a specified month and year.
 Months are to be input from 1 (January) - 12 (December) and years from 2022 and above.
 
 ```http request
@@ -228,7 +295,7 @@ Please use the route above to get monthly data instead.
 GET https://api.hubbleprotocol.io/staking/lido/eligible-loans?env=devnet&start=2022-06-01&end=2022-07-01
 ```
 
-### Stability 
+### Stability
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
 
@@ -374,6 +441,67 @@ Sample response:
 - rewards represent vault rewards, kamino rewards represent autocompounded rewards
 - last calculated refers to the last calculation date (fees and rewards are calculated hourly)
 
+#### Get all strategies with filters
+
+* The current filters that are supported are:
+  * `strategyType` which can be:
+    * `NON_PEGGED`: e.g. SOL-BONK
+    * `PEGGED`: e.g. BSOL-JitoSOL
+    * `STABLE`: e.g. USDH-USDC
+
+  * `strategyCreationStatus` which can be:
+    * `IGNORED`
+    * `SHADOW`
+    * `LIVE`
+    * `DEPRECATED`
+    * `STAGING`
+
+If no filters are provided all strategies are fetched
+```http request
+GET https://api.hubbleprotocol.io/strategies?env={cluster}&type={type}&status={status}
+```
+
+Examples:
+
+Get all `NON_PEGGED` strategies
+```http request
+GET https://api.hubbleprotocol.io/strategies?type=NON_PEGGED
+```
+
+Get all `STAGING` strategies
+```http request
+GET https://api.hubbleprotocol.io/strategies?status=STAGING
+```
+
+#### Get total token amounts in live strategies
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/tokens/{tokenMint}/amounts?env={cluster}
+```
+
+Example request to get total MSOL stored in Kamino:
+https://api.hubbleprotocol.io/strategies/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/amounts?env=mainnet-beta
+
+Example response:
+```json
+{
+    "totalTokenAmount": "2643,805199154",
+    "vaults": [
+        {
+            "address": "9zBNQtnenpQY6mCoRqbPpeePeSy17h34DZP82oegt1fL",
+            "frontendUrl": "https://app.kamino.finance/liquidity/9zBNQtnenpQY6mCoRqbPpeePeSy17h34DZP82oegt1fL",
+            "amount": "1641.613204799"
+        },
+        {
+            "address": "F3v6sBb5gXL98kaMkaKm5GfEoBNUaSd3ZGErbjqgzTho",
+            "frontendUrl": "https://app.kamino.finance/liquidity/F3v6sBb5gXL98kaMkaKm5GfEoBNUaSd3ZGErbjqgzTho",
+            "amount": "1002.191994355"
+        }
+    ],
+    "timestamp": "2023-02-21T12:09:21.304Z"
+}
+```
+
 ### Whirlpools Kamino
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
@@ -512,7 +640,7 @@ You can specify start/end date range with query params `start` and `end`. Otherw
 GET https://api.hubbleprotocol.io/bms/FqkHHpETrpfgcA5SeH7PKKFDLGWM4tM7ZV31HfutTXNV/history?env=mainnet-beta&start=2020-01-01&end=2023-01-01
 ```
 
-#### Get BMS loans closest to a snapshot timestamp 
+#### Get BMS loans closest to a snapshot timestamp
 
 Please note: This route is not exposed to the public and requires basic authentication.
 
@@ -534,9 +662,9 @@ GET https://api.hubbleprotocol.io/debug/accounts/HubbLeXBb7qyLHt3x7gvYaRrxQmmgEx
 
 ### Transactions
 
-#### Get all kamino transactions 
+#### Get all kamino transactions
 
-Get shareholder's Kamino transactions (`withdraw`, `deposit` and `depositAndInvest` instructions). 
+Get shareholder's Kamino transactions (`withdraw`, `deposit` and `depositAndInvest` instructions).
 Returns the last 1000 transactions ordered by timestamp descending.
 
 ```http request
@@ -591,7 +719,7 @@ Example response:
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market?env={cluster}
 ```
-Example: 
+Example:
 https://api.hubbleprotocol.io/kamino-market?env=mainnet-beta
 
 #### Get Kamino Market metrics history
@@ -617,37 +745,4 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/loans/:loanPubkey/
 ```
 Example:
 https://api.hubbleprotocol.io/kamino-market/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmg/loans/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmm/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
-
-
-#### Get all strategies with filters
-
-
-* The current filters that are supported are:
-  * `strategyType` which can be:
-    * `NON_PEGGED`: e.g. SOL-BONK
-    * `PEGGED`: e.g. BSOL-JitoSOL
-    * `STABLE`: e.g. USDH-USDC
-
-  * `strategyCreationStatus` which can be:
-    * `IGNORED`
-    * `SHADOW`
-    * `LIVE`
-    * `DEPRECATED`
-    * `STAGING`
-
-If no filters are provided all strategies are fetched
-```http request
-GET https://api.hubbleprotocol.io/strategies?env={cluster}&type={type}&status={status}
-```
-
-Examples:
-
-Get all `NON_PEGGED` strategies
-```http request
-GET https://api.hubbleprotocol.io/strategies?type=NON_PEGGED
-```
-
-Get all `NON_PEGGED` strategies
-```http request
-GET https://api.hubbleprotocol.io/strategies?status=STAGING
-```
+  
