@@ -4,6 +4,11 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
 
 ## Table of contents
 
+- [Development](#development)
+  * [Database](#database)
+  * [Local API Setup](#local-api-setup)
+  * [Tests](#tests)
+  * [Deployment](#deployment)
 - [Usage](#usage)
   * [Metrics](#metrics)
   * [Metrics History](#metrics-history)
@@ -23,6 +28,71 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
   * [Borrowing Market State](#borrowing-market-state)
   * [Transactions](#transactions)
   * [Kamino Market Lending](#kamino-market-lending)
+
+## Development
+
+### Database
+
+We use Flyway for database migrations and PostgreSQL for data storage.
+
+Run migrations with docker:
+
+```shell
+# Run postgresql at localhost:5432 and apply flyway migrations
+docker-compose up db flyway
+```
+
+### Local API Setup
+You will need to use [npm](https://www.npmjs.com/) to install the dependencies.
+
+We are using private nodes without rate limit for fetching mainnet-beta and devnet chain data.
+You will have to add an `.env` file in the root of this repository with the correct environment variables inside.
+Please take a look at the example `.env.example` file:
+
+```shell
+cd hubble-public-api
+cp .env.example .env
+# edit .env with actual endpoints with your favorite editor
+# nano .env  
+# code .env
+# ...
+```
+
+We also use Redis for caching API responses from PostgreSQL database. You can use docker-compose to run an instance of Redis locally.
+
+Run the API with yarn (for debugging) and dependencies with docker-compose:
+
+```shell
+cd hubble-public-api
+docker-compose up -d redis db flyway
+yarn start
+```
+
+Run everything with docker-compose:
+
+```shell
+cd hubble-public-api
+docker-compose up -d
+```
+
+API will be available at http://localhost:8888.
+
+Some routes are protected by basic authentication - for local dev API you can use these credentials:
+- user: `hubble`
+- password: `development`
+
+### Tests
+
+We use a test database and migrations for integration tests that needs to be launched before running the tests:
+
+```shell
+docker-compose up -d test-db test-flyway
+yarn test
+```
+
+### Deployment
+
+Deployments are done automatically, everything that gets pushed to the `master` branch will be packaged as a docker container and pushed to Hubble's DockerHub.
 
 ## Usage
 
@@ -230,6 +300,32 @@ Please use the route above to get monthly data instead.
 GET https://api.hubbleprotocol.io/staking/lido/eligible-loans?env=devnet&start=2022-06-01&end=2022-07-01
 ```
 
+#### Get staking yields
+
+```http request
+GET https://api.hubbleprotocol.io/staking-yields
+```
+
+Example request:
+https://api.hubbleprotocol.io/staking-yields
+
+Example response:
+
+```json
+[
+    {
+        "apy": "0.076269480000000005",
+        "token": "cgntSOL",
+        "tokenMint": "CgnTSoL3DgY9SFHxcLj6CgCgKKoTBr6tp4CPAEWy25DE"
+    },
+    {
+        "apy": "6.88",
+        "token": "LDO",
+        "tokenMint": "HZRCwxP2Vq9PCpPXooayhJ2bxTpo5xfpQrwB1svh332p"
+    }
+]
+```
+
 ### Stability
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
@@ -374,7 +470,71 @@ Sample response:
 - fees/rewards earned represent the amount of tokens earned from the first deposit
 - fees/rewards earned in USD represent the USD amount earned from the first deposit
 - rewards represent vault rewards, kamino rewards represent autocompounded rewards
-- last calculated refers to the last calculation date (fees and rewards are calculated hourly)
+- last calculated refers to the last calculation date (fees and rewards are calculated every 5 minutes)
+
+#### Get fees and rewards for strategies:
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/fees-and-rewards?env={cluster}&period={timePeriod}&status={strategyStatus}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* period: time period for fees and rewards `"24h" (default) | "7d" | "14d" | "30d" | "90d"`
+* status: strategy status `"LIVE" (default) | "STAGING" | "SHADOW" | "IGNORED" | "DEPRECATED"`, status query param can also be used multiple times, for example:
+  * https://api.hubbleprotocol.io/strategies/fees-and-rewards?status=LIVE&status=STAGING&status=SHADOW
+
+Example response:
+
+```json
+[
+  {
+    "strategyPubkey": "2VQaDuSqqxeX2h9dS9WgpvN6ShaBxd8JjaaWEvbmTDY1",
+    "feesAEarned": "1.037294",
+    "feesBEarned": "2.753151",
+    "rewards0Earned": "0",
+    "rewards1Earned": "0",
+    "rewards2Earned": "0",
+    "kaminoRewards0Earned": "0",
+    "kaminoRewards1Earned": "0",
+    "kaminoRewards2Earned": "0",
+    "feesAEarnedUsd": "1.0344169674816346",
+    "feesBEarnedUsd": "2.75657612228428",
+    "rewards0EarnedUsd": "0",
+    "rewards1EarnedUsd": "0",
+    "rewards2EarnedUsd": "0",
+    "kaminoRewards0EarnedUsd": "0",
+    "kaminoRewards1EarnedUsd": "0",
+    "kaminoRewards2EarnedUsd": "0",
+    "lastCalculated": "2023-03-24T14:14:13.885Z"
+  },
+  {
+    "strategyPubkey": "2dczcMRpxWHZTcsiEjPT4YBcSseTaUmWFzw24HxYMFod",
+    "feesAEarned": "1.389828787",
+    "feesBEarned": "1.182662835",
+    "rewards0Earned": "681.574997269",
+    "rewards1Earned": "272.629657",
+    "rewards2Earned": "0",
+    "kaminoRewards0Earned": "351.579127",
+    "kaminoRewards1Earned": "0",
+    "kaminoRewards2Earned": "0",
+    "feesAEarnedUsd": "29.78482623351582254",
+    "feesBEarnedUsd": "27.9253762204614832164",
+    "rewards0EarnedUsd": "31.2709271924846080985",
+    "rewards1EarnedUsd": "66.55395386232317",
+    "rewards2EarnedUsd": "0",
+    "kaminoRewards0EarnedUsd": "85.68865812406762",
+    "kaminoRewards1EarnedUsd": "0",
+    "kaminoRewards2EarnedUsd": "0",
+    "lastCalculated": "2023-03-24T14:14:13.885Z"
+  }
+]
+```
+
+- fees/rewards earned represent the amount of tokens earned from the first deposit
+- fees/rewards earned in USD represent the USD amount earned from the first deposit
+- rewards represent vault rewards, kamino rewards represent autocompounded rewards
+- last calculated refers to the last calculation date (fees and rewards are calculated every 5 minutes)
 
 #### Get all strategies with filters
 
@@ -473,7 +633,7 @@ GET https://api.hubbleprotocol.io/ktokens/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRGRwu
 #### Get all prices:
 
 ```http request
-GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)}
+GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)|birdeye}
 ```
 
 Example request: https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope
@@ -496,7 +656,7 @@ Example response:
 #### Get specific token price:
 
 ```http request
-GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)}&token={tokenName}
+GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)|birdeye}&token={tokenName}
 ```
 
 Example request: https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope&token=SOL
@@ -555,7 +715,7 @@ Example response:
         "start": "2023-02-14T15:36:42.498Z",
         "end": "2023-02-14T15:39:03.759Z",
         "ema": "21.8084071408819895",
-        "source": "scope"
+        "source": "birdeye"
     }
 ]
 ```
@@ -649,13 +809,21 @@ Example response:
 
 **⚠️ This is still work in progress, endpoints return mock data for testing. ⚠️**
 
-#### Get Kamino Market config
+#### Get All Kamino Markets config
 
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market?env={cluster}
 ```
 Example:
 https://api.hubbleprotocol.io/kamino-market?env=mainnet-beta
+
+#### Get Kamino Market config
+
+```http request
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey?env={cluster}
+```
+Example:
+https://api.hubbleprotocol.io/kamino-market/J5ndTP1GJe6ZWzGiZQR2UKJmWWMJojbWxCxZ2yUXwakR?env=mainnet-beta
 
 #### Get Kamino Market metrics history
 
@@ -680,4 +848,93 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/loans/:loanPubkey/
 ```
 Example:
 https://api.hubbleprotocol.io/kamino-market/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmg/loans/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmm/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
-  
+
+### Trades
+
+#### Get trade history
+
+`POST https://api.hubbleprotocol.io/trades?env=mainnet-beta&source=hellomoon`
+
+Example POST request:
+
+```shell
+# obtain the first page of 10 trades
+curl --location 'https://api.hubbleprotocol.io/trades?env=mainnet-beta&source=hellomoon' --header 'Content-Type: application/json' --data '{
+    "tokenAMint": "So11111111111111111111111111111111111111112",
+    "tokenBMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "start": "2023-01-01T00:00Z",
+    "end": "2023-02-01T00:00Z",
+    "limit": 10
+}'
+# use "paginationToken" property in response in the next request to get next 10 trades:
+curl --location 'https://api.hubbleprotocol.io/trades?env=mainnet-beta&source=hellomoon' --header 'Content-Type: application/json' --data '{
+    "tokenAMint": "So11111111111111111111111111111111111111112",
+    "tokenBMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "start": "2023-01-01T00:00Z",
+    "end": "2023-02-01T00:00Z",
+    "limit": 10,
+    "paginationToken": "MzQ3OTQzMQ=="
+}' 
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* source: trades fetched from source`"hellomoon" (default)`
+
+Body params:
+* tokenAMint: public key of the first mint, e.g. SOL mint: `"So11111111111111111111111111111111111111112"`
+* tokenBMint: public key of the second mint, e.g. USDC mint: `"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"`
+* start: start of the date range to fetch trades from, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
+* end: end of the date range to fetch trades to, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
+* limit: number of results to return, default 10, max 1000
+* paginationToken: pagination token to use for retrieving results.
+  If the response contains a `paginationToken` JSON property,
+  you can use that in the next request to fetch more data from the last trade onwards.
+  If the property does not exist, you've reached the end.
+
+Please note that the response will contain both "directions" (buys, sells) of the trade.
+For example, if you input tokenA/tokenB mints for SOL/USDC in the request body,
+the response will contain trades with (source = SOL, destination = USDC) or (source = USDC, destination = SOL).
+
+Example response:
+
+```json
+{
+  "trades": [
+    {
+      "transactionId": "67enaV7ufBGu5quuzZFwn4B2kqpNiqRunAwXbytt6TCkVkEJzUmNRyCYnDPvPi8yP8aDpHL16oVecqrqa3rvvbv9",
+      "sourceAmount": "30.202777503",
+      "destinationAmount": "704.59445",
+      "tradedOn": "2023-01-16T12:54:49.000Z",
+      "aggregator": "Jupiter v3",
+      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+      "sourceMint": "So11111111111111111111111111111111111111112",
+      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "transactionId": "4rZRGF8P667EjprBZomP7MiwHhUDwa6Dnuw2i5MvLn8jbVfVdzBg9DcvoHpkuykrRJpf4LTbPMaFiTR13QCgMxPb",
+      "sourceAmount": "30.202526264",
+      "destinationAmount": "704.766755",
+      "tradedOn": "2023-01-16T12:54:49.000Z",
+      "aggregator": "Jupiter v3",
+      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+      "sourceMint": "So11111111111111111111111111111111111111112",
+      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "transactionId": "3PXDTVaYKoDcMdyyyxGu4pMLbv2ApAx9biapEJv1rjPZdePTdGgqK6LstV8MBiAWtA3zaYJDJ86fT8hveNUN2VEN",
+      "sourceAmount": "0.04293291",
+      "destinationAmount": "1.001095",
+      "tradedOn": "2023-01-16T12:54:42.000Z",
+      "aggregator": "Jupiter v3",
+      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+      "sourceMint": "So11111111111111111111111111111111111111112",
+      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    }
+  ],
+  "source": "hellomoon",
+  "start": "2023-01-01T00:00:00.000Z",
+  "end": "2023-02-01T00:00:00.000Z",
+  "paginationToken": "MTQ2MTAzMA=="
+}
+```
