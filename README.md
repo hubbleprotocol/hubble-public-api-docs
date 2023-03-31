@@ -480,7 +480,7 @@ GET https://api.hubbleprotocol.io/strategies/fees-and-rewards?env={cluster}&peri
 
 Query params:
 * env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* period: time period for fees and rewards `"24h" (default) | "7d" | "14d" | "30d" | "90d"`
+* period: time period for fees and rewards `"24h" (default) | "7d" | "30d"`
 * status: strategy status `"LIVE" (default) | "STAGING" | "SHADOW" | "IGNORED" | "DEPRECATED"`, status query param can also be used multiple times, for example:
   * https://api.hubbleprotocol.io/strategies/fees-and-rewards?status=LIVE&status=STAGING&status=SHADOW
 
@@ -535,6 +535,55 @@ Example response:
 - fees/rewards earned in USD represent the USD amount earned from the first deposit
 - rewards represent vault rewards, kamino rewards represent autocompounded rewards
 - last calculated refers to the last calculation date (fees and rewards are calculated every 5 minutes)
+
+#### Get volume for strategies:
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/volume?env={cluster}&status={strategyStatus}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* status: strategy status `"LIVE" (default) | "STAGING" | "SHADOW" | "IGNORED" | "DEPRECATED"`, status query param can also be used multiple times, for example:
+  * https://api.hubbleprotocol.io/strategies/volume?status=LIVE&status=STAGING&status=SHADOW
+
+Example response:
+
+```json
+[
+  {
+    "strategy": "6K4jM79yijUEFxdFhCFZSjav1nZji1gsxUWQE6XrC8YD",
+    "kaminoVolume": [
+      {
+        "period": "24h",
+        "amount": "0"
+      },
+      {
+        "period": "7d",
+        "amount": "4943.5832904232213864595352"
+      },
+      {
+        "period": "30d",
+        "amount": "70711922.7175338705593670146676"
+      }
+    ],
+    "poolVolume": [
+      {
+        "period": "24h",
+        "amount": "32449.432601658486"
+      },
+      {
+        "period": "7d",
+        "amount": "199221.15394896772"
+      },
+      {
+        "period": "30d",
+        "amount": "1493200.352996167"
+      }
+    ]
+  }
+]
+```
 
 #### Get all strategies with filters
 
@@ -633,7 +682,7 @@ GET https://api.hubbleprotocol.io/ktokens/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRGRwu
 #### Get all prices:
 
 ```http request
-GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)|birdeye}
+GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)}
 ```
 
 Example request: https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope
@@ -656,7 +705,7 @@ Example response:
 #### Get specific token price:
 
 ```http request
-GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)|birdeye}&token={tokenName}
+GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)}&token={tokenName}
 ```
 
 Example request: https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope&token=SOL
@@ -715,7 +764,7 @@ Example response:
         "start": "2023-02-14T15:36:42.498Z",
         "end": "2023-02-14T15:39:03.759Z",
         "ema": "21.8084071408819895",
-        "source": "birdeye"
+        "source": "scope"
     }
 ]
 ```
