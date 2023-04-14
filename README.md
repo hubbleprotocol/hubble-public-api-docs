@@ -585,6 +585,49 @@ Example response:
 ]
 ```
 
+#### Get all-time Kamino volume:
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/all-time-volume?env={cluster}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+Example request:
+
+https://api.hubbleprotocol.io/strategies/all-time-volume
+
+Example response:
+
+```json
+{
+  "volumeUsd": "106015327.76",
+  "lastCalculated": "2023-04-13T15:55:31.761Z"
+}
+```
+
+#### Get Kamino TVL:
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/tvl?env={cluster}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+Example request:
+
+https://api.hubbleprotocol.io/strategies/tvl?env=mainnet-beta
+
+Example response:
+
+```json
+{
+  "tvl": "8360625.990205809513007916645145375207353"
+}
+```
+
 #### Get all strategies with filters
 
 * The current filters that are supported are:
@@ -657,6 +700,32 @@ You may use the `env` query param for all the methods specified below (`mainnet-
 GET https://api.hubbleprotocol.io/whirlpools/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRGRwusQyLPS/history?env=mainnet-beta&year=2022
 ```
 
+#### Get whirlpools TVL
+
+Get all unique Orca/Raydium pools from Kamino strategies and return their TVL:
+
+```http request
+GET https://api.hubbleprotocol.io/whirlpools/tvl?env={cluster}
+```
+
+Example request:
+
+https://api.hubbleprotocol.io/whirlpools/tvl
+
+Response example:
+```json
+[
+    {
+        "tvl": "10628.86524130715",
+        "pool": "3BScXnPjT4hut1G5yJ5UGQWhUmoYxyBFQf3juLBeMH2S"
+    },
+    {
+        "tvl": "522635.86139358365",
+        "pool": "4nFbdT7DeXATvaRZfR3WqALGJnogMjqe9vf2H6C1WXBr"
+    }
+]
+```
+
 ### kToken metadata (Kamino)
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
@@ -682,7 +751,7 @@ GET https://api.hubbleprotocol.io/ktokens/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRGRwu
 #### Get all prices:
 
 ```http request
-GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)}
+GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)|birdeye}
 ```
 
 Example request: https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope
@@ -705,7 +774,7 @@ Example response:
 #### Get specific token price:
 
 ```http request
-GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)}&token={tokenName}
+GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)|birdeye}&token={tokenName}
 ```
 
 Example request: https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope&token=SOL
@@ -764,7 +833,7 @@ Example response:
         "start": "2023-02-14T15:36:42.498Z",
         "end": "2023-02-14T15:39:03.759Z",
         "ema": "21.8084071408819895",
-        "source": "scope"
+        "source": "birdeye"
     }
 ]
 ```
@@ -912,8 +981,7 @@ curl --location 'https://api.hubbleprotocol.io/trades?env=mainnet-beta&source=he
     "tokenAMint": "So11111111111111111111111111111111111111112",
     "tokenBMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
     "start": "2023-01-01T00:00Z",
-    "end": "2023-02-01T00:00Z",
-    "limit": 10
+    "end": "2023-02-01T00:00Z"
 }'
 # use "paginationToken" property in response in the next request to get next 10 trades:
 curl --location 'https://api.hubbleprotocol.io/trades?env=mainnet-beta&source=hellomoon' --header 'Content-Type: application/json' --data '{
@@ -921,7 +989,6 @@ curl --location 'https://api.hubbleprotocol.io/trades?env=mainnet-beta&source=he
     "tokenBMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
     "start": "2023-01-01T00:00Z",
     "end": "2023-02-01T00:00Z",
-    "limit": 10,
     "paginationToken": "MzQ3OTQzMQ=="
 }' 
 ```
@@ -935,7 +1002,6 @@ Body params:
 * tokenBMint: public key of the second mint, e.g. USDC mint: `"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"`
 * start: start of the date range to fetch trades from, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
 * end: end of the date range to fetch trades to, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
-* limit: number of results to return, default 10, max 1000
 * paginationToken: pagination token to use for retrieving results.
   If the response contains a `paginationToken` JSON property,
   you can use that in the next request to fetch more data from the last trade onwards.
@@ -949,41 +1015,41 @@ Example response:
 
 ```json
 {
-  "trades": [
-    {
-      "transactionId": "67enaV7ufBGu5quuzZFwn4B2kqpNiqRunAwXbytt6TCkVkEJzUmNRyCYnDPvPi8yP8aDpHL16oVecqrqa3rvvbv9",
-      "sourceAmount": "30.202777503",
-      "destinationAmount": "704.59445",
-      "tradedOn": "2023-01-16T12:54:49.000Z",
-      "aggregator": "Jupiter v3",
-      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-      "sourceMint": "So11111111111111111111111111111111111111112",
-      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-    },
-    {
-      "transactionId": "4rZRGF8P667EjprBZomP7MiwHhUDwa6Dnuw2i5MvLn8jbVfVdzBg9DcvoHpkuykrRJpf4LTbPMaFiTR13QCgMxPb",
-      "sourceAmount": "30.202526264",
-      "destinationAmount": "704.766755",
-      "tradedOn": "2023-01-16T12:54:49.000Z",
-      "aggregator": "Jupiter v3",
-      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-      "sourceMint": "So11111111111111111111111111111111111111112",
-      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-    },
-    {
-      "transactionId": "3PXDTVaYKoDcMdyyyxGu4pMLbv2ApAx9biapEJv1rjPZdePTdGgqK6LstV8MBiAWtA3zaYJDJ86fT8hveNUN2VEN",
-      "sourceAmount": "0.04293291",
-      "destinationAmount": "1.001095",
-      "tradedOn": "2023-01-16T12:54:42.000Z",
-      "aggregator": "Jupiter v3",
-      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-      "sourceMint": "So11111111111111111111111111111111111111112",
-      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-    }
-  ],
-  "source": "hellomoon",
-  "start": "2023-01-01T00:00:00.000Z",
-  "end": "2023-02-01T00:00:00.000Z",
-  "paginationToken": "MTQ2MTAzMA=="
+    "trades": [
+        {
+            "transactionId": "67enaV7ufBGu5quuzZFwn4B2kqpNiqRunAwXbytt6TCkVkEJzUmNRyCYnDPvPi8yP8aDpHL16oVecqrqa3rvvbv9",
+            "sourceAmount": "30.202777503",
+            "destinationAmount": "704.59445",
+            "tradedOn": "2023-01-16T12:54:49.000Z",
+            "aggregator": "Jupiter v3",
+            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+            "sourceMint": "So11111111111111111111111111111111111111112",
+            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+        },
+        {
+            "transactionId": "4rZRGF8P667EjprBZomP7MiwHhUDwa6Dnuw2i5MvLn8jbVfVdzBg9DcvoHpkuykrRJpf4LTbPMaFiTR13QCgMxPb",
+            "sourceAmount": "30.202526264",
+            "destinationAmount": "704.766755",
+            "tradedOn": "2023-01-16T12:54:49.000Z",
+            "aggregator": "Jupiter v3",
+            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+            "sourceMint": "So11111111111111111111111111111111111111112",
+            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"          
+        },
+        {
+            "transactionId": "3PXDTVaYKoDcMdyyyxGu4pMLbv2ApAx9biapEJv1rjPZdePTdGgqK6LstV8MBiAWtA3zaYJDJ86fT8hveNUN2VEN",
+            "sourceAmount": "0.04293291",
+            "destinationAmount": "1.001095",
+            "tradedOn": "2023-01-16T12:54:42.000Z",
+            "aggregator": "Jupiter v3",
+            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+            "sourceMint": "So11111111111111111111111111111111111111112",
+            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+        }
+    ],
+    "source": "hellomoon",
+    "start": "2023-01-01T00:00:00.000Z",
+    "end": "2023-02-01T00:00:00.000Z",
+    "paginationToken": "MTQ2MTAzMA=="
 }
 ```
