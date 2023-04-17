@@ -607,6 +607,36 @@ Example response:
 }
 ```
 
+#### Get all-time Kamino fees and rewards:
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/all-time-fees-and-rewards?env={cluster}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+Example request:
+
+https://api.hubbleprotocol.io/strategies/fees-and-rewards
+
+Example response:
+
+```json
+{
+  "feesAEarnedUsd": "59246.89656897732967689080867366185019",
+  "feesBEarnedUsd": "57080.94920621374904358352501138520562",
+  "rewards0EarnedUsd": "5927.1681652971537634193",
+  "rewards1EarnedUsd": "4404.4392311526895494322",
+  "rewards2EarnedUsd": "0",
+  "kaminoRewards0EarnedUsd": "39648.8949681613351787107",
+  "kaminoRewards1EarnedUsd": "1231.803977675133",
+  "kaminoRewards2EarnedUsd": "0",
+  "totalUsd": "167540.15211747739021203653368504705581",
+  "lastCalculated": "2023-04-14T09:52:59.292Z"
+}
+```
+
 #### Get Kamino TVL:
 
 ```http request
@@ -1015,41 +1045,41 @@ Example response:
 
 ```json
 {
-    "trades": [
-        {
-            "transactionId": "67enaV7ufBGu5quuzZFwn4B2kqpNiqRunAwXbytt6TCkVkEJzUmNRyCYnDPvPi8yP8aDpHL16oVecqrqa3rvvbv9",
-            "sourceAmount": "30.202777503",
-            "destinationAmount": "704.59445",
-            "tradedOn": "2023-01-16T12:54:49.000Z",
-            "aggregator": "Jupiter v3",
-            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-            "sourceMint": "So11111111111111111111111111111111111111112",
-            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-        },
-        {
-            "transactionId": "4rZRGF8P667EjprBZomP7MiwHhUDwa6Dnuw2i5MvLn8jbVfVdzBg9DcvoHpkuykrRJpf4LTbPMaFiTR13QCgMxPb",
-            "sourceAmount": "30.202526264",
-            "destinationAmount": "704.766755",
-            "tradedOn": "2023-01-16T12:54:49.000Z",
-            "aggregator": "Jupiter v3",
-            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-            "sourceMint": "So11111111111111111111111111111111111111112",
-            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"          
-        },
-        {
-            "transactionId": "3PXDTVaYKoDcMdyyyxGu4pMLbv2ApAx9biapEJv1rjPZdePTdGgqK6LstV8MBiAWtA3zaYJDJ86fT8hveNUN2VEN",
-            "sourceAmount": "0.04293291",
-            "destinationAmount": "1.001095",
-            "tradedOn": "2023-01-16T12:54:42.000Z",
-            "aggregator": "Jupiter v3",
-            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-            "sourceMint": "So11111111111111111111111111111111111111112",
-            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-        }
-    ],
-    "source": "hellomoon",
-    "start": "2023-01-01T00:00:00.000Z",
-    "end": "2023-02-01T00:00:00.000Z",
-    "paginationToken": "MTQ2MTAzMA=="
+  "trades": [
+    {
+      "transactionId": "67enaV7ufBGu5quuzZFwn4B2kqpNiqRunAwXbytt6TCkVkEJzUmNRyCYnDPvPi8yP8aDpHL16oVecqrqa3rvvbv9",
+      "sourceAmount": "30.202777503",
+      "destinationAmount": "704.59445",
+      "tradedOn": "2023-01-16T12:54:49.000Z",
+      "aggregator": "Jupiter v3",
+      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+      "sourceMint": "So11111111111111111111111111111111111111112",
+      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "transactionId": "4rZRGF8P667EjprBZomP7MiwHhUDwa6Dnuw2i5MvLn8jbVfVdzBg9DcvoHpkuykrRJpf4LTbPMaFiTR13QCgMxPb",
+      "sourceAmount": "30.202526264",
+      "destinationAmount": "704.766755",
+      "tradedOn": "2023-01-16T12:54:49.000Z",
+      "aggregator": "Jupiter v3",
+      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+      "sourceMint": "So11111111111111111111111111111111111111112",
+      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "transactionId": "3PXDTVaYKoDcMdyyyxGu4pMLbv2ApAx9biapEJv1rjPZdePTdGgqK6LstV8MBiAWtA3zaYJDJ86fT8hveNUN2VEN",
+      "sourceAmount": "0.04293291",
+      "destinationAmount": "1.001095",
+      "tradedOn": "2023-01-16T12:54:42.000Z",
+      "aggregator": "Jupiter v3",
+      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+      "sourceMint": "So11111111111111111111111111111111111111112",
+      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    }
+  ],
+  "source": "hellomoon",
+  "start": "2023-01-01T00:00:00.000Z",
+  "end": "2023-02-01T00:00:00.000Z",
+  "paginationToken": "MTQ2MTAzMA=="
 }
 ```
