@@ -756,6 +756,58 @@ Response example:
 ]
 ```
 
+#### Get whirlpool fees
+
+Get all unique Orca/Raydium pools from Kamino strategies and return their fees:
+
+```http request
+GET https://api.hubbleprotocol.io/whirlpools/fees?env={cluster}
+```
+
+Example request:
+
+https://api.hubbleprotocol.io/whirlpools/fees
+
+Response example:
+```json
+[
+  {
+    "fees": [
+      {
+        "period": "24h",
+        "amount": "0.13107745873661961"
+      },
+      {
+        "period": "7d",
+        "amount": "0.4323762174032862"
+      },
+      {
+        "period": "30d",
+        "amount": "0.52013355740328621"
+      }
+    ],
+    "pool": "H1fREbTWrkhCs2stH3tKANWJepmqeF9hww4nWRYrM7uV"
+  },
+  {
+    "fees": [
+      {
+        "period": "24h",
+        "amount": "437.0303313444236"
+      },
+      {
+        "period": "7d",
+        "amount": "2578.2959811239195"
+      },
+      {
+        "period": "30d",
+        "amount": "7032.52314803323"
+      }
+    ],
+    "pool": "BVXNG6BrL2Tn3NmppnMeXHjBHTaQSnSnLE99JKwZSWPg"
+  }
+]
+```
+
 ### kToken metadata (Kamino)
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
@@ -1045,41 +1097,42 @@ Example response:
 
 ```json
 {
-  "trades": [
-    {
-      "transactionId": "67enaV7ufBGu5quuzZFwn4B2kqpNiqRunAwXbytt6TCkVkEJzUmNRyCYnDPvPi8yP8aDpHL16oVecqrqa3rvvbv9",
-      "sourceAmount": "30.202777503",
-      "destinationAmount": "704.59445",
-      "tradedOn": "2023-01-16T12:54:49.000Z",
-      "aggregator": "Jupiter v3",
-      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-      "sourceMint": "So11111111111111111111111111111111111111112",
-      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-    },
-    {
-      "transactionId": "4rZRGF8P667EjprBZomP7MiwHhUDwa6Dnuw2i5MvLn8jbVfVdzBg9DcvoHpkuykrRJpf4LTbPMaFiTR13QCgMxPb",
-      "sourceAmount": "30.202526264",
-      "destinationAmount": "704.766755",
-      "tradedOn": "2023-01-16T12:54:49.000Z",
-      "aggregator": "Jupiter v3",
-      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-      "sourceMint": "So11111111111111111111111111111111111111112",
-      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-    },
-    {
-      "transactionId": "3PXDTVaYKoDcMdyyyxGu4pMLbv2ApAx9biapEJv1rjPZdePTdGgqK6LstV8MBiAWtA3zaYJDJ86fT8hveNUN2VEN",
-      "sourceAmount": "0.04293291",
-      "destinationAmount": "1.001095",
-      "tradedOn": "2023-01-16T12:54:42.000Z",
-      "aggregator": "Jupiter v3",
-      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-      "sourceMint": "So11111111111111111111111111111111111111112",
-      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-    }
-  ],
-  "source": "hellomoon",
-  "start": "2023-01-01T00:00:00.000Z",
-  "end": "2023-02-01T00:00:00.000Z",
-  "paginationToken": "MTQ2MTAzMA=="
+    "trades": [
+        {
+            "transactionId": "67enaV7ufBGu5quuzZFwn4B2kqpNiqRunAwXbytt6TCkVkEJzUmNRyCYnDPvPi8yP8aDpHL16oVecqrqa3rvvbv9",
+            "sourceAmount": "30.202777503",
+            "destinationAmount": "704.59445",
+            "tradedOn": "2023-01-16T12:54:49.000Z",
+            "aggregator": "Jupiter v3",
+            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+            "sourceMint": "So11111111111111111111111111111111111111112",
+            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+        },
+        {
+            "transactionId": "4rZRGF8P667EjprBZomP7MiwHhUDwa6Dnuw2i5MvLn8jbVfVdzBg9DcvoHpkuykrRJpf4LTbPMaFiTR13QCgMxPb",
+            "sourceAmount": "30.202526264",
+            "destinationAmount": "704.766755",
+            "tradedOn": "2023-01-16T12:54:49.000Z",
+            "aggregator": "Jupiter v3",
+            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+            "sourceMint": "So11111111111111111111111111111111111111112",
+            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"          
+        },
+        {
+            "transactionId": "3PXDTVaYKoDcMdyyyxGu4pMLbv2ApAx9biapEJv1rjPZdePTdGgqK6LstV8MBiAWtA3zaYJDJ86fT8hveNUN2VEN",
+            "sourceAmount": "0.04293291",
+            "destinationAmount": "1.001095",
+            "tradedOn": "2023-01-16T12:54:42.000Z",
+            "aggregator": "Jupiter v3",
+            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+            "sourceMint": "So11111111111111111111111111111111111111112",
+            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+        }
+    ],
+    "source": "hellomoon",
+    "start": "2023-01-01T00:00:00.000Z",
+    "end": "2023-02-01T00:00:00.000Z",
+    "paginationToken": "MTQ2MTAzMA=="
 }
 ```
+
