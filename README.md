@@ -1,33 +1,33 @@
 # 🛰 Hubble Public API
 
-Hubble Public API is a TypeScript API (using Express) that serves public data of the Hubble Protocol.
+Hubble Public API is a TypeScript API (using Express) that serves public data of the Hubble Protocol.  
 
 ## Table of contents
 
 - [Development](#development)
-  * [Database](#database)
-  * [Local API Setup](#local-api-setup)
-  * [Tests](#tests)
-  * [Deployment](#deployment)
+    * [Database](#database)
+    * [Local API Setup](#local-api-setup)
+    * [Tests](#tests)
+    * [Deployment](#deployment)
 - [Usage](#usage)
-  * [Metrics](#metrics)
-  * [Metrics History](#metrics-history)
-  * [Config](#config)
-  * [IDL](#idl)
-  * [Circulating Supply Value (HBB)](#circulating-supply-value-hbb)
-  * [Circulating Supply (HBB)](#circulating-supply-hbb)
-  * [API Version](#api-version)
-  * [Maintenance mode](#maintenance-mode)
-  * [Borrowing version](#borrowing-version)
-  * [Loans](#loans)
-  * [Staking](#staking)
-  * [Stability](#stability)
-  * [Strategies (Kamino)](#strategies-kamino)
-  * [Whirlpools (Kamino)](#whirlpools-kamino)
-  * [Prices](#prices)
-  * [Borrowing Market State](#borrowing-market-state)
-  * [Transactions](#transactions)
-  * [Kamino Market Lending](#kamino-market-lending)
+    * [Metrics](#metrics)
+    * [Metrics History](#metrics-history)
+    * [Config](#config)
+    * [IDL](#idl)
+    * [Circulating Supply Value (HBB)](#circulating-supply-value-hbb)
+    * [Circulating Supply (HBB)](#circulating-supply-hbb)
+    * [API Version](#api-version)
+    * [Maintenance mode](#maintenance-mode)
+    * [Borrowing version](#borrowing-version)
+    * [Loans](#loans)
+    * [Staking](#staking)
+    * [Stability](#stability)
+    * [Strategies (Kamino)](#strategies-kamino)
+    * [Whirlpools (Kamino)](#whirlpools-kamino)
+    * [Prices](#prices)
+    * [Borrowing Market State](#borrowing-market-state)
+    * [Transactions](#transactions)
+    * [Kamino Market Lending](#kamino-market-lending)
 
 ## Development
 
@@ -158,7 +158,7 @@ GET https://api.hubbleprotocol.io/idl
 ### Circulating Supply Value HBB
 
 #### Get circulating supply value of HBB (number of HBB issued * HBB price).
-This is also included in the `/metrics` endpoint, but we need this for external services like CoinMarketCap.
+This is also included in the `/metrics` endpoint, but we need this for external services like CoinMarketCap. 
 
 ```http request
 GET https://api.hubbleprotocol.io/circulating-supply-value
@@ -195,7 +195,7 @@ GET https://api.hubbleprotocol.io/version
 
 ### Maintenance mode
 
-#### Get maintenance mode parameter that specifies if Hubble webapp/smart contracts are in maintenance mode.
+#### Get maintenance mode parameter that specifies if Hubble webapp/smart contracts are in maintenance mode.  
 
 ```http request
 GET https://api.hubbleprotocol.io/maintenance-mode
@@ -226,7 +226,7 @@ GET https://api.hubbleprotocol.io/loans?env=mainnet-beta
 GET https://api.hubbleprotocol.io/loans/HrwbdQYwSnAyVpVHuGQ661HiNbWmGjDp5DdDR9YMw7Bu
 ```
 
-#### Get a specific user's list of loans by specifying their public key:
+#### Get a specific user's list of loans by specifying their public key: 
 
 ```http request
 // GET https://api.hubbleprotocol.io/owners/:pubkey/loans
@@ -275,7 +275,7 @@ GET https://api.hubbleprotocol.io/staking/usdh/users
 GET https://api.hubbleprotocol.io/staking/lido
 ```
 
-#### Get eligible loans for LIDO staking rewards for a specified month and year.
+#### Get eligible loans for LIDO staking rewards for a specified month and year. 
 Months are to be input from 1 (January) - 12 (December) and years from 2022 and above.
 
 ```http request
@@ -661,7 +661,7 @@ Example response:
 #### Get all strategies with filters
 
 * The current filters that are supported are:
-  * `strategyType` which can be:
+  * `strategyType` which can be: 
     * `NON_PEGGED`: e.g. SOL-BONK
     * `PEGGED`: e.g. BSOL-JitoSOL
     * `STABLE`: e.g. USDH-USDC
@@ -732,7 +732,7 @@ GET https://api.hubbleprotocol.io/whirlpools/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRG
 
 #### Get whirlpools TVL
 
-Get all unique Orca/Raydium pools from Kamino strategies and return their TVL:
+Get all unique Orca/Raydium pools from Kamino strategies and return their TVL: 
 
 ```http request
 GET https://api.hubbleprotocol.io/whirlpools/tvl?env={cluster}
@@ -935,7 +935,7 @@ You can specify start/end date range with query params `start` and `end`. Otherw
 GET https://api.hubbleprotocol.io/bms/FqkHHpETrpfgcA5SeH7PKKFDLGWM4tM7ZV31HfutTXNV/history?env=mainnet-beta&start=2020-01-01&end=2023-01-01
 ```
 
-#### Get BMS loans closest to a snapshot timestamp
+#### Get BMS loans closest to a snapshot timestamp 
 
 Please note: This route is not exposed to the public and requires basic authentication.
 
@@ -957,9 +957,9 @@ GET https://api.hubbleprotocol.io/debug/accounts/HubbLeXBb7qyLHt3x7gvYaRrxQmmgEx
 
 ### Transactions
 
-#### Get all kamino transactions
+#### Get all kamino transactions 
 
-Get shareholder's Kamino transactions (`withdraw`, `deposit` and `depositAndInvest` instructions).
+Get shareholder's Kamino transactions (`withdraw`, `deposit` and `depositAndInvest` instructions). 
 Returns the last 1000 transactions ordered by timestamp descending.
 
 ```http request
@@ -1014,7 +1014,7 @@ Example response:
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market?env={cluster}
 ```
-Example:
+Example: 
 https://api.hubbleprotocol.io/kamino-market?env=mainnet-beta
 
 #### Get Kamino Market config
@@ -1022,7 +1022,7 @@ https://api.hubbleprotocol.io/kamino-market?env=mainnet-beta
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey?env={cluster}
 ```
-Example:
+Example: 
 https://api.hubbleprotocol.io/kamino-market/J5ndTP1GJe6ZWzGiZQR2UKJmWWMJojbWxCxZ2yUXwakR?env=mainnet-beta
 
 #### Get Kamino Market metrics history
@@ -1048,7 +1048,7 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/loans/:loanPubkey/
 ```
 Example:
 https://api.hubbleprotocol.io/kamino-market/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmg/loans/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmm/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
-
+  
 ### Trades
 
 #### Get trade history
@@ -1076,24 +1076,24 @@ curl --location 'https://api.hubbleprotocol.io/trades?env=mainnet-beta&source=he
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* source: trades fetched from source`"hellomoon" (default)`
+  * env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+  * source: trades fetched from source`"hellomoon" (default)`
 
 Body params:
-* tokenAMint: public key of the first mint, e.g. SOL mint: `"So11111111111111111111111111111111111111112"`
-* tokenBMint: public key of the second mint, e.g. USDC mint: `"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"`
-* start: start of the date range to fetch trades from, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
-* end: end of the date range to fetch trades to, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
-* paginationToken: pagination token to use for retrieving results.
-  If the response contains a `paginationToken` JSON property,
+  * tokenAMint: public key of the first mint, e.g. SOL mint: `"So11111111111111111111111111111111111111112"`
+  * tokenBMint: public key of the second mint, e.g. USDC mint: `"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"`
+  * start: start of the date range to fetch trades from, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
+  * end: end of the date range to fetch trades to, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
+  * paginationToken: pagination token to use for retrieving results. 
+  If the response contains a `paginationToken` JSON property, 
   you can use that in the next request to fetch more data from the last trade onwards.
   If the property does not exist, you've reached the end.
 
 Please note that the response will contain both "directions" (buys, sells) of the trade.
-For example, if you input tokenA/tokenB mints for SOL/USDC in the request body,
+For example, if you input tokenA/tokenB mints for SOL/USDC in the request body, 
 the response will contain trades with (source = SOL, destination = USDC) or (source = USDC, destination = SOL).
 
-Example response:
+Example response: 
 
 ```json
 {
