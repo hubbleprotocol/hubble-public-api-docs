@@ -472,6 +472,53 @@ Sample response:
 - rewards represent vault rewards, kamino rewards represent autocompounded rewards
 - last calculated refers to the last calculation date (fees and rewards are calculated every 5 minutes)
 
+#### Get latest fees and rewards earned for a strategy shareholder:
+
+Fetch strategy shareholder fees and rewards for only the latest position.
+This endpoint takes a look at when the user's position was last closed (fully withdrawn)
+and opened again and only calculates the fees and rewards after that time.
+
+For all-time fees and rewards of a strategy shareholder use endpoint
+mentioned in the previous section (`Get fees and rewards earned for a strategy shareholder` above).
+
+```http request
+// GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/fees-and-rewards/latest-position?env={cluster}
+GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/fees-and-rewards/latest-position?env=mainnet-beta
+```
+
+Example request:
+
+https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/fees-and-rewards/latest-position?env=mainnet-beta
+
+Sample response:
+
+```json
+{
+    "feesAEarned": "31.32619353486741639998339868",
+    "feesBEarned": "24.70081628219520072196336092",
+    "feesAEarnedUsd": "31.256576407153470503340282981001181676",
+    "feesBEarnedUsd": "24.698716826795158937664218970228174",
+    "rewards0Earned": "0",
+    "rewards1Earned": "0",
+    "rewards2Earned": "0",
+    "rewards0EarnedUsd": "0",
+    "rewards1EarnedUsd": "0",
+    "rewards2EarnedUsd": "0",
+    "kaminoRewards0Earned": "712379.5022312449919715809869996",
+    "kaminoRewards1Earned": "0",
+    "kaminoRewards2Earned": "0",
+    "kaminoRewards0EarnedUsd": "0.61236142011797819509877101642485616",
+    "kaminoRewards1EarnedUsd": "0",
+    "kaminoRewards2EarnedUsd": "0",
+    "lastCalculated": "2023-01-12T13:10:21.212Z"
+}
+```
+
+- fees/rewards earned represent the amount of tokens earned from the last deposit
+- fees/rewards earned in USD represent the USD amount earned from the last deposit
+- rewards represent vault rewards, kamino rewards represent autocompounded rewards
+- last calculated refers to the last calculation date (fees and rewards are calculated every 5 minutes)
+
 #### Get fees and rewards for strategies:
 
 ```http request
