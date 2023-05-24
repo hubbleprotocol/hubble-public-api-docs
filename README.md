@@ -583,6 +583,60 @@ Example response:
 - rewards represent vault rewards, kamino rewards represent autocompounded rewards
 - last calculated refers to the last calculation date (fees and rewards are calculated every 5 minutes)
 
+#### Get PnL for a strategy shareholder position:
+
+Caclulate profit and loss and cost basis for a Kamino strategy shareholder's latest position.
+
+```http request
+// GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/pnl?env={cluster}
+GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl?env=mainnet-beta
+```
+
+Example request:
+
+https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl?env=mainnet-beta
+
+Sample response:
+
+```json
+{
+  "history": [
+    {
+      "timestamp": 1672051577137,
+      "pnl": "0",
+      "costBasis": "11.34183777191083107772512670644557000987",
+      "price": "264.4328194385949644883962343604371604227",
+      "type": "buy",
+      "quantity": "0.042891188"
+    },
+    {
+      "timestamp": 1672869772519,
+      "pnl": "0",
+      "costBasis": "24.5072511090212066398631585769726480007",
+      "price": "308.3909100202460079244964665233163144101",
+      "type": "buy",
+      "quantity": "0.042690666"
+    },
+    {
+      "timestamp": 1684758166841,
+      "pnl": "16.85956987646012332697120738654223239247",
+      "costBasis": "24.50725110902120663986315857697264800069",
+      "price": "483.3597199878531489494766725141860141657",
+      "type": "hypothetical-sell",
+      "quantity": "0.085581854"
+    }
+  ],
+  "totalPnl": "16.85956987646012332697120738654223239247",
+  "totalCostBasis": "24.50725110902120663986315857697264800069",
+  "strategy": "ByXB4xCxVhmUEmQj3Ut7byZ1Hbva1zhKjaVcv3jBMN7E",
+  "wallet": "2VGzusQTEFJneuTWd7RQXx53vXiTi2qNYXx4ftj26Vvb"
+}
+```
+
+If the user currently has an open position then the last transaction in the response history array
+will always be a hypothetical sell to calculate the unrealised profit and loss (mark to market)
+if they sold their position at this moment.
+
 #### Get volume for strategies:
 
 ```http request
