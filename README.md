@@ -600,42 +600,114 @@ Sample response:
 
 ```json
 {
+  "totalPnl": {
+    "sol": "0.821586623506697901642320602103",
+    "usd": "15.932660735531558716134077510914",
+    "a": "0.821586623506697901642320602103",
+    "b": "0.742615763210195652674132993392"
+  },
+  "totalCostBasis": {
+    "sol": "1.263745586773755885725088551614",
+    "usd": "24.507251109021206639863158576972",
+    "a": "1.263745586773755885725088551614",
+    "b": "1.142274431659923954552610113376"
+  }
+}
+```
+
+`"a"` and `"b"` properties in the response refer to the token A and token B that the strategy contains.
+
+#### Get PnL history for a strategy shareholder:
+
+Return PnL history data for strategy shareholder with mark to market analysis. 
+
+Returns hourly timeseries if user's latest position is under 15 days old, otherwise it returns daily timeseries data.
+This is an optimization for frontend charts. 
+
+```http request
+// GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/pnl/history?env={cluster}
+GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl/history?env=mainnet-beta
+```
+
+Example request:
+
+https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl/history?env=mainnet-beta
+
+Sample response:
+
+```json
+{
   "history": [
     {
       "timestamp": 1672051577137,
-      "pnl": "0",
-      "costBasis": "11.34183777191083107772512670644557000987",
-      "price": "264.4328194385949644883962343604371604227",
       "type": "buy",
-      "quantity": "0.042891188"
-    },
-    {
-      "timestamp": 1672869772519,
-      "pnl": "0",
-      "costBasis": "24.5072511090212066398631585769726480007",
-      "price": "308.3909100202460079244964665233163144101",
-      "type": "buy",
-      "quantity": "0.042690666"
-    },
-    {
-      "timestamp": 1684758166841,
-      "pnl": "16.85956987646012332697120738654223239247",
-      "costBasis": "24.50725110902120663986315857697264800069",
-      "price": "483.3597199878531489494766725141860141657",
-      "type": "hypothetical-sell",
-      "quantity": "0.085581854"
+      "price": {
+        "sol": "13.707781891346918813283886561673",
+        "usd": "264.432819438594964488396234360437",
+        "a": "13.707781891346918813283886561673",
+        "b": "12.38943455028558047998876234889"
+      },
+      "quantity": "0.042891188",
+      "positionPnl": {
+        "sol": "0",
+        "usd": "0",
+        "a": "0",
+        "b": "0"
+      },
+      "realizedPnl": {
+        "sol": "0",
+        "usd": "0",
+        "a": "0",
+        "b": "0"
+      },
+      "allHistoryPnl": {
+        "sol": "0",
+        "usd": "0",
+        "a": "0",
+        "b": "0"
+      },
+      "position": "0.042891188",
+      "positionValue": {
+        "sol": "0.587943050164756268041296075887",
+        "usd": "11.341837771910831077725126706445",
+        "a": "0.587943050164756268041296075887",
+        "b": "0.531397566509994286056328243793"
+      },
+      "costBasis": {
+        "sol": "0.587943050164756268041296075887",
+        "usd": "11.341837771910831077725126706445",
+        "a": "0.587943050164756268041296075887",
+        "b": "0.531397566509994286056328243793"
+      },
+      "investment": {
+        "sol": "0.587943050164756268041296075887",
+        "usd": "11.341837771910831077725126706445",
+        "a": "0.587943050164756268041296075887",
+        "b": "0.531397566509994286056328243793"
+      }
     }
   ],
-  "totalPnl": "16.85956987646012332697120738654223239247",
-  "totalCostBasis": "24.50725110902120663986315857697264800069",
+  "totalPnl": {
+    "sol": "0.815290185426638259315771871017",
+    "usd": "15.727525000165956333285426076312",
+    "a": "0.815290185426638259315771871017",
+    "b": "0.736879567525786810587921709799"
+  },
+  "totalCostBasis": {
+    "sol": "1.270417392486119200058849813594",
+    "usd": "24.507251109021206639863158576972",
+    "a": "1.270417392486119200058849813594",
+    "b": "1.148234868376991871955894984218"
+  },
   "strategy": "ByXB4xCxVhmUEmQj3Ut7byZ1Hbva1zhKjaVcv3jBMN7E",
   "wallet": "2VGzusQTEFJneuTWd7RQXx53vXiTi2qNYXx4ftj26Vvb"
 }
 ```
 
-If the user currently has an open position then the last transaction in the response history array
-will always be a hypothetical sell to calculate the unrealised profit and loss (mark to market)
-if they sold their position at this moment.
+`"a"` and `"b"` properties in the response refer to the token A and token B that the strategy contains.
+
+Transaction type can be `buy`, `sell` or `mark-to-market`. Buys and sells are actual transactions of the user.
+Mark to market represents potential position and PnL if they bought/sold at that specific time.
 
 #### Get volume for strategies:
 
