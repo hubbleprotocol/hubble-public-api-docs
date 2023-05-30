@@ -377,11 +377,42 @@ GET https://api.hubbleprotocol.io/strategies/ByXB4xCxVhmUEmQj3Ut7byZ1Hbva1zhKjaV
 GET https://api.hubbleprotocol.io/strategies/metrics?env=mainnet-beta
 ```
 
-#### Get strategy reward stats for all frontend-enabled strategies:
+#### Get strategy reward stats for all live strategies:
 
 ```http request
 // GET https://api.hubbleprotocol.io/strategies/rewards?env={cluster}
 GET https://api.hubbleprotocol.io/strategies/rewards?env=mainnet-beta
+```
+
+Example response:
+
+```json
+[
+    {
+        "apr": "0.03089658127477581433161189171198501610943",
+        "apy": "0.031377485860868284369015169698693427029",
+        "totalReturn": "9959.75762697216",
+        "totalInvestment": "322357.9184504589828735999999999999999998",
+        "strategy": "2dczcMRpxWHZTcsiEjPT4YBcSseTaUmWFzw24HxYMFod",
+        "token": "RAY",
+        "rewardsPerDay": "137.8944",
+        "rewardsPerHour": "5.7456",
+        "rewardsPerSecond": "0.001596",
+        "rewardIsOption": false      
+    },
+    {
+        "apr": "0.1837059453843344336978185004649421142565",
+        "apy": "0.201606883863164306468378664554523674214",
+        "totalReturn": "39084.02775504",
+        "totalInvestment": "212753.2000843610114423811349599999999999",
+        "strategy": "6K4jM79yijUEFxdFhCFZSjav1nZji1gsxUWQE6XrC8YD",
+        "token": "LDO",
+        "rewardsPerDay": "48.386592",
+        "rewardsPerHour": "2.016108",
+        "rewardsPerSecond": "0.00056003",
+        "rewardIsOption": false      
+    }
+]
 ```
 
 #### Get strategy stats for rewards:
@@ -389,6 +420,23 @@ GET https://api.hubbleprotocol.io/strategies/rewards?env=mainnet-beta
 ```http request
 // GET https://api.hubbleprotocol.io/strategies/:strategy_pubkey/rewards?env={cluster}&year={year}
 GET https://api.hubbleprotocol.io/strategies/ByXB4xCxVhmUEmQj3Ut7byZ1Hbva1zhKjaVcv3jBMN7E/rewards?env=mainnet-beta
+```
+
+Example response:
+
+```json
+    {
+        "apr": "0.03089658127477581433161189171198501610943",
+        "apy": "0.031377485860868284369015169698693427029",
+        "totalReturn": "9959.75762697216",
+        "totalInvestment": "322357.9184504589828735999999999999999998",
+        "strategy": "2dczcMRpxWHZTcsiEjPT4YBcSseTaUmWFzw24HxYMFod",
+        "token": "RAY",
+        "rewardsPerDay": "137.8944",
+        "rewardsPerHour": "5.7456",
+        "rewardsPerSecond": "0.001596",
+        "rewardIsOption": false  
+    }
 ```
 
 #### Get rewards for eligible shareholders of a specific strategy:
