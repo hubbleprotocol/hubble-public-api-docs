@@ -1364,8 +1364,8 @@ Example response:
 #### Get simulator pool history processed data
 
 ```http request
-// GET https://api.hubbleprotocol.io/simulator/pools/:poolPubkey/programs/:programId/history?env={cluster}&start={start}&end={end}
-GET https://api.hubbleprotocol.io/simulator/pools/7qbRF6YsyGuLUVs6Y1q64bdVrfe4ZcUUz1JRdoVNUJnm/programs/whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc/history?env=mainnet-beta&start=2023-05-01T00%3A55%3A00.000Z&end=2023-05-03T00%3A00%3A00.000Z'
+// GET https://api.hubbleprotocol.io/simulator/pools/:poolPubkey/history?env={cluster}&start={start}&end={end}
+GET https://api.hubbleprotocol.io/simulator/pools/7qbRF6YsyGuLUVs6Y1q64bdVrfe4ZcUUz1JRdoVNUJnm/history?env=mainnet-beta&start=2023-05-01T00%3A55%3A00.000Z&end=2023-05-03T00%3A00%3A00.000Z'
 ```
 
 Query params:
@@ -1375,7 +1375,7 @@ Query params:
 
 Example request:
 
-https://api.hubbleprotocol.io/simulator/pools/7qbRF6YsyGuLUVs6Y1q64bdVrfe4ZcUUz1JRdoVNUJnm/programs/whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc/history?env=mainnet-beta&start=2023-05-01T00%3A55%3A00.000Z&end=2023-05-03T00%3A00%3A00.000Z'
+https://api.hubbleprotocol.io/simulator/pools/7qbRF6YsyGuLUVs6Y1q64bdVrfe4ZcUUz1JRdoVNUJnm/history?env=mainnet-beta&start=2023-05-01T00%3A55%3A00.000Z&end=2023-05-03T00%3A00%3A00.000Z'
 
 Sample response:
 
