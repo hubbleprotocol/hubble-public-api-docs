@@ -28,6 +28,8 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
     * [Borrowing Market State](#borrowing-market-state)
     * [Transactions](#transactions)
     * [Kamino Market Lending](#kamino-market-lending)
+    * [Trades](#trades)
+    * [Simulator](#simulator)
 
 ## Development
 
@@ -1357,3 +1359,51 @@ Example response:
 }
 ```
 
+### Simulator
+
+#### Get simulator pool history processed data
+
+```http request
+// GET https://api.hubbleprotocol.io/simulator/pools/:poolPubkey/programs/:programId/history?env={cluster}&start={start}&end={end}
+GET https://api.hubbleprotocol.io/simulator/pools/7qbRF6YsyGuLUVs6Y1q64bdVrfe4ZcUUz1JRdoVNUJnm/programs/whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc/history?env=mainnet-beta&start=2023-05-01T00%3A55%3A00.000Z&end=2023-05-03T00%3A00%3A00.000Z'
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
+* end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
+
+Example request:
+
+https://api.hubbleprotocol.io/simulator/pools/7qbRF6YsyGuLUVs6Y1q64bdVrfe4ZcUUz1JRdoVNUJnm/programs/whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc/history?env=mainnet-beta&start=2023-05-01T00%3A55%3A00.000Z&end=2023-05-03T00%3A00%3A00.000Z'
+
+Sample response:
+
+```json
+[
+  {
+    "date": "2023-05-01T00:00:00.000Z",
+    "liquidity": "128579835037512.1296149423008288059642304",
+    "tokenAPrice": "22.8225",
+    "tokenBPrice": "0.999899925",
+    "priceAToB": "22.80281142119161469576395863338884312471",
+    "priceBToA": "0.04381507266239798735733225736404509709275",
+    "sourceAmountAToB": "2254.958720845",
+    "sourceAmountBToA": "127153.433494",
+    "destinationAmountAToB": "51419.398474",
+    "destinationAmountBToA": "5571.236927813"
+  },
+  {
+    "date": "2023-05-01T01:00:00.000Z",
+    "liquidity": "118590788019032.7258026104877490267918479",
+    "tokenAPrice": "22.18812871",
+    "tokenBPrice": "0.999922935",
+    "priceAToB": "22.35004452461559675442332082035821547892",
+    "priceBToA": "0.04489632573185525843575517883550659203986",
+    "sourceAmountAToB": "25052.494904219",
+    "sourceAmountBToA": "288330.780462",
+    "destinationAmountAToB": "559924.376562",
+    "destinationAmountBToA": "12944.992638142"
+  }
+]
+```
