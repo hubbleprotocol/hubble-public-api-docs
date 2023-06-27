@@ -841,7 +841,7 @@ Query params:
 
 Example request:
 
-https://api.hubbleprotocol.io/strategies/fees-and-rewards
+https://api.hubbleprotocol.io/strategies/all-time-fees-and-rewards
 
 Example response:
 
@@ -857,6 +857,66 @@ Example response:
   "kaminoRewards2EarnedUsd": "0",
   "totalUsd": "167540.15211747739021203653368504705581",
   "lastCalculated": "2023-04-14T09:52:59.292Z"
+}
+```
+
+If you want to get a breakdown of all-time Kamino fees and rewards for each strategy, you can use this endpoint instead:
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/all-time-fees-and-rewards/breakdown?env={cluster}
+```
+
+Example request:
+
+https://api.hubbleprotocol.io/strategies/all-time-fees-and-rewards/breakdown
+
+Example response:
+
+```json
+{
+  "lastCalculated": "2023-06-27T13:58:16.619Z",
+  "strategies": [
+    {
+      "strategyPubkey": "12iZna9cRnhSY85cDTvas3mav36bYE9WeDuL9uFzH2Zw",
+      "feesAEarned": "0.08458176",
+      "feesBEarned": "0.00064853",
+      "rewards0Earned": "0",
+      "rewards1Earned": "0",
+      "rewards2Earned": "0",
+      "kaminoRewards0Earned": "0",
+      "kaminoRewards1Earned": "0",
+      "kaminoRewards2Earned": "0",
+      "feesAEarnedUsd": "1.492410700820064",
+      "feesBEarnedUsd": "1.114493941025",
+      "rewards0EarnedUsd": "0",
+      "rewards1EarnedUsd": "0",
+      "rewards2EarnedUsd": "0",
+      "kaminoRewards0EarnedUsd": "0",
+      "kaminoRewards1EarnedUsd": "0",
+      "kaminoRewards2EarnedUsd": "0",
+      "totalUsd": "2.606904641845064"
+    },
+    {
+      "strategyPubkey": "13GDKPRjvK5GWtk8YNTMGj7S4PzhQ6gpQdHJpmCSmWn6",
+      "feesAEarned": "0",
+      "feesBEarned": "0",
+      "rewards0Earned": "0",
+      "rewards1Earned": "0",
+      "rewards2Earned": "0",
+      "kaminoRewards0Earned": "0",
+      "kaminoRewards1Earned": "0",
+      "kaminoRewards2Earned": "0",
+      "feesAEarnedUsd": "0",
+      "feesBEarnedUsd": "0",
+      "rewards0EarnedUsd": "0",
+      "rewards1EarnedUsd": "0",
+      "rewards2EarnedUsd": "0",
+      "kaminoRewards0EarnedUsd": "0",
+      "kaminoRewards1EarnedUsd": "0",
+      "kaminoRewards2EarnedUsd": "0",
+      "totalUsd": "0"
+    }
+  ]
 }
 ```
 
