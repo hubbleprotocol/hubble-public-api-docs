@@ -1002,6 +1002,53 @@ Example response:
 }
 ```
 
+#### Get strategy historical ranges
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/ranges/history?env={cluster}&period={24h/7d/30d}&start={timestamp}&end={timestamp}
+```
+
+Example requests:
+  - https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/ranges/history?env=mainnet-beta&start=2020-01-01&end=2024-01-01
+  - https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/ranges/history?env=mainnet-beta&period=24h
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* period: time period for fees and rewards `"24h" (default) | "7d" | "30d"`
+* start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
+* end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
+
+You can either use a custom range with start/end query params, or a fixed range with period query param.
+Fixed range should generally be faster due to caching.
+
+Example response:
+```json
+[
+  {
+    "poolPrice": "0.9972366173254501385554518847257254077598",
+    "priceLower": "0.9967056034608861435985512952707255012191",
+    "priceUpper": "0.9991004498350494870014376094211437370195",
+    "oraclePrice": "0.9971830421584632669044453843263363536864",
+    "rebalanceParams": {
+      "rangePriceLower": "0.9967056034608861435985512952707255012191",
+      "rangePriceUpper": "0.9991004498350494870014376094211437370195"
+    },
+    "date": "2023-06-25T12:00:00.000Z"
+  },
+  {
+    "poolPrice": "0.9972366173254501385554518847257254077598",
+    "priceLower": "0.9967056034608861435985512952707255012191",
+    "priceUpper": "0.9991004498350494870014376094211437370195",
+    "oraclePrice": "0.9971830421584632669044453843263363536864",
+    "rebalanceParams": {
+      "rangePriceLower": "0.9967056034608861435985512952707255012191",
+      "rangePriceUpper": "0.9991004498350494870014376094211437370195"
+    },
+    "date": "2023-06-25T13:00:00.000Z"
+  }
+]
+```
+
 ### Whirlpools Kamino
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
