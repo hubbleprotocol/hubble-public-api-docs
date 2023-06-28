@@ -1049,6 +1049,45 @@ Example response:
 ]
 ```
 
+#### Get strategy metrics history
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/metrics/history?env={cluster}&period={24h/7d/30d}&start={timestamp}&end={timestamp}
+```
+
+Example requests:
+- https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/metrics/history?env=mainnet-beta&start=2020-01-01&end=2024-01-01
+- https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/metrics/history?env=mainnet-beta&period=24h
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* period: time period for fees and rewards `"24h" (default) | "7d" | "30d"`
+* start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z`
+* end: end date (exclusive), e.g. `2023-06-01T00:00:00.000Z`
+
+You can either use a custom range with start/end query params, or a fixed range with period query param.
+Fixed range should generally be faster due to caching.
+
+Example response:
+```json
+[
+  {
+    "date": "2023-06-28T13:00:00.000Z",
+    "feesAndRewards24hUsd": "6.892236874",
+    "volume24hUsd": "137960909.25357357",
+    "cumulativeFeesAndRewardsUsd": "65507.881823738092895",
+    "apy24h": "0.001245986450885626907330639945496746179"
+  },
+  {
+    "date": "2023-06-28T12:00:00.000Z",
+    "feesAndRewards24hUsd": "6.3897214358",
+    "volume24hUsd": "137922148.76631424",
+    "cumulativeFeesAndRewardsUsd": "65507.881823738092895",
+    "apy24h": "0.001186575692116333812242675851871094793"
+  }
+]
+```
+
 ### Whirlpools Kamino
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
