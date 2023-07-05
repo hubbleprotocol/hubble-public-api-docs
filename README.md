@@ -675,9 +675,14 @@ Returns hourly timeseries if user's latest position is under 15 days old, otherw
 This is an optimization for frontend charts. 
 
 ```http request
-// GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/pnl/history?env={cluster}
+// GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/pnl/history?env={cluster}&start={date}&end={date}
 GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl/history?env=mainnet-beta
 ```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
+* end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
 
 Example request:
 
