@@ -379,6 +379,13 @@ GET https://api.hubbleprotocol.io/strategies/ByXB4xCxVhmUEmQj3Ut7byZ1Hbva1zhKjaV
 GET https://api.hubbleprotocol.io/strategies/metrics?env=mainnet-beta
 ```
 
+#### Get strategy stats for strategies by status (tvl/pnl/shares..):
+
+```http request
+// GET https://api.hubbleprotocol.io/strategies/metrics?env={cluster}&status={status}
+GET https://api.hubbleprotocol.io/strategies/metrics?env=mainnet-beta&status=IGNORED
+```
+
 #### Get strategy reward stats for all live strategies:
 
 ```http request
