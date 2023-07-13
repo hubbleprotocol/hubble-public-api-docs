@@ -90,7 +90,18 @@ We use a test database and migrations for integration tests that needs to be lau
 ```shell
 docker-compose up -d test-db test-flyway
 yarn test
+yarn test -- -t 'should calculate the fees and rewards of strategy shareholder 2 with race condition'
+
 ```
+
+### How to run locally
+
+- Set this up for prod: https://github.com/hubbleprotocol/hubble-infrastructure/blob/master/cluster/docs/database_access.md#connecting
+- Ssh into the prod cluster in a separate window: (this creates an RDS tunnel from localhost -> prod db): `ssh <tunnel>`
+- Set up the .env to have POSTGRES_CONNECTION_STRING=.....localhost:5432/hubble (this connects to the localhost tunnel that points to prod db)
+- Start redis locally: `docker-compose up redis`
+- Start the server locally: `yarn start`
+
 
 ### Deployment
 
@@ -1565,3 +1576,5 @@ Sample response:
   }
 ]
 ```
+
+
