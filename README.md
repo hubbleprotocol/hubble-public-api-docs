@@ -27,7 +27,7 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
     * [Prices](#prices)
     * [Borrowing Market State](#borrowing-market-state)
     * [Transactions](#transactions)
-    * [Kamino Market Lending](#kamino-market-lending)
+    * [Kamino Lending](#kamino-lending)
     * [Trades](#trades)
     * [Simulator](#simulator)
 
@@ -1397,7 +1397,7 @@ Example response:
 }
 ```
 
-### Kamino Market Lending
+### Kamino Lending
 
 **⚠️ This is still work in progress, endpoints return mock data for testing. ⚠️**
 
@@ -1417,30 +1417,135 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey?env={cluster}
 Example: 
 https://api.hubbleprotocol.io/kamino-market/J5ndTP1GJe6ZWzGiZQR2UKJmWWMJojbWxCxZ2yUXwakR?env=mainnet-beta
 
-#### Get Kamino Market metrics history
+#### Get KLend Market metrics history
 
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/metrics/history?env={cluster}&start={date}&end={date}'
 ```
-Example:
-https://api.hubbleprotocol.io/kamino-market/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmg/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
+Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
 
-#### Get Kamino Market reserve history
+Example response:
+
+```json
+[
+  {
+    "market": "9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs",
+    "timestamp": "2023-06-29T15:15:26.464Z",
+    "metrics": { "tvl": 234.14377328764223, "obligations": 38 }
+  },
+  {
+    "market": "9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs",
+    "timestamp": "2023-06-29T16:50:08.601Z",
+    "metrics": { "tvl": "234.14377328764223401824", "obligations": 38 }
+  },
+  {
+    "market": "9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs",
+    "timestamp": "2023-06-30T18:02:39.430Z",
+    "metrics": { "tvl": "234.14377328764223401824", "obligations": 38 }
+  }
+]
+```
+
+#### Get KLend reserve history
 
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/:reservePubkey/metrics/history?env={cluster}&start={date}&end={date}'
 ```
-Example:
-https://api.hubbleprotocol.io/kamino-market/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmg/reserves/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmm/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
 
-#### Get Kamino Market loan history
+Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/reserves/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmm/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
+
+```json
+{
+  "reserve": "5ZQCZt4UV3b7SzR3nPRgqbFE1XAUmo1yVfNanGM7qFVj",
+  "market": "9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs",
+  "history": [
+    {
+      "metrics": {
+        "tvl": "21.58894844114247816444",
+        "symbol": "USDH",
+        "decimals": 6,
+        "borrowCurve": [
+          [0, 0.0001],
+          [0.7, 0.1],
+          [1, 1.5]
+        ],
+        "mintAddress": "USDH1SM1ojwWUga67PGrgFWUHibbjqMvuMaDkRJTgkX",
+        "borrowFactor": 0,
+        "exchangeRate": 0.9749784180009508,
+        "assetPriceUSD": 0.9971944372197178,
+        "mintTotalSupply": "21.833854",
+        "totalSupplyWads": "22.411148742143389807977042",
+        "liquidationBonus": 0,
+        "loanToValueRatio": 0.75,
+        "protocolTakeRate": 0.1,
+        "totalBorrowsWads": "0.761460742143389807977042",
+        "utilizationRatio": 0.033976872444360214,
+        "borrowInterestAPY": 0.004961253732466142,
+        "supplyInterestAPY": 0.00016816974038857957,
+        "reserveBorrowLimit": "10000000000",
+        "totalLiquidityWads": "21.649688",
+        "borrowFeePercentage": 0.001,
+        "reserveDepositLimit": "10000000000",
+        "liquidationThreshold": 0.8,
+        "borrowLimitCrossedSlot": 0,
+        "flashLoanFeePercentage": 0.003,
+        "accumulatedProtocolFees": "0.01695662785321651304",
+        "depositLimitCrossedSlot": 0,
+        "cumulativeBorrowRateWads": "1033653581204157935"
+      }
+    }
+  ]
+}
+```
+
+#### Get KLend obligation history
 
 ```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/loans/:loanPubkey/metrics/history?env={cluster}&start={date}&end={date}'
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/metrics/history?env={cluster}&start={date}&end={date}'
 ```
-Example:
-https://api.hubbleprotocol.io/kamino-market/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmg/loans/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmm/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
-  
+
+Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/obligations/63QrAB1okxCc4FpsgcKYHjYTp1ua8ch6mLReyKRdc22o/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
+
+Example response:
+
+```json
+{
+  "obligation": "63QrAB1okxCc4FpsgcKYHjYTp1ua8ch6mLReyKRdc22o",
+  "market": "9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs",
+  "history": [
+    {
+      "timestamp": "2023-07-11T09:51:40.498Z",
+      "stats": {
+        "leverage": 1.8849400779844114,
+        "positions": 2,
+        "borrowLimit": 0.20884206942858852,
+        "loanToValue": 0.46947915656326233,
+        "netAccountValue": 0.14772676109110466,
+        "userTotalBorrow": 0.13072933148034668,
+        "userTotalDeposit": 0.2784560925714514,
+        "borrowUtilization": 0.6259722087510164,
+        "liquidationThreshold": 0.22276487405716108
+      },
+      "deposits": [
+        {
+          "amount": "11442889",
+          "marketValue": "0.27845609257145136",
+          "mintAddress": "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+        }
+      ],
+      "borrows": [
+        {
+          "amount": "6024369",
+          "marketValue": "0.13072933148034669",
+          "mintAddress": "So11111111111111111111111111111111111111112"
+        }
+      ],
+      "tag": 1
+    }
+  ]
+}
+```
+
 ### Trades
 
 #### Get trade history
@@ -1576,5 +1681,3 @@ Sample response:
   }
 ]
 ```
-
-
