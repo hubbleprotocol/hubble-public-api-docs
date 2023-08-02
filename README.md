@@ -1111,6 +1111,48 @@ Example response:
 ]
 ```
 
+#### Get strategy leaderboard
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/leaderboard?env={cluster}&period={24h/7d/30d/90d/180d/1y}
+```
+
+Example requests:
+- https://api.hubbleprotocol.io/strategies/leaderboard?env=mainnet-beta
+- https://api.hubbleprotocol.io/strategies/leaderboard?env=mainnet-beta&period=24h
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* period: leaderboard time period `"24h" | "7d" (default) | "30d" | "90d" | "180d" | "1y"`
+
+Example response:
+```json
+{
+  "period": "24h",
+  "strategies": [
+    {
+      "strategy": "AepjvYK4QfGhV3UjSRkZviR2AJAkLGtqdyKJFCf9kpz9",
+      "apy": "0.615191615489133766348795004255205034784",
+      "pnl": "0.001035403769",
+      "volume": "15763.8054565617",
+      "fees": "35.6656098455"
+    },
+    {
+      "strategy": "5QgwaBQzzMAHdxpaVUgb4KrpXELgNTaEYXycUvNvRxr6",
+      "apy": "0.03826440591163673741072800936266385589",
+      "pnl": "0.000726162458",
+      "volume": "90454.9846990331",
+      "fees": "8.1861761153"
+    }
+  ]
+}
+```
+
+Leaderboard response is always ordered by profit and loss (PnL) descending.
+
+APY and PNL properties are in decimal form, to convert to percentage multiply it by 100.
+Volume and fees are both in USD.
+
 ### Whirlpools Kamino
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
