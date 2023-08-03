@@ -1307,13 +1307,24 @@ Example response:
 
 #### Get token price history:
 
-Please note: This route is not exposed to the public and requires basic authentication.
-
-You can specify start/end date range with query params `start` and `end`. Otherwise, it will return 24 hours of prices by default.
-
 ```http request
-GET https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=SOL&start=2020-01-01&end=2023-01-01
+GET https://api.hubbleprotocol.io/prices/history?env={cluster}&token={name or mint}&start={start}&end={end}&frequency={frequency}
 ```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* token: name of token or mint pubkey, e.g. `"SOL"` or `"So11111111111111111111111111111111111111112"`
+* start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z` (optional, default 1 day ago) 
+* end: end date (inclusive), e.g. `2023-05-01T00:55:00.000Z` (optional, default now)
+* frequency: frequency of the prices, e.g. `"minute" (default) | "hour" | "day"` for price every minute/hour/day for the specified timeseries
+
+
+Example requests:
+
+- https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=USDH
+- https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=SOL&start=2020-01-01&end=2023-01-01&frequency=hour
+- https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=So11111111111111111111111111111111111111112&start=2020-01-01&end=2023-01-01&frequency=day
+
 
 Example response:
 
