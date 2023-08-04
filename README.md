@@ -1599,6 +1599,276 @@ Example response:
 }
 ```
 
+#### Get KLend tx history per user
+
+```http request
+GET https://api.hubbleprotocol.io/:marketPubkey/users/:userPubkey/transactions/
+```
+
+Example response:
+
+```json
+{
+  "allTransactions": {
+    "8th5rmiEfHUdPRs1fFRzxisjhHMTPmotAeBsAGGvFGH": {
+      "transactions": [
+        {
+          "createdOn": "2023-05-12T11:41:31.818Z",
+          "timestamp": 1683891691818,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "initObligation",
+          "reserve": "",
+          "liquidityToken": "",
+          "liquidityTokenAmount": "0",
+          "liquidityTokenPrice": "0",
+          "solPrice": "0",
+          "liquidityUsdValue": "0",
+          "kTokenExchangeRate": "0",
+          "isLiquidationWithdrawal": false
+        },
+        {
+          "createdOn": "2023-05-12T11:41:31.818Z",
+          "timestamp": 1683891691818,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "depositReserveLiquidityAndObligationCollateral",
+          "reserve": "455pvamji39kgFkiZScbLFnqFuReFQJLvv8pd1nmzfRp",
+          "liquidityToken": "JITOSOL",
+          "liquidityTokenAmount": "2",
+          "liquidityTokenPrice": "20.99153922345559845933295",
+          "solPrice": "20.28813173",
+          "liquidityUsdValue": "41.9830784469111969186659",
+          "kTokenExchangeRate": "1",
+          "isLiquidationWithdrawal": false
+        },
+        {
+          "createdOn": "2023-05-12T11:41:31.818Z",
+          "timestamp": 1683891691818,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "initObligation",
+          "reserve": "",
+          "liquidityToken": "",
+          "liquidityTokenAmount": "0",
+          "liquidityTokenPrice": "0",
+          "solPrice": "0",
+          "liquidityUsdValue": "0",
+          "kTokenExchangeRate": "0",
+          "isLiquidationWithdrawal": false
+        },
+        {
+          "createdOn": "2023-05-12T11:41:31.818Z",
+          "timestamp": 1683891691818,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "depositReserveLiquidityAndObligationCollateral",
+          "reserve": "455pvamji39kgFkiZScbLFnqFuReFQJLvv8pd1nmzfRp",
+          "liquidityToken": "JITOSOL",
+          "liquidityTokenAmount": "2",
+          "liquidityTokenPrice": "20.99153922345559845933295",
+          "solPrice": "20.28813173",
+          "liquidityUsdValue": "41.9830784469111969186659",
+          "kTokenExchangeRate": "1",
+          "isLiquidationWithdrawal": false
+        }
+      ],
+      "lastUpdatedOn": "2023-08-04T06:55:07.391Z"
+    },
+    "8th5rmiEfHUdPRs1fFRzxisjhHMTPmotAeBsAGGvFGH": {
+      "transactions": [
+        {
+          "createdOn": "2023-07-26T03:10:32.190Z",
+          "timestamp": 1690341032190,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "initObligation",
+          "reserve": "",
+          "liquidityToken": "",
+          "liquidityTokenAmount": "0",
+          "liquidityTokenPrice": "0",
+          "solPrice": "0",
+          "liquidityUsdValue": "0",
+          "kTokenExchangeRate": "0",
+          "isLiquidationWithdrawal": false
+        },
+        {
+          "createdOn": "2023-07-28T00:03:15.368Z",
+          "timestamp": 1690502595368,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "depositReserveLiquidityAndObligationCollateral",
+          "reserve": "FdSLxHXZLDrAxTwQ9ztWBw6Djueu6KbCvViJvf1Ck5Av",
+          "liquidityToken": "BSOL",
+          "liquidityTokenAmount": "2",
+          "liquidityTokenPrice": "0",
+          "solPrice": "25.07601599",
+          "liquidityUsdValue": "0",
+          "kTokenExchangeRate": "1",
+          "isLiquidationWithdrawal": false
+        },
+        {
+          "createdOn": "2023-07-26T03:10:32.190Z",
+          "timestamp": 1690341032190,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "depositReserveLiquidityAndObligationCollateral",
+          "reserve": "FdSLxHXZLDrAxTwQ9ztWBw6Djueu6KbCvViJvf1Ck5Av",
+          "liquidityToken": "BSOL",
+          "liquidityTokenAmount": "0.396843479",
+          "liquidityTokenPrice": "0",
+          "solPrice": "23.62",
+          "liquidityUsdValue": "0",
+          "kTokenExchangeRate": "1",
+          "isLiquidationWithdrawal": false
+        },
+        {
+          "createdOn": "2023-07-26T03:10:32.190Z",
+          "timestamp": 1690341032190,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "initObligation",
+          "reserve": "",
+          "liquidityToken": "",
+          "liquidityTokenAmount": "0",
+          "liquidityTokenPrice": "0",
+          "solPrice": "0",
+          "liquidityUsdValue": "0",
+          "kTokenExchangeRate": "0",
+          "isLiquidationWithdrawal": false
+        },
+        {
+          "createdOn": "2023-07-28T00:03:15.368Z",
+          "timestamp": 1690502595368,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "depositReserveLiquidityAndObligationCollateral",
+          "reserve": "FdSLxHXZLDrAxTwQ9ztWBw6Djueu6KbCvViJvf1Ck5Av",
+          "liquidityToken": "BSOL",
+          "liquidityTokenAmount": "2",
+          "liquidityTokenPrice": "0",
+          "solPrice": "25.07601599",
+          "liquidityUsdValue": "0",
+          "kTokenExchangeRate": "1",
+          "isLiquidationWithdrawal": false
+        },
+        {
+          "createdOn": "2023-07-26T03:10:32.190Z",
+          "timestamp": 1690341032190,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "depositReserveLiquidityAndObligationCollateral",
+          "reserve": "FdSLxHXZLDrAxTwQ9ztWBw6Djueu6KbCvViJvf1Ck5Av",
+          "liquidityToken": "BSOL",
+          "liquidityTokenAmount": "0.396843479",
+          "liquidityTokenPrice": "0",
+          "solPrice": "23.62",
+          "liquidityUsdValue": "0",
+          "kTokenExchangeRate": "1",
+          "isLiquidationWithdrawal": false
+        }
+      ],
+      "lastUpdatedOn": "2023-08-04T06:55:04.134Z"
+    },
+    "8th5rmiEfHUdPRs1fFRzxisjhHMTPmotAeBsAGGvFGH": {
+      "transactions": [
+        {
+          "createdOn": "2023-05-12T12:10:48.695Z",
+          "timestamp": 1683893448695,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "initObligation",
+          "reserve": "",
+          "liquidityToken": "",
+          "liquidityTokenAmount": "0",
+          "liquidityTokenPrice": "0",
+          "solPrice": "0",
+          "liquidityUsdValue": "0",
+          "kTokenExchangeRate": "0",
+          "isLiquidationWithdrawal": false
+        },
+        {
+          "createdOn": "2023-07-23T13:45:58.881Z",
+          "timestamp": 1690119958881,
+          "transactionSignature": "5xtF68Ra53aqYvrCZnXQ2bRVUaR2BiiKLvSsZhEXLr2F2fRbeJMR6FaxWCDRcxUzetBrod8i7kre3651L7ohxRDL",
+          "transactionName": "depositReserveLiquidityAndObligationCollateral",
+          "reserve": "7SsmK3wj4V6cg4hqKFrSAdRYirUU5UyJPY2oQ2Bjgvcw",
+          "liquidityToken": "STSOL",
+          "liquidityTokenAmount": "-0.002682361",
+          "liquidityTokenPrice": "27.4789254927168",
+          "solPrice": "24.57688671",
+          "liquidityUsdValue": "-0.0737083980635693283648",
+          "kTokenExchangeRate": "0.9999999477448258",
+          "isLiquidationWithdrawal": false
+        }
+      ],
+      "lastUpdatedOn": "2023-07-23T13:46:56.790"
+    }
+  }
+}
+```
+
+#### Get KLend tx history per obligation
+
+```http request
+GET https://api.hubbleprotocol.io/:marketPubkey/obligations/:obligationPubkey/transactions/
+```
+
+Example response:
+
+```json
+{
+  "transactions": [
+    {
+      "createdOn": "2023-07-24T06:30:53.785Z",
+      "timestamp": 1690180253785,
+      "transactionSignature": "5AHBE2oupPNnwQnpzHSqyfW2xMKhkvR8bduBDqbRtuuLRKRMhscKAPv8pwxx75Na6KNMJUCKvhw7EXDz9XLnc4Xp",
+      "transactionName": "depositReserveLiquidityAndObligationCollateral",
+      "reserve": "3zqgH952VPgRWw9Xwa9q9Smt4cPwPaF5LTqHGGxYEYgi",
+      "kTokenAmount": "0",
+      "liquidityToken": "USDC",
+      "liquidityTokenAmount": "1",
+      "liquidityTokenPrice": "0.9999",
+      "solPrice": "24.3694875",
+      "liquidityUsdValue": "0.9999",
+      "kTokenExchangeRate": "0.9999999952711031"
+    },
+    {
+      "createdOn": "2023-07-24T06:10:43.489Z",
+      "timestamp": 1690179043489,
+      "transactionSignature": "2MRCGnGQcgRmzgkmp48C4ngkSwUxFSXujEVJXt4zxjb3BJ23i3QEtcZTVpe396nULHKBNXvbiGwCmkSyojLvRwgi",
+      "transactionName": "depositReserveLiquidityAndObligationCollateral",
+      "reserve": "3zqgH952VPgRWw9Xwa9q9Smt4cPwPaF5LTqHGGxYEYgi",
+      "kTokenAmount": "0",
+      "liquidityToken": "USDC",
+      "liquidityTokenAmount": "2",
+      "liquidityTokenPrice": "0.9999",
+      "solPrice": "24.3694875",
+      "liquidityUsdValue": "1.9998",
+      "kTokenExchangeRate": "0.9999999963031772"
+    }
+  ]
+}
+```
+
+#### Get PnL per obligation
+
+You can specify pnl mode with query param `pnlMode` with one of these values: {`obligation_all_time`, `current_obligation`}. By default, pnl mode is set to `current_obligation` position
+
+These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the obligation (even before it was closed).
+
+```http request
+GET https://api.hubbleprotocol.io/:marketPubkey/obligations/:obligationPubkey/pnl/?pnlMode=current_obligation
+```
+
+Example response:
+
+```json
+{
+  "usd": "25.21",
+  "sol": "1.0"
+}
+```
+
+#### Get PnL per user
+
+You can specify pnl mode with query param `pnlMode` with one of these values: {`user_all_time`, `user_all_current_positions`}. By default, pnl mode is set to `user_all_current_positions` position
+
+These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the user's obligation (even before they were closed).
+
+```http request
+GET https://api.hubbleprotocol.io/:marketPubkey/users/:userPubkey/pnl/?pnlMode=user_all_current_positions
+```
+
 ### Trades
 
 #### Get trade history
