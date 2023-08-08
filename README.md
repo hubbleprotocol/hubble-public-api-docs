@@ -481,12 +481,16 @@ GET https://api.hubbleprotocol.io/strategies/shareholders/GkeDRfHcACap2CM9oaWrb3
 
 #### Get strategy state history aggregated by the hour for a specific year (default current year, or use query param `year`):
 
+:warning: **DEPRECATED, PLEASE USE /v2/strategies/:pubkey/history INSTEAD!** :warning:
+
 ```http request
 // GET https://api.hubbleprotocol.io/strategies/:strategy_pubkey/history?env={cluster}&year={year}
 GET https://api.hubbleprotocol.io/strategies/ByXB4xCxVhmUEmQj3Ut7byZ1Hbva1zhKjaVcv3jBMN7E/history?env=devnet&year=2022
 ```
 
 #### Get full non-aggregated strategy state history for a specific year (default current year, or use query param `year`):
+
+:warning: **DEPRECATED, PLEASE USE /v2/strategies/:pubkey/history INSTEAD!** :warning:
 
 Please note: This route is not exposed to the public and requires basic authentication.
 
@@ -495,6 +499,59 @@ Please use the public route to get hourly aggregated history for a specific stra
 ```http request
 // GET https://api.hubbleprotocol.io/strategies/:strategy_pubkey/full-history?env={cluster}&year={year}
 GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/full-history?env=mainnet-beta&year=2022
+```
+
+#### Get strategy state history v2:
+
+```http request
+GET https://api.hubbleprotocol.io/v2/strategies/:strategyPubkey/history?env={cluster}&start={start}&end={end}&frequency={frequency}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z` (optional, default since beginning of strategy)
+* end: end date (exclusive), e.g. `2023-05-02T00:00:00.000Z` (optional, default now)
+* frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
+
+
+Example requests:
+
+- https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/history?env=mainnet-beta
+- https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/history?env=mainnet-beta&start=2023-01-01&end=2023-02-01&frequency=hour
+- https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/history?env=mainnet-beta&start=2023-01-01&end=2023-02-01&frequency=day
+
+
+Example response:
+
+```js
+[
+  {
+    "timestamp": "2023-06-06T00:00:00.000Z",
+    "feesCollectedCumulativeA": "4528.851182",
+    "feesCollectedCumulativeB": "4388.399699",
+    "rewardsCollectedCumulative0": "6816.973791",
+    "rewardsCollectedCumulative1": "869.925191",
+    "rewardsCollectedCumulative2": "0",
+    "kaminoRewardsIssuedCumulative0": "0",
+    "kaminoRewardsIssuedCumulative1": "0",
+    "kaminoRewardsIssuedCumulative2": "0",
+    "sharePrice": "1.009166844496339887986660123337354133388",
+    "sharesIssued": "2000370.229713",
+    "tokenAAmounts": "1941835.079462",
+    "tokenBAmounts": "83285.638712",
+    "tokenAPrice": "0.9966972458",
+    "tokenBPrice": "0.99999998",
+    "reward0Price": "0.042612354",
+    "reward1Price": "0.6421835081",
+    "reward2Price": "0.99999998",
+    "kaminoReward0Price": "0",
+    "kaminoReward1Price": "0",
+    "kaminoReward2Price": "0",
+    "totalValueLocked": "2018707.312543886771519599999999999999998983602957644",
+    "solPrice": "0",
+    "profitAndLoss": "0"
+  }
+]
 ```
 
 #### Get user's shares history aggregated by the hour for a specific year (default current year, or use query param `year`):
