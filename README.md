@@ -1210,6 +1210,61 @@ Leaderboard response is always ordered by profit and loss (PnL) descending.
 APY and PNL properties are in decimal form, to convert to percentage multiply it by 100.
 Volume and fees are both in USD.
 
+#### Get strategy shareholders history
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/history?env={cluster}&start={start}&end={end}&frequency={frequency}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z` (optional, default since beginning of strategy)
+* end: end date (exclusive), e.g. `2023-05-02T00:00:00.000Z` (optional, default now)
+* frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
+
+Example requests:
+
+- https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/history?env=mainnet-beta
+- https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/history?env=mainnet-beta&start=2023-01-01&end=2023-02-01&frequency=hour
+- https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/history?env=mainnet-beta&start=2023-01-01&end=2023-02-01&frequency=day
+
+
+Example response:
+
+```json
+[
+    {
+        "timestamp": "2023-06-06T11:00:00.000Z",
+        "shareholders": [
+            {
+                "sharesAmount": "25215.549995",
+                "sharePrice": "1.067670377475403913338573081893682618365",
+                "sharesUsd": "26921.89578141156925960743690845138333804",
+                "tokenAAmount": "820.4214362237481540135710513269",
+                "tokenAPrice": "19.98425069",
+                "tokenAUsd": "16395.507652945230041231933551843626740561",
+                "tokenBAmount": "0.408879105380424526340758204",
+                "tokenBPrice": "25744.5",
+                "tokenBUsd": "10526.388128466339218379649582878",
+                "wallet": "7tH1k4PsMu3sNUYJxD5ezxhAmYYXyVVZz5c3dbaxcvUV"
+            },
+            {
+                "sharesAmount": "0.853582",
+                "sharePrice": "1.067670377475403913338573081893682618365",
+                "sharesUsd": "0.9113442161462102231553658883889733967492",
+                "tokenAAmount": "0.027772424972431754280993115411983",
+                "tokenAPrice": "19.98425069",
+                "tokenAUsd": "0.55501110291829251646784712055717090201827",
+                "tokenBAmount": "0.00001384113551352396460160423028",
+                "tokenBPrice": "25744.5",
+                "tokenBUsd": "0.35633311322791770668600010644346",
+                "wallet": "BUfcRmRPQNqMbPSKh6a7Pp3tSTneNMt2zWYr5DefW5hd"
+            }
+        ]
+    }
+]
+```
+
 ### Whirlpools Kamino
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
