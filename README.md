@@ -1735,7 +1735,6 @@ Example response:
           "liquidityTokenPrice": "0",
           "solPrice": "0",
           "liquidityUsdValue": "0",
-          "kTokenExchangeRate": "0",
           "isLiquidationWithdrawal": false
         },
         {
@@ -1749,7 +1748,6 @@ Example response:
           "liquidityTokenPrice": "20.99153922345559845933295",
           "solPrice": "20.28813173",
           "liquidityUsdValue": "41.9830784469111969186659",
-          "kTokenExchangeRate": "1",
           "isLiquidationWithdrawal": false
         },
         {
@@ -1763,7 +1761,6 @@ Example response:
           "liquidityTokenPrice": "0",
           "solPrice": "0",
           "liquidityUsdValue": "0",
-          "kTokenExchangeRate": "0",
           "isLiquidationWithdrawal": false
         },
         {
@@ -1777,7 +1774,6 @@ Example response:
           "liquidityTokenPrice": "20.99153922345559845933295",
           "solPrice": "20.28813173",
           "liquidityUsdValue": "41.9830784469111969186659",
-          "kTokenExchangeRate": "1",
           "isLiquidationWithdrawal": false
         }
       ],
@@ -1796,7 +1792,6 @@ Example response:
           "liquidityTokenPrice": "0",
           "solPrice": "0",
           "liquidityUsdValue": "0",
-          "kTokenExchangeRate": "0",
           "isLiquidationWithdrawal": false
         },
         {
@@ -1810,7 +1805,6 @@ Example response:
           "liquidityTokenPrice": "0",
           "solPrice": "25.07601599",
           "liquidityUsdValue": "0",
-          "kTokenExchangeRate": "1",
           "isLiquidationWithdrawal": false
         },
         {
@@ -1824,7 +1818,6 @@ Example response:
           "liquidityTokenPrice": "0",
           "solPrice": "23.62",
           "liquidityUsdValue": "0",
-          "kTokenExchangeRate": "1",
           "isLiquidationWithdrawal": false
         },
         {
@@ -1838,7 +1831,6 @@ Example response:
           "liquidityTokenPrice": "0",
           "solPrice": "0",
           "liquidityUsdValue": "0",
-          "kTokenExchangeRate": "0",
           "isLiquidationWithdrawal": false
         },
         {
@@ -1852,7 +1844,6 @@ Example response:
           "liquidityTokenPrice": "0",
           "solPrice": "25.07601599",
           "liquidityUsdValue": "0",
-          "kTokenExchangeRate": "1",
           "isLiquidationWithdrawal": false
         },
         {
@@ -1866,7 +1857,6 @@ Example response:
           "liquidityTokenPrice": "0",
           "solPrice": "23.62",
           "liquidityUsdValue": "0",
-          "kTokenExchangeRate": "1",
           "isLiquidationWithdrawal": false
         }
       ],
@@ -1885,7 +1875,6 @@ Example response:
           "liquidityTokenPrice": "0",
           "solPrice": "0",
           "liquidityUsdValue": "0",
-          "kTokenExchangeRate": "0",
           "isLiquidationWithdrawal": false
         },
         {
@@ -1899,7 +1888,6 @@ Example response:
           "liquidityTokenPrice": "27.4789254927168",
           "solPrice": "24.57688671",
           "liquidityUsdValue": "-0.0737083980635693283648",
-          "kTokenExchangeRate": "0.9999999477448258",
           "isLiquidationWithdrawal": false
         }
       ],
@@ -1932,7 +1920,6 @@ Example response:
       "liquidityTokenPrice": "0.9999",
       "solPrice": "24.3694875",
       "liquidityUsdValue": "0.9999",
-      "kTokenExchangeRate": "0.9999999952711031"
     },
     {
       "createdOn": "2023-07-24T06:10:43.489Z",
@@ -1946,7 +1933,6 @@ Example response:
       "liquidityTokenPrice": "0.9999",
       "solPrice": "24.3694875",
       "liquidityUsdValue": "1.9998",
-      "kTokenExchangeRate": "0.9999999963031772"
     }
   ]
 }
