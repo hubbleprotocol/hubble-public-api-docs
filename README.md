@@ -30,6 +30,7 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
     * [Kamino Lending](#kamino-lending)
     * [Trades](#trades)
     * [Simulator](#simulator)
+    * [Leaderboard](#leaderboard)
 
 ## Development
 
@@ -102,10 +103,73 @@ yarn test -- -t 'should calculate the fees and rewards of strategy shareholder 2
 - Start redis locally: `docker-compose up redis`
 - Start the server locally: `yarn start`
 
-
 ### Deployment
 
 Deployments are done automatically, everything that gets pushed to the `master` branch will be packaged as a docker container and pushed to Hubble's DockerHub.
+
+## Cache
+
+We cache all the endpoint responses with Redis. 
+
+### Local development cache
+
+To access the local cache, you will need to install [redis-cli](https://redis.io/docs/ui/cli/) and run:
+
+```shell
+# make sure local redis is running first:
+docker-compose up redis
+# connect to redis-cli
+redis-cli
+# a few examples below
+
+# list all keys:
+KEYS *
+# get specific redis key contents:
+GET strategies-leaderboard-mainnet-beta
+# delete specific redis key:
+DEL strategies-leaderboard-mainnet-beta
+# check when a specific redis key will expire:
+TTL strategies-leaderboard-mainnet-beta
+# clear entire cache - delete all redis keys (useful when testing locally, not enabled in production)
+FLUSHALL
+```
+
+### Production cache
+
+:warning: This can be potentially be very dangerous, proceed with caution! :warning:
+
+Make sure you have everything required to access the Kubernetes clusters: [Developer Setup](https://github.com/hubbleprotocol/hubble-infrastructure/blob/6e53b122a6b74a6a53c019b9fadd3364ffb4c718/README.md#L8).
+
+To access the production redis cache:
+```shell
+# connect to the prod kubernetes cluster 
+export NAME=k8s.hubbleprotocol.io
+export KOPS_STATE_STORE=s3://k8s.hubbleprotocol.io-kops-state-store
+kops export kubecfg k8s.hubbleprotocol.io --admin
+
+# reverse-proxy the redis instance in the api namespace to localhost:6380
+kubectl -n api port-forward redis-hubble-public-api-master-0 6380:6379
+
+# access the prod redis cache by using localhost:6380 with redis-cli
+redis-cli -p 6380
+```
+
+A very common use case is to clear certain redis keys in production to force a refresh:
+
+```shell
+# the commands below support wildcard (*) usage 
+
+# WARNING - POTENTIALLY DANGEROUS, DOUBLE CHECK BEFORE EXECUTING, MAKE A BACKUP IF NECESSARY
+
+# check how many keys you're deleting beforehand - make sure the keys returned are expected
+redis-cli -p 6380 KEYS "*transactions*"
+# clear all redis keys that have "transactions" in their name
+redis-cli -p 6380 KEYS "*transactions*" | xargs redis-cli DEL
+
+# clear all redis keys that start with "strategies" in their name
+redis-cli -p 6380 KEYS "strategies*" | xargs redis-cli DEL
+```
+
 
 ## Usage
 
@@ -1168,48 +1232,6 @@ Example response:
 ]
 ```
 
-#### Get strategy leaderboard
-
-```http request
-GET https://api.hubbleprotocol.io/strategies/leaderboard?env={cluster}&period={24h/7d/30d/90d/180d/1y}
-```
-
-Example requests:
-- https://api.hubbleprotocol.io/strategies/leaderboard?env=mainnet-beta
-- https://api.hubbleprotocol.io/strategies/leaderboard?env=mainnet-beta&period=24h
-
-Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* period: leaderboard time period `"24h" | "7d" (default) | "30d" | "90d" | "180d" | "1y"`
-
-Example response:
-```json
-{
-  "period": "24h",
-  "strategies": [
-    {
-      "strategy": "AepjvYK4QfGhV3UjSRkZviR2AJAkLGtqdyKJFCf9kpz9",
-      "apy": "0.615191615489133766348795004255205034784",
-      "pnl": "0.001035403769",
-      "volume": "15763.8054565617",
-      "fees": "35.6656098455"
-    },
-    {
-      "strategy": "5QgwaBQzzMAHdxpaVUgb4KrpXELgNTaEYXycUvNvRxr6",
-      "apy": "0.03826440591163673741072800936266385589",
-      "pnl": "0.000726162458",
-      "volume": "90454.9846990331",
-      "fees": "8.1861761153"
-    }
-  ]
-}
-```
-
-Leaderboard response is always ordered by profit and loss (PnL) descending.
-
-APY and PNL properties are in decimal form, to convert to percentage multiply it by 100.
-Volume and fees are both in USD.
-
 #### Get strategy shareholders history
 
 ```http request
@@ -2114,3 +2136,105 @@ Sample response:
   }
 ]
 ```
+
+### Leaderboard
+
+#### Get strategy leaderboard
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/leaderboard?env={cluster}&period={24h/7d/30d/90d/180d/1y}
+```
+
+Example requests:
+- https://api.hubbleprotocol.io/strategies/leaderboard?env=mainnet-beta
+- https://api.hubbleprotocol.io/strategies/leaderboard?env=mainnet-beta&period=24h
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* period: leaderboard time period `"24h" | "7d" (default) | "30d" | "90d" | "180d" | "1y"`
+
+Example response:
+```json
+{
+  "period": "24h",
+  "strategies": [
+    {
+      "strategy": "AepjvYK4QfGhV3UjSRkZviR2AJAkLGtqdyKJFCf9kpz9",
+      "apy": "0.615191615489133766348795004255205034784",
+      "pnl": "0.001035403769",
+      "volume": "15763.8054565617",
+      "fees": "35.6656098455"
+    },
+    {
+      "strategy": "5QgwaBQzzMAHdxpaVUgb4KrpXELgNTaEYXycUvNvRxr6",
+      "apy": "0.03826440591163673741072800936266385589",
+      "pnl": "0.000726162458",
+      "volume": "90454.9846990331",
+      "fees": "8.1861761153"
+    }
+  ]
+}
+```
+
+Leaderboard response is always ordered by profit and loss (PnL) descending.
+
+APY and PNL properties are in decimal form, to convert to percentage multiply it by 100.
+Volume and fees are both in USD.
+
+#### Get user leaderboard
+
+```http request
+GET https://api.hubbleprotocol.io/users/leaderboard?env={cluster}&period={24h/7d/30d/90d/180d/1y/all-time}
+```
+
+Example requests:
+- https://api.hubbleprotocol.io/users/leaderboard?env=mainnet-beta
+- https://api.hubbleprotocol.io/users/leaderboard?env=mainnet-beta&period=24h
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* period: leaderboard time period `"24h" | "7d" (default) | "30d" | "90d" | "180d" | "1y" | "all-time"`
+
+Example response:
+```json
+{
+  "period": "24h",
+  "users": [
+    {
+      "user": "7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW",
+      "totalReturns": {
+        "sol": "200",
+        "usd": "2000"
+      },
+      "pnl": {
+        "sol": "0.6896551724137931034482758620689655172416",
+        "usd": "0.606060606060606060606060606060606060606"
+      },
+      "totalPositionsValue": {
+        "sol": "350",
+        "usd": "3500"
+      }
+    },
+    {
+      "user": "5HDpYuGtrmdRe49r48BoasoZ66Fsz74xShc4DQYDhNii",
+      "totalReturns": {
+        "sol": "200",
+        "usd": "2000"
+      },
+      "pnl": {
+        "sol": "0.6896551724137931034482758620689655172416",
+        "usd": "0.606060606060606060606060606060606060606"
+      },
+      "totalPositionsValue": {
+        "sol": "350",
+        "usd": "3500"
+      }
+    }
+  ]
+}
+```
+
+Leaderboard response is always ordered by USD profit and loss (PnL) descending.
+
+PNL is in decimal form, to convert to percentage multiply it by 100.
+Total positions value and total returns are both in USD.
