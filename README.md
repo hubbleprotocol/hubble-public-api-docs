@@ -1564,8 +1564,6 @@ Example response:
 
 ### Kamino Lending
 
-**⚠️ This is still work in progress, endpoints return mock data for testing. ⚠️**
-
 #### Get All Kamino Markets config
 
 ```http request
@@ -1614,10 +1612,17 @@ Example response:
 #### Get KLend reserve history
 
 ```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/:reservePubkey/metrics/history?env={cluster}&start={date}&end={date}'
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/:reservePubkey/metrics/history?env={cluster}&start={date}&end={date}&frequency={frequency}'
 ```
 
-Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/reserves/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmm/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
+Query params:
+
+* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+* start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z (optional, default since beginning of strategy)
+* end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z (optional, default now)
+* frequency: frequency of the snapshots, e.g. "hour" (default) | "day"
+
+Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/reserves/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmm/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02&frequency=hour
 
 ```json
 {
@@ -1666,10 +1671,17 @@ Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c
 #### Get KLend obligation history
 
 ```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/metrics/history?env={cluster}&start={date}&end={date}'
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/metrics/history?env={cluster}&start={date}&end={date}&frequency={frequency}'
 ```
 
-Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/obligations/63QrAB1okxCc4FpsgcKYHjYTp1ua8ch6mLReyKRdc22o/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
+Query params:
+
+* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+* start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z (optional, default since beginning of strategy)
+* end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z (optional, default now)
+* frequency: frequency of the snapshots, e.g. "hour" (default) | "day"
+
+Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/obligations/63QrAB1okxCc4FpsgcKYHjYTp1ua8ch6mLReyKRdc22o/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02&frequency=day
 
 Example response:
 
@@ -1711,10 +1723,10 @@ Example response:
 }
 ```
 
-#### Get KLend tx history per user
+#### Get KLend tx history per user (for all obligations)
 
 ```http request
-GET https://api.hubbleprotocol.io/:marketPubkey/users/:userPubkey/transactions/
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/transactions/
 ```
 
 Example response:
@@ -1900,7 +1912,7 @@ Example response:
 #### Get KLend tx history per obligation
 
 ```http request
-GET https://api.hubbleprotocol.io/:marketPubkey/obligations/:obligationPubkey/transactions/
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/transactions/
 ```
 
 Example response:
@@ -1945,7 +1957,7 @@ You can specify pnl mode with query param `pnlMode` with one of these values: {`
 These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the obligation (even before it was closed).
 
 ```http request
-GET https://api.hubbleprotocol.io/:marketPubkey/obligations/:obligationPubkey/pnl/?pnlMode=current_obligation
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/pnl/?pnlMode=current_obligation
 ```
 
 Example response:
@@ -1964,7 +1976,7 @@ You can specify pnl mode with query param `pnlMode` with one of these values: {`
 These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the user's obligation (even before they were closed).
 
 ```http request
-GET https://api.hubbleprotocol.io/:marketPubkey/users/:userPubkey/pnl/?pnlMode=user_all_current_positions
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/pnl/?pnlMode=user_all_current_positions
 ```
 
 ### Trades
