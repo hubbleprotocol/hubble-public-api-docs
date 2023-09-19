@@ -1411,11 +1411,13 @@ Example response:
 [
     {
         "usdPrice": "22.382246552631578",
-        "token": "SOL"
+        "token": "SOL",
+        "mint": "So11111111111111111111111111111111111111112"
     },
     {
         "usdPrice": "1580.8847893915756",
-        "token": "ETH"
+        "token": "ETH",
+        "mint": "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs"
     }
 ]
 ```
@@ -1424,17 +1426,20 @@ Example response:
 #### Get specific token price:
 
 ```http request
-GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)|birdeye}&token={tokenName}
+GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)|birdeye}&token={tokenName or mint}
 ```
 
-Example request: https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope&token=SOL
+Example requests:
+- https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope&token=SOL
+- https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope&token=So11111111111111111111111111111111111111112
 Example response:
 
 ```json
 [
     {
         "usdPrice": "22.382246552631578",
-        "token": "SOL"
+        "token": "SOL",
+        "mint": "So11111111111111111111111111111111111111112"
     }
 ]
 ```
@@ -1756,7 +1761,7 @@ Example response:
 ```json
 {
   "allTransactions": {
-    "8th5rmiEfHUdPRs1fFRzxisjhHMTPmotAeBsAGGvFGH": {
+    "8th5rmiEfHUdPRs1fFRzxisjhHMTPmotAeBsAGGvFGG": {
       "transactions": [
         {
           "createdOn": "2023-05-12T11:41:31.818Z",
@@ -1813,7 +1818,7 @@ Example response:
       ],
       "lastUpdatedOn": "2023-08-04T06:55:07.391Z"
     },
-    "8th5rmiEfHUdPRs1fFRzxisjhHMTPmotAeBsAGGvFGH": {
+    "8th5rmiEfHUdPRs1fFRzxisjhHMTPmotAeBsAGGvFGJ": {
       "transactions": [
         {
           "createdOn": "2023-07-26T03:10:32.190Z",
@@ -1953,7 +1958,7 @@ Example response:
       "liquidityTokenAmount": "1",
       "liquidityTokenPrice": "0.9999",
       "solPrice": "24.3694875",
-      "liquidityUsdValue": "0.9999",
+      "liquidityUsdValue": "0.9999"
     },
     {
       "createdOn": "2023-07-24T06:10:43.489Z",
@@ -1966,7 +1971,7 @@ Example response:
       "liquidityTokenAmount": "2",
       "liquidityTokenPrice": "0.9999",
       "solPrice": "24.3694875",
-      "liquidityUsdValue": "1.9998",
+      "liquidityUsdValue": "1.9998"
     }
   ]
 }
