@@ -1979,12 +1979,12 @@ Example response:
 
 #### Get PnL per obligation
 
-You can specify pnl mode with query param `pnlMode` with one of these values: {`obligation_all_time`, `current_obligation`}. By default, pnl mode is set to `current_obligation` position
+You can specify pnl mode with query param `positionMode` with one of these values: {`obligation_all_time`, `current_obligation`}. By default, pnl mode is set to `current_obligation` position
 
 These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the obligation (even before it was closed).
 
 ```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/pnl/?pnlMode=current_obligation
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/pnl/?positionMode=current_obligation
 ```
 
 Example response:
@@ -1998,12 +1998,221 @@ Example response:
 
 #### Get PnL per user
 
-You can specify pnl mode with query param `pnlMode` with one of these values: {`user_all_time`, `user_all_current_positions`}. By default, pnl mode is set to `user_all_current_positions` position
+You can specify pnl mode with query param `positionMode` with one of these values: {`user_all_time`, `user_all_current_positions`}. By default, pnl mode is set to `user_all_current_positions` position
 
 These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the user's obligation (even before they were closed).
 
 ```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/pnl/?pnlMode=user_all_current_positions
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/pnl/?positionMode=user_all_current_positions
+```
+
+#### Get interest fees earned per obligation
+
+```http request
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/interest-fees/
+```
+
+Query params:
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
+- end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
+- frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
+- positionMode: position mode, e.g. `"obligation_all_time" | "current_obligation (default)"`
+
+Example response:
+
+```json
+{
+  "totalFeesEarnedObligation": {
+    "5QvxCCLUnmxgoAF8kuUsyPjKd6RV2XPGivsqq773TzjK": {
+      "ts": 1695200400000,
+      "solFees": "0.06313669856513711976206400769604439360579",
+      "usdFees": "1.269225847264109025064706147202735158871",
+      "nativeFees": "1.261001541373388353921537172595541265214"
+    }
+  },
+  "feesObligation": {
+    "5QvxCCLUnmxgoAF8kuUsyPjKd6RV2XPGivsqq773TzjK": [
+      {
+        "USDH": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" },
+        "STSOL": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" },
+        "UXD": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" },
+        "USDC": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" },
+        "MSOL": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" },
+        "SOL": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" },
+        "JITOSOL": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" },
+        "kUXDUSDCOrca": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" }
+      },
+      {
+        "USDH": {
+          "ts": 1695200400000,
+          "solFees": "0.009127930668530089532008568492476558595633",
+          "usdFees": "0.1835061678794232293068324983297403016265",
+          "nativeFees": "0.1840858688969978660085239011713265619735"
+        },
+        "STSOL": { "ts": 1695200400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" },
+        "UXD": { "ts": 1695200400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" },
+        "USDC": {
+          "ts": 1695200400000,
+          "solFees": "0.05354646057380662740920466718071105954604",
+          "usdFees": "1.076487775841993410013844914006083239768",
+          "nativeFees": "1.07645428734911397907795579880118253498"
+        },
+        "MSOL": {
+          "ts": 1695200400000,
+          "solFees": "0.0000000002729669118503462954743437138234390588713",
+          "usdFees": "0.00000000548767445443401462031404881729929319511",
+          "nativeFees": "0.0000000002409057587721427566924936757882938254622"
+        },
+        "SOL": {
+          "ts": 1695200400000,
+          "solFees": "0.00004161517214718125325688557874458751446175",
+          "usdFees": "0.0008366234411376726934711156672714631160833",
+          "nativeFees": "0.00004161517214718125325688557874458751446176"
+        },
+        "JITOSOL": {
+          "ts": 1695200400000,
+          "solFees": "0.00001637958277767565995674794591594066633801",
+          "usdFees": "0.0003292919913773938484626639982754417744366",
+          "nativeFees": "0.00001545746301911876686717846158351857411716"
+        },
+        "kUXDUSDCOrca": { "ts": 1695200400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" }
+      }
+    ]
+  }
+}
+```
+
+#### Get interest fees earned per user
+
+```http request
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/interest-fees/
+```
+
+Query params:
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
+- end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
+- frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
+- positionMode: position mode, e.g. `"user_all_time" | "user_all_current_positions (default)"`
+
+Example response:
+
+```json
+{
+  "totalFeesEarnedObligation": {
+    "MX68wMfQRkQA13SrKnSX47wwjiV2TDBak7NMb4Qfg5g": {
+      "ts": 1695200400000,
+      "solFees": "0.000000001697888184902321902172852546261584381586",
+      "usdFees": "0.0000000341340184992168245010582859455671467486",
+      "nativeFees": "0.000000001602302340966625236782497000842808190647"
+    },
+    "598TqTp5HfFQcNwWhgXyxE5zFYgFUYnRJSAADdfVXm2N": {
+      "ts": 1695200400000,
+      "solFees": "0.00001252855751062609254654040779155507638912",
+      "usdFees": "0.0002501232156778048715929059083302644728593",
+      "nativeFees": "0.00001252855751062609254654040779155507638912"
+    },
+  },
+  "feesObligation": {
+    "MX68wMfQRkQA13SrKnSX47wwjiV2TDBak7NMb4Qfg5g": [
+      { "JITOSOL": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695121200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695124800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695128400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695132000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695135600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695139200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695142800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695146400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695150000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695153600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695157200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695160800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695164400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695168000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695171600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695175200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695178800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695182400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695186000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695189600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695193200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "JITOSOL": { "ts": 1695196800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      {
+        "JITOSOL": {
+          "ts": 1695200400000,
+          "solFees": "0.000000001697888184902321902172852546261584381586",
+          "usdFees": "0.0000000341340184992168245010582859455671467486",
+          "nativeFees": "0.000000001602302340966625236782497000842808190647"
+        }
+      }
+    ],
+    "598TqTp5HfFQcNwWhgXyxE5zFYgFUYnRJSAADdfVXm2N": [
+      { "SOL": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695121200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695124800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      {
+        "SOL": {
+          "ts": 1695128400000,
+          "solFees": "0.000001799717797858716590338358835351733653603",
+          "usdFees": "0.00003596415275114428523179196620477162156107",
+          "nativeFees": "0.000001799717797858716590338358835351733653604"
+        }
+      },
+      { "SOL": { "ts": 1695132000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695135600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695139200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695142800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695146400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695150000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695153600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695157200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695160800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695164400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      {
+        "SOL": {
+          "ts": 1695168000000,
+          "solFees": "0.000006064101667947088381984925284168149623453",
+          "usdFees": "0.0001209912293028143483368695347715114560122",
+          "nativeFees": "0.000006064101667947088381984925284168149623456"
+        }
+      },
+      { "SOL": { "ts": 1695171600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695175200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695178800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695182400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      { "SOL": { "ts": 1695186000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      {
+        "SOL": {
+          "ts": 1695189600000,
+          "solFees": "0.000003084857420134046011686340063997035617416",
+          "usdFees": "0.00006146691096373786754851793467830291215417",
+          "nativeFees": "0.000003084857420134046011686340063997035617417"
+        }
+      },
+      {
+        "SOL": {
+          "ts": 1695193200000,
+          "solFees": "0.0000004106794248750007481729916324997687533188",
+          "usdFees": "0.000008195525933433248949303575906066025362104",
+          "nativeFees": "0.0000004106794248750007481729916324997687533189"
+        }
+      },
+      { "SOL": { "ts": 1695196800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
+      {
+        "SOL": {
+          "ts": 1695200400000,
+          "solFees": "0.000001169201199811240814357791975538388741346",
+          "usdFees": "0.00002350539672667512152642289676961245776999",
+          "nativeFees": "0.000001169201199811240814357791975538388741347"
+        }
+      }
+    ]
+  }
+}
 ```
 
 ### Trades
