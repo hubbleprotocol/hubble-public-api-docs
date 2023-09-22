@@ -2452,3 +2452,23 @@ Leaderboard response is always ordered by USD profit and loss (PnL) descending.
 
 PNL is in decimal form, to convert to percentage multiply it by 100.
 Total positions value and total returns are both in USD.
+
+### Raydium
+
+These endpoints use Raydium's API directly and cache their responses to avoid rate-limits.
+
+#### Get AMM Pools
+
+```http request
+GET https://api.hubbleprotocol.io/raydium/ammPools
+```
+
+Example request: https://api.hubbleprotocol.io/raydium/ammPools
+
+#### Get pool liquidity distribution
+
+```http request
+GET https://api.hubbleprotocol.io/raydium/positionLine/:poolPubkey
+```
+
+Example request: https://api.hubbleprotocol.io/raydium/positionLine/2QdhepnKRTLjjSqPL1PtKNwqrUkoLee5Gqs8bvZhRdMv
