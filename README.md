@@ -1287,6 +1287,39 @@ Example response:
 ]
 ```
 
+#### Get strategies start date overrides
+
+```http request
+GET https://api.hubbleprotocol.io/strategies/start-date-overrides?env={cluster}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+Example request:
+
+- https://api.hubbleprotocol.io/strategies/start-date-overrides?env=mainnet-beta
+
+
+Example response:
+
+```json
+[
+  {
+    "strategy": "Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN",
+    "start": "2022-09-01T00:00:00.000Z"
+  },
+  {
+    "strategy": "ByXB4xCxVhmUEmQj3Ut7byZ1Hbva1zhKjaVcv3jBMN7E",
+    "start": "2022-09-01T00:00:00.000Z"
+  },
+  {
+    "strategy": "98kNMp1aqWoYAaUU8m5REBAYVwhFb4aX9yoSpgq8kUFu",
+    "start": "2022-09-01T00:00:00.000Z"
+  }
+]
+```
+
 ### Whirlpools Kamino
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
