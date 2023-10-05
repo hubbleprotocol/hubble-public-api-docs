@@ -905,6 +905,8 @@ Mark to market represents potential position and PnL if they bought/sold at that
 
 #### Get volume for strategies:
 
+:warning: **DEPRECATED, PLEASE USE /v2/strategies/volume INSTEAD!** :warning:
+
 ```http request
 GET https://api.hubbleprotocol.io/strategies/volume?env={cluster}&status={strategyStatus}
 ```
@@ -950,6 +952,95 @@ Example response:
     ]
   }
 ]
+```
+
+#### Get volume for all strategies v2:
+
+Return 24h/7d/30d volume (in USD) for every single Kamino strategy. 
+
+```http request
+GET https://api.hubbleprotocol.io/v2/strategies/volume?env={cluster}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+Example request: https://api.hubbleprotocol.io/v2/strategies/volume?env=mainnet-beta
+
+Example response:
+
+```json
+[
+  {
+    "strategy": "BfyQYYr2T9eJfMfq5gPXcq3SUkJSh2ahtk7ZNUCzkx9e",
+    "kaminoVolume": [
+      {
+        "period": "24h",
+        "amount": "110492.5009755243"
+      },
+      {
+        "period": "7d",
+        "amount": "2720522.381172522"
+      },
+      {
+        "period": "30d",
+        "amount": "5617787.72039797"
+      }
+    ]
+  },
+  {
+    "strategy": "9zBNQtnenpQY6mCoRqbPpeePeSy17h34DZP82oegt1fL",
+    "kaminoVolume": [
+      {
+        "period": "24h",
+        "amount": "110492.5009755243"
+      },
+      {
+        "period": "7d",
+        "amount": "2720522.381172522"
+      },
+      {
+        "period": "30d",
+        "amount": "5617787.72039797"
+      }
+    ]
+  }
+]
+```
+
+#### Get volume for specific strategy v2:
+
+Return 24h/7d/30d volume (in USD) for specified Kamino strategy.
+
+```http request
+GET https://api.hubbleprotocol.io/v2/strategies/:strategyPubkey/volume?env={cluster}
+```
+
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+Example request: https://api.hubbleprotocol.io/v2/strategies/BfyQYYr2T9eJfMfq5gPXcq3SUkJSh2ahtk7ZNUCzkx9e/volume?env=mainnet-beta
+
+Example response:
+
+```json
+{
+  "strategy": "BfyQYYr2T9eJfMfq5gPXcq3SUkJSh2ahtk7ZNUCzkx9e",
+  "kaminoVolume": [
+    {
+      "period": "24h",
+      "amount": "110492.5009755243"
+    },
+    {
+      "period": "7d",
+      "amount": "2720522.381172522"
+    },
+    {
+      "period": "30d",
+      "amount": "5617787.72039797"
+    }
+  ]
+}
 ```
 
 #### Get all-time Kamino volume:
@@ -2147,7 +2238,7 @@ Example response:
       "solFees": "0.00001252855751062609254654040779155507638912",
       "usdFees": "0.0002501232156778048715929059083302644728593",
       "nativeFees": "0.00001252855751062609254654040779155507638912"
-    },
+    }
   },
   "feesObligation": {
     "MX68wMfQRkQA13SrKnSX47wwjiV2TDBak7NMb4Qfg5g": [
