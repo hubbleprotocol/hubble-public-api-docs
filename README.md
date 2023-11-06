@@ -1571,22 +1571,25 @@ Example response:
 #### Get token price history:
 
 ```http request
-GET https://api.hubbleprotocol.io/prices/history?env={cluster}&token={name or mint}&start={start}&end={end}&frequency={frequency}
+GET https://api.hubbleprotocol.io/prices/history?env={cluster}&token={name or mint}&start={start}&end={end}&frequency={frequency}&type={type}
 ```
 
 Query params:
 * env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* token: name of token or mint pubkey, e.g. `"SOL"` or `"So11111111111111111111111111111111111111112"`
+* token: name (deprecated soon) or mint (**use of mint recommended!**) pubkey, e.g. `"SOL"` or `"So11111111111111111111111111111111111111112"`
 * start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z` (optional, default 1 day ago) 
 * end: end date (inclusive), e.g. `2023-05-01T00:55:00.000Z` (optional, default now)
 * frequency: frequency of the prices, e.g. `"minute" (default) | "hour" | "day"` for price every minute/hour/day for the specified timeseries
+* type: price type, e.g. `"spot" (default) | "TWAP"`
 
 
 Example requests:
 
-- https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=USDH
-- https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=SOL&start=2020-01-01&end=2023-01-01&frequency=hour
+- https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=USDH1SM1ojwWUga67PGrgFWUHibbjqMvuMaDkRJTgkX
+- https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=So11111111111111111111111111111111111111112&start=2020-01-01&end=2023-01-01&frequency=hour&type=spot
+- https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=USDH1SM1ojwWUga67PGrgFWUHibbjqMvuMaDkRJTgkX&type=TWAP
 - https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=So11111111111111111111111111111111111111112&start=2020-01-01&end=2023-01-01&frequency=day
+- (not recommended, deprecated soon): https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=USDH
 
 
 Example response:
