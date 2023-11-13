@@ -2342,6 +2342,47 @@ Example response:
 }
 ```
 
+#### Get metrics for market reserves
+
+```http request
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/metrics
+```
+
+Query params:
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+Example response:
+
+```json
+[
+    {
+        "reserve": "d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q",
+        "liquidityToken": "SOL",
+        "liquidityTokenMint": "So11111111111111111111111111111111111111112",
+        "maxLtv": "0.65",
+        "borrowApy": "0.05450988511483601",
+        "supplyApy": "0.038266801210808055",
+        "totalSupply": "3270.370813041054416388850832278062044876",
+        "totalBorrow": "2314.442149604473429941074038490263985018",
+        "totalBorrowUsd": "132328.2299036357776146495065685745631077",
+        "totalSupplyUsd": "186983.4512356222993385157984997158629711"
+    },
+    {
+        "reserve": "G31zKdH2SkDZPhmoQraep5xbTSPyk3VZxAeBdC3nmq5J",
+        "liquidityToken": "STEP",
+        "liquidityTokenMint": "StepAscQoEioFxxWGnh2sLBDFp9d8rvKz2Yp39iDpyT",
+        "maxLtv": "0",
+        "borrowApy": "0.00009999925246972907",
+        "supplyApy": "0",
+        "totalSupply": "14.957139738",
+        "totalBorrow": "0",
+        "totalBorrowUsd": "0",
+        "totalSupplyUsd": "0.5941041438503336806162179231"
+    }
+]
+```
+
 ### Trades
 
 #### Get trade history
