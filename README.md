@@ -38,6 +38,13 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
 
 We use Flyway for database migrations and PostgreSQL for data storage.
 
+Lint your migration files:
+
+```shell
+cd migrations
+./lint.sh
+```
+
 Run migrations with docker:
 
 ```shell
