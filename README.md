@@ -1727,6 +1727,8 @@ Example response:
 
 #### Get All Kamino Markets config
 
+:warning: **DEPRECATED, PLEASE USE /v2/kamino-market/ INSTEAD!** :warning:
+
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market?env={cluster}
 ```
@@ -1735,11 +1737,29 @@ https://api.hubbleprotocol.io/kamino-market?env=mainnet-beta
 
 #### Get Kamino Market config
 
+:warning: **DEPRECATED, PLEASE USE /v2/kamino-market/:marketPubkey INSTEAD!** :warning:
+
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey?env={cluster}
 ```
 Example: 
 https://api.hubbleprotocol.io/kamino-market/J5ndTP1GJe6ZWzGiZQR2UKJmWWMJojbWxCxZ2yUXwakR?env=mainnet-beta
+
+#### Get All Kamino Markets config V2
+
+```http request
+GET https://api.hubbleprotocol.io/kamino-market?programId={programId}
+```
+Example: 
+https://api.hubbleprotocol.io/kamino-market?programId=KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD
+
+#### Get Kamino Market config V2
+
+```http request
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey?programId={programId}
+```
+Example: 
+https://api.hubbleprotocol.io/kamino-market/6WVSwDQXrBZeQVnu6hpnsRZhodaJTZBUaC334SiiBKdb?programId=SLendK7ySfcEzyaFqy93gDnD3RtrpXJcnRwb6zFHJSh
 
 #### Get KLend Market metrics history
 
