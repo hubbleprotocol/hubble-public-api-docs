@@ -1904,6 +1904,18 @@ Example response:
 }
 ```
 
+#### Get all user obligations
+
+```http request
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/obligations?env={cluster}'
+```
+
+Query params:
+
+* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+
+Example: https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/users/AcNSmd5CxwLs21TYUmhWt7CW2v159TdYRkvQxb1iBYRj/obligations
+
 #### Get KLend tx history per user (for all obligations)
 
 ```http request
