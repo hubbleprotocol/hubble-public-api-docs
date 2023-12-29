@@ -2422,6 +2422,51 @@ Example response:
 ]
 ```
 
+#### Get metrics for leverage/multiply vaults
+
+```http request
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/leverage/metrics?env={cluster}
+```
+
+Query params:
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+Example request:
+- https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/leverage/metrics?env=mainnet-beta
+
+Example response:
+
+```json
+[
+  {
+    "avgLeverage": "2.757170327410913560319220040749227783417",
+    "totalBorrowed": "154395.1202118977930406687953589698645807",
+    "totalDeposited": "193096.379305039",
+    "totalBorrowedUsd": "16739712.70542562946167548855378444003952",
+    "totalObligations": "1836",
+    "totalDepositedUsd": "23093580.44995144380237321675219340108242",
+    "tvl": "23093580.44995144380237321675219340108242",
+    "updatedOn": "2023-12-29T10:29:30.896Z",
+    "depositReserve": "H9vmCVd77N1HZa36eBn3UnftYmg4vQzPfm1RxabHAMER",
+    "borrowReserve": "d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q",
+    "tag": "Multiply"
+  },
+  {
+    "avgLeverage": "2.604314516472810767833910368870052572746",
+    "totalBorrowed": "26112.30734890929199125495560713880090385",
+    "totalDeposited": "34303.490774368",
+    "totalBorrowedUsd": "2831129.134758960612809682991545473977498",
+    "totalObligations": "1168",
+    "tvl": "23093580.44995144380237321675219340108242",
+    "totalDepositedUsd": "4315255.85162694588194992120445036586528",
+    "updatedOn": "2023-12-29T10:29:30.896Z",
+    "depositReserve": "FBSyPnxtHKLBZ4UeeUyAnbtFuAmTHLtso9YtsqRDRWpM",
+    "borrowReserve": "d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q",
+    "tag": "Leverage"
+  }
+]
+```
+
 ### Trades
 
 #### Get trade history
