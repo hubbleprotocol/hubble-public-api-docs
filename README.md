@@ -2746,39 +2746,45 @@ Example response:
 
 ```json
 {
-    "totalLeaderboardCount": 1000,
-    "leaderboard": [
-        {
-            "leaderboardRank": 1,
-            "lastCalculated": "2024-01-08T11:14:43.622Z",
-            "ownerPubkey": "CU3n8eMWRWuTRHtsxmfC5eUpzPQ36XZQXHpnGTyCAUjB",
-            "currentPointsPerSecondBorrowLend": "7914.74009645241",
-            "currentPointsPerSecondMultiply": "8302.874912585152",
-            "currentPointsPerSecondLeverage": "1396.837474246583",
-            "pointsEarnedBorrowLend": "5266.90715799291",
-            "pointsEarnedLeverage": "1292.24152420471",
-            "pointsEarnedMultiply": "7495.799582544783",
-            "pointsEarnedStrategies": "2823.493656394334",
-            "currentPointsPerSecondStrategies": "8639.198936530241",
-            "totalPointsEarned": "8103.915581595105",
-            "totalCurrentPointsPerSecond": "8598.402577438141"
-        },
-        {
-            "leaderboardRank": 2,
-            "lastCalculated": "2024-01-08T11:14:43.622Z",
-            "ownerPubkey": "LMDaDKECSEuT7a6T6ctvTumzZnqh9BEvRU8gjieb2fH",
-            "currentPointsPerSecondBorrowLend": "3965.161436362493",
-            "currentPointsPerSecondMultiply": "8298.552869968437",
-            "currentPointsPerSecondLeverage": "8857.357809925764",
-            "pointsEarnedBorrowLend": "5859.601376574293",
-            "pointsEarnedLeverage": "6470.96059220377",
-            "pointsEarnedMultiply": "3578.47840870558",
-            "pointsEarnedStrategies": "4712.333968774353",
-            "currentPointsPerSecondStrategies": "9725.681385518928",
-            "totalPointsEarned": "6627.275878221409",
-            "totalCurrentPointsPerSecond": "3247.747621019791"
-        }
-    ]
+  "totalLeaderboardCount": "90129",
+  "leaderboard": [
+    {
+      "leaderboardRank": "1",
+      "ownerPubkey": "7tH1k4PsMu3sNUYJxD5ezxhAmYYXyVVZz5c3dbaxcvUV",
+      "lastCalculatedStrategies": "2024-01-10T16:00:00.000Z",
+      "lastCalculatedBorrowLend": "2024-01-10T15:00:00.000Z",
+      "lastCalculatedMultiply": null,
+      "lastCalculatedLeverage": null,
+      "pointsEarnedStrategies": "122367620435.3735191599063727893014010360341",
+      "pointsEarnedBorrowLend": "1267843473.82435611251081561593395418572529",
+      "pointsEarnedMultiply": "0",
+      "pointsEarnedLeverage": "0",
+      "totalPointsEarned": "123635463909.19787527241718840523535522175939",
+      "currentPointsPerSecondStrategies": "560.478391755217855861526657236069466256",
+      "currentPointsPerSecondBorrowLend": "89.41877886905689864601546998888888888885",
+      "currentPointsPerSecondMultiply": "0",
+      "currentPointsPerSecondLeverage": "0",
+      "totalCurrentPointsPerSecond": "649.89717062427475450754212722495835514485"
+    },
+    {
+      "leaderboardRank": "2",
+      "ownerPubkey": "HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L",
+      "lastCalculatedStrategies": "2024-01-10T16:00:00.000Z",
+      "lastCalculatedBorrowLend": null,
+      "lastCalculatedMultiply": null,
+      "lastCalculatedLeverage": null,
+      "pointsEarnedStrategies": "54903470324.3054572407658617493510029034321",
+      "pointsEarnedBorrowLend": "0",
+      "pointsEarnedMultiply": "0",
+      "pointsEarnedLeverage": "0",
+      "totalPointsEarned": "54903470324.3054572407658617493510029034321",
+      "currentPointsPerSecondStrategies": "6.48961815479786922528593823056190322725",
+      "currentPointsPerSecondBorrowLend": "0",
+      "currentPointsPerSecondMultiply": "0",
+      "currentPointsPerSecondLeverage": "0",
+      "totalCurrentPointsPerSecond": "6.48961815479786922528593823056190322725"
+    }
+  ]
 }
 ```
 
@@ -2795,67 +2801,121 @@ Example response:
 
 ```json
 {
-  "leaderboardRank": 300,
-  "lastCalculated": "2024-01-08T11:16:31.441Z",
-  "pointsEarnedStrategies": "1099.270631429619",
-  "pointsEarnedBorrowLend": "5998.526743905828",
-  "pointsEarnedLeverage": "1117.187693913597",
-  "pointsEarnedMultiply": "1092.628294495148",
-  "currentPointsPerSecondStrategies": "2705.40343766169",
-  "currentPointsPerSecondBorrowLend": "7387.21799806467",
-  "currentPointsPerSecondLeverage": "900.505066949072",
-  "currentPointsPerSecondMultiply": "3265.231146346617",
-  "totalPointsEarned": "9797.492711729713",
-  "totalCurrentPointsPerSecond": "5581.356781205016",
-  "avgBoost": "3.34598564894589",
+  "leaderboardRank": "1271",
+  "updatedOnStrategies": "2024-01-10T16:00:00.000Z",
+  "updatedOnBorrowLend": "2024-01-10T15:00:00.000Z",
+  "updatedOnMultiply": null,
+  "updatedOnLeverage": null,
+  "pointsEarnedStrategies": "22761790.71117315449263523732644006896670425",
+  "pointsEarnedBorrowLend": "10442477.186904250407027339999999999999982264",
+  "pointsEarnedMultiply": "201389.4329133435694562408780984881999283067",
+  "pointsEarnedLeverage": "0",
+  "totalPointsEarned": "33405657.3309907484691188182045385571666148207",
+  "currentPointsPerSecondStrategies": "2.966637247762797453716544976431414311005",
+  "currentPointsPerSecondBorrowLend": "1.219000935252249471499999999999999999999",
+  "currentPointsPerSecondMultiply": "0.1646297171217158133378010918910399701269",
+  "currentPointsPerSecondLeverage": "0",
+  "totalCurrentPointsPerSecond": "4.3502679001367627385543460683224542811309",
+  "avgBoost": "1",
   "strategiesBreakdown": [
     {
-      "strategy": "Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN",
-      "lastCalculated": "2024-01-08T11:16:31.441Z",
-      "pointsEarned": "3044.373760972672",
-      "currentPointsPerSecond": "9489.860457592183",
+      "strategy": "5EfeGn1h7m6Rx9mGEmamDoxMtdhRmUh2N9fYRiDQqteS",
+      "lastCalculated": "2023-08-10T12:00:00.000Z",
+      "pointsEarned": "3038.752099688225508715680139338092961558",
+      "currentPointsPerSecond": "0",
+      "boost": "0"
+    },
+    {
+      "strategy": "5QgwaBQzzMAHdxpaVUgb4KrpXELgNTaEYXycUvNvRxr6",
+      "lastCalculated": "2024-01-10T16:00:00.000Z",
+      "pointsEarned": "2184181.274912947035496797367836501158876",
+      "currentPointsPerSecond": "1.673149451222033829527709343420742693505",
       "boost": "1"
     },
     {
-      "strategy": "HCntzqDU5wXSWjwgLQP5hqh3kLHRYizKtPErvSCyggXd",
-      "lastCalculated": "2024-01-08T11:16:31.441Z",
-      "pointsEarned": "3412.71901967517",
-      "currentPointsPerSecond": "3197.836208254016",
-      "boost": "2"
-    },
-    {
-      "strategy": "9dbHjqfEdVnmiQp1jWSMW1TF3r2i1kiSFrjz61guE7WW",
-      "lastCalculated": "2024-01-08T11:16:31.441Z",
-      "pointsEarned": "1299.165248735517",
-      "currentPointsPerSecond": "6208.43833169556",
-      "boost": "1.5213434534453"
+      "strategy": "8DRToyNBUTR4MxqkKAP49s9z1JhotQWy3rMQKEw1HHdu",
+      "lastCalculated": "2024-01-10T16:00:00.000Z",
+      "pointsEarned": "723051.1325021971074900781555286204179783",
+      "currentPointsPerSecond": "0.2045374909997805147118103015547306358167",
+      "boost": "1"
     }
   ],
   "klendBreakdown": [
     {
-      "lastCalculated": "2024-01-08T11:16:31.441Z",
-      "pointsEarned": "3596.825864910762",
-      "currentPointsPerSecond": "2762.94530886932",
+      "lastCalculated": "2024-01-10T15:00:00.000Z",
+      "pointsEarned": "4196615.002722601454031089999999999999992",
+      "currentPointsPerSecond": "1.219000935252249471499999999999999999999",
+      "boost": "1",
       "obligationTag": "Vanilla",
-      "obligation": "44rhfsGNFG6SrssCyyVzHKTdf9xjouDXtqS7b68fjweB",
-      "boost": "1"
+      "obligation": "J3UBd95TrkWVb9d6moomMwEoAsHYcrRPprZX2vf3YG75",
+      "market": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF"
     },
     {
-      "lastCalculated": "2024-01-08T11:16:31.441Z",
-      "pointsEarned": "2262.593869233982",
-      "currentPointsPerSecond": "8311.110411443273",
+      "lastCalculated": "2024-01-10T15:00:00.000Z",
+      "pointsEarned": "200704.9350075835765854408408010038433802",
+      "currentPointsPerSecond": "0.1646297171217158133378010918910399701269",
+      "boost": "1",
       "obligationTag": "Multiply",
-      "obligation": "2Cv4iQG99mJo1n6eY865siNTaS1wZ9XuAgyKBc3KN4Yw",
-      "boost": "3.12345678"
-    },
-    {
-      "lastCalculated": "2024-01-08T11:16:31.441Z",
-      "pointsEarned": "5473.50238706004",
-      "currentPointsPerSecond": "4403.618847898334",
-      "obligationTag": "Leverage",
-      "obligation": "HQ2Qk2VEQmgP3c5bmrRtFUkHg8hBLoXSPvrDw7j3yy6Y",
-      "boost": "2"
+      "obligation": "BnNMMQdhytPsQYambAeX8LZCDfcA3Q72Uo7tV5TWvYcR",
+      "market": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF"
     }
   ]
+}
+```
+
+#### Get rules for points
+
+```http request
+GET https://api.hubbleprotocol.io/points/rules?env={solana cluster}
+```
+
+Example request:
+- https://api.hubbleprotocol.io/points/rules?env=mainnet-beta
+
+Example response:
+
+```json
+{
+    "strategies": {
+        "defaultRate": 2,
+        "defaultBoost": 2,
+        "strategyRates": {
+            "Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN": 2
+        },
+        "strategyBoosts": {
+            "Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN": 2
+        },
+        "tokenRates": {
+            "So11111111111111111111111111111111111111112": 2
+        },
+        "tokenBoosts": {
+            "So11111111111111111111111111111111111111112": 2
+        }
+    },
+    "lending": [
+        {
+            "market": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+            "defaultRates": {
+                "borrowRate": 2,
+                "depositRate": 2
+            },
+            "defaultBoosts": {
+                "borrowBoost": 2,
+                "depositBoost": 2
+            },
+            "tokenRates": {
+                "So11111111111111111111111111111111111111112": {
+                    "depositRate": 1,
+                    "borrowRate": 3
+                }
+            },
+            "tokenBoosts": {
+                "So11111111111111111111111111111111111111112": {
+                    "depositBoost": 1,
+                    "borrowBoost": 3
+                }
+            }
+        }
+    ]
 }
 ```
