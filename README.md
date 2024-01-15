@@ -2919,3 +2919,30 @@ Example response:
     ]
 }
 ```
+
+#### Get metrics for points
+
+```http request
+GET https://api.hubbleprotocol.io/points/metrics
+```
+
+Example request:
+- https://api.hubbleprotocol.io/points/metrics
+
+Example response:
+
+```json
+{
+  "totalPointsEarned": "5984999924.493912541433019214995884898855713422508120471697",
+  "totalCurrentPointsPerSecond": "3578.637988920129679710443661281444597259705465236233671",
+  "currentPointsPerSecondLeverage": "52.040770416817290492365834856421461150509848186708961",
+  "currentPointsPerSecondBorrowLend": "2891.05947353323817434578242345116583467662686554546471",
+  "currentPointsPerSecondMultiply": "635.53774497007421487229540297385730143256875150406",
+  "currentPointsPerSecondStrategies": "12354.58",
+  "updatedOnLeverage": "2024-01-10T15:00:00.000Z",
+  "updatedOnMultiply": "2024-01-10T15:00:00.000Z",
+  "updatedOnStrategies": "2024-01-10T15:00:00.000Z",
+  "updatedOnBorrowLend": "2024-01-10T15:00:00.000Z",
+  "numberOfUsers": "91309"
+}
+```
