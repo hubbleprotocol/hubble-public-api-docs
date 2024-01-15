@@ -2728,8 +2728,6 @@ Example request: https://api.hubbleprotocol.io/raydium/positionLine/2QdhepnKRTLj
 
 ### Points
 
-:warning: This returns mock data, it is not real production data! :warning:
-
 #### Get points leaderboard
 
 ```http request
