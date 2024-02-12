@@ -1676,49 +1676,9 @@ GET https://api.hubbleprotocol.io/debug/accounts/HubbLeXBb7qyLHt3x7gvYaRrxQmmgEx
 
 ### Transactions
 
-#### Get all kamino transactions v2
+#### Get all kamino transactions 
 
-Get all instructions for the specified Kamino (liquidity) shareholder.
-
-```http request
-// GET https://api.hubbleprotocol.io/v2/shareholders/:shareholderPubkey/transactions?env={cluster}
-GET https://api.hubbleprotocol.io/v2/shareholders/9y7uLMUMW6EiRwH1aJFSp9Zka7dVx2JdZKA3858u6YHT/transactions?env=mainnet-beta
-```
-
-Example response:
-
-```json
-{
-  "transactions": [
-    {
-      "createdOn": "2024-02-02T12:07:19.000Z",
-      "timestamp": "1706875639000",
-      "transactionSignature": "DyUW9Rhkis65Y4RAoD6Xj3C2iZQigZn67ZJt5P11Uk8kZxC9Zx8r84bsAKYMgfvzows1LNPDmB3hD5kimHqjufF",
-      "transactionName": "deposit",
-      "strategy": "HBuYwvq67VKnLyKxPzDjzskyRMk7ps39gwHdvaPGwdmQ",
-      "tokenA": "JUP",
-      "tokenAMint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
-      "tokenAAmount": "1172.664445",
-      "tokenAPrice": "1.4235452",
-      "tokenB": "bSOL",
-      "tokenBMint": "bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1",
-      "tokenBAmount": "6.452820291",
-      "tokenBPrice": "1.55343",
-      "usdValue": "1345.28593",
-      "numberOfShares": "5315.114625",
-      "sharePrice": "0.1248459",
-      "solPrice": "90.1348745894",
-      "latestPosition": true
-    }
-  ]
-}
-```
-
-#### Get all kamino transactions
-
-:warning: **DEPRECATED, PLEASE USE V2 TRANSACTIONS (`Get all kamino transactions v2`) INSTEAD!** :warning:
-
-Get shareholder's Kamino transactions (`withdraw`, `deposit` and `depositAndInvest` instructions).
+Get shareholder's Kamino transactions (`withdraw`, `deposit` and `depositAndInvest` instructions). 
 Returns the last 1000 transactions ordered by timestamp descending.
 
 ```http request
