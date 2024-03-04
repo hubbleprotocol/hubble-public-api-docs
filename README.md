@@ -411,6 +411,32 @@ Example response:
 ]
 ```
 
+#### Get yield history for specific source
+
+```http request
+GET https://api.hubbleprotocol.io/yields/:source/history
+```
+
+Example request, get JLP pool yield history:
+https://api.hubbleprotocol.io/yields/5BUwFW4nRbftYTDMbgxykoFWqWHPzahFSNAaaaJtVKsq/history
+
+Example response (please note APR/APY is in decimal format, not in percentage, multiply by 100 to get percentage):
+
+```json
+[
+  {
+    "createdOn": "2024-01-01T00:00:07.569Z",
+    "apr": "5.16226661065975",
+    "apy": "1.72282489033179"
+  },
+  {
+    "createdOn": "2024-01-01T01:00:07.569Z",
+    "apr": "5.53223063067687",
+    "apy": "9.201613187495"
+  }
+]
+```
+
 ### Stability
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
