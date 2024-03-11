@@ -2210,6 +2210,81 @@ Example response:
 }
 ```
 
+#### Bulk get Klend transactions
+
+This endpoint is not open to the public, it is private for analytical purposes only, add authorization headers to the request.
+
+```http request
+POST https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/transactions?programId={programId}
+```
+
+```json
+{
+    "start": "2024-01-01T00:00Z",
+    "end": "2024-01-02T00:00Z",
+    "instruction": "depositReserveLiquidityAndObligationCollateral",
+    "paginationToken": ""
+}
+```
+
+Example cURL request:
+```bash
+curl --location 'https://api.hubbleprotocol.io/v2/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/transactions?programId=KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD' --header 'Content-Type: application/json' --header 'Authorization: Basic ENTER_CREDENTIALS' --data '{
+    "start": "2024-01-01",
+    "end": "2024-01-02",
+    "instruction": "depositReserveLiquidityAndObligationCollateral",
+    "paginationToken": ""
+}'
+```
+
+Example Python request:
+```python
+import requests
+import json
+
+url = "https://api.hubbleprotocol.io/v2/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/transactions?programId=KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD"
+
+payload = json.dumps({
+  "start": "2024-01-01",
+  "end": "2024-01-02",
+  "instruction": "depositReserveLiquidityAndObligationCollateral",
+  "paginationToken": ""
+})
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic ADD-CREDENTIALS-HERE'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+Example response:
+```json
+{
+    "result": [
+        {
+            "ixs": [
+                {
+                    "solPrice": "100.123",
+                    "liquidityToken": "SOL",
+                    "liquidityUsdValue": "100.123",
+                    "liquidityTokenMint": "So11111111111111111111111111111111111111112",
+                    "liquidityTokenPrice": "100.123",
+                    "liquidityTokenAmount": "1",
+                    "isLiquidationWithdrawal": false
+                }
+            ],
+            "timestamp": "2024-02-19T00:20:45.000Z",
+            "signature": "NysWUiARXCRntcCmbyyRv43aLv2m4rKF39nCTJKsaV59ASu9cDLVpxuMVWn9HujorM81iXHUYtRYw29jNnAHhTD"
+        }
+    ],
+    "paginationToken": "eyJsYXN0SWQiOjIwNzh9"
+}
+```
+
+
 #### Get PnL per obligation
 
 You can specify pnl mode with query param `positionMode` with one of these values: {`obligation_all_time`, `current_obligation`}. By default, pnl mode is set to `current_obligation` position
