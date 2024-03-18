@@ -2872,12 +2872,13 @@ Example request: https://api.hubbleprotocol.io/raydium/positionLine/2QdhepnKRTLj
 #### Get points leaderboard
 
 ```http request
-GET https://api.hubbleprotocol.io/points/leaderboard?offset={offset}&limit=${limit}
+GET https://api.hubbleprotocol.io/points/leaderboard?offset={offset}&limit=${limit}&source={source}
 ```
 
 Example requests:
 - get first 20 leaderboard ranks: https://api.hubbleprotocol.io/points/leaderboard?offset=0&limit=20
 - get  leaderboard ranks between 100-200: https://api.hubbleprotocol.io/points/leaderboard?offset=100&limit=100
+- get first 20 leaderboard ranks for season 2: https://api.hubbleprotocol.io/points/leaderboard?offset=0&limit=20&source=Season2
 
 To implement pagination fetch the first page (offset = 0, limit = 20 for example) and then look at the property `totalLeaderboardCount` to calculate the amount of pages you will display.
 
@@ -2930,11 +2931,12 @@ Example response:
 #### Get points user breakdown
 
 ```http request
-GET https://api.hubbleprotocol.io/points/users/:userPubkey/breakdown?env={solana cluster}
+GET https://api.hubbleprotocol.io/points/users/:userPubkey/breakdown?env={solana cluster}&source={source}
 ```
 
-Example request:
-- https://api.hubbleprotocol.io/points/users/9y7uLMUMW6EiRwH1aJFSp9Zka7dVx2JdZKA3858u6YHT/breakdown?env=mainnet-beta
+Example requests:
+- https://api.hubbleprotocol.io/points/users/9y7uLMUMW6EiRwH1aJFSp9Zka7dVx2JdZKA3858u6YHT/breakdown?env=mainnet-beta&source=Season1
+- https://api.hubbleprotocol.io/points/users/9y7uLMUMW6EiRwH1aJFSp9Zka7dVx2JdZKA3858u6YHT/breakdown?env=mainnet-beta&source=Season2
 
 Example response:
 
@@ -3062,11 +3064,12 @@ Example response:
 #### Get metrics for points
 
 ```http request
-GET https://api.hubbleprotocol.io/points/metrics
+GET https://api.hubbleprotocol.io/points/metrics?source={source}
 ```
 
 Example request:
-- https://api.hubbleprotocol.io/points/metrics
+- Fetch default points source (season 1): https://api.hubbleprotocol.io/points/metrics
+- Fetch custom points source: https://api.hubbleprotocol.io/points/metrics?source=Season2
 
 Example response:
 
