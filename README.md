@@ -3000,6 +3000,12 @@ Example response:
       "obligation": "BnNMMQdhytPsQYambAeX8LZCDfcA3Q72Uo7tV5TWvYcR",
       "market": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF"
     }
+  ],
+  "boosts": [
+    {
+      "boost": "0.07",
+      "name": "loyalty_bonus"
+    }
   ]
 }
 ```
