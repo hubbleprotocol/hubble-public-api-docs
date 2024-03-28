@@ -1708,7 +1708,7 @@ Get all instructions for the specified Kamino (liquidity) shareholder.
 
 ```http request
 // GET https://api.hubbleprotocol.io/v2/shareholders/:shareholderPubkey/transactions?env={cluster}
-GET https://api.hubbleprotocol.io/v2/shareholders/9y7uLMUMW6EiRwH1aJFSp9Zka7dVx2JdZKA3858u6YHT/transactions?env=mainnet-beta
+GET https://api.hubbleprotocol.io/v2/shareholders/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/transactions?env=mainnet-beta
 ```
 
 Example response:
@@ -1749,7 +1749,7 @@ Returns the last 1000 transactions ordered by timestamp descending.
 
 ```http request
 // GET https://api.hubbleprotocol.io/shareholders/:shareholderPubkey/transactions?env={cluster}
-GET https://api.hubbleprotocol.io/shareholders/9y7uLMUMW6EiRwH1aJFSp9Zka7dVx2JdZKA3858u6YHT/transactions?env=mainnet-beta
+GET https://api.hubbleprotocol.io/shareholders/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/transactions?env=mainnet-beta
 ```
 
 Example response:
@@ -2935,8 +2935,8 @@ GET https://api.hubbleprotocol.io/points/users/:userPubkey/breakdown?env={solana
 ```
 
 Example requests:
-- https://api.hubbleprotocol.io/points/users/9y7uLMUMW6EiRwH1aJFSp9Zka7dVx2JdZKA3858u6YHT/breakdown?env=mainnet-beta&source=Season1
-- https://api.hubbleprotocol.io/points/users/9y7uLMUMW6EiRwH1aJFSp9Zka7dVx2JdZKA3858u6YHT/breakdown?env=mainnet-beta&source=Season2
+- https://api.hubbleprotocol.io/points/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/breakdown?env=mainnet-beta&source=Season1
+- https://api.hubbleprotocol.io/points/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/breakdown?env=mainnet-beta&source=Season2
 
 Example response:
 
@@ -3092,5 +3092,64 @@ Example response:
   "updatedOnStrategies": "2024-01-10T15:00:00.000Z",
   "updatedOnBorrowLend": "2024-01-10T15:00:00.000Z",
   "numberOfUsers": "91309"
+}
+```
+
+### Airdrop
+
+#### Get user airdrop allocation
+
+```http request
+GET https://api.hubbleprotocol.io/airdrop/users/:pubkey/allocations?source={source}
+```
+
+Example requests:
+- get season 1 allocation: https://api.hubbleprotocol.io/airdrop/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/allocations?source=Season1
+
+Example response:
+
+```json
+[
+  {
+    "quantity": "0.38493976366798",
+    "name": "main_allocation"
+  },
+  {
+    "quantity": "5.2414259465036",
+    "name": "OG_allocation"
+  }
+]
+```
+
+Example empty response when user has 0 airdrop allocations to claim:
+
+```json
+[]
+```
+
+#### Get airdrop metrics
+
+```http request
+GET https://api.hubbleprotocol.io/airdrop/metrics?source={source}
+```
+
+Example requests:
+- get season 1 airdrop metrics: https://api.hubbleprotocol.io/airdrop/metrics?source=Season1
+
+Example response:
+
+```json
+{
+  "totalAllocation": "800000000",
+  "totalUsers": "251284",
+  "claimDate": "2024-04-15T00:00:00.000Z"
+}
+```
+
+Example response when no metrics are found (404 Not Found):
+
+```json
+{
+  "metadata": "Airdrop metrics for source not found"
 }
 ```
