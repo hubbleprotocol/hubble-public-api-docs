@@ -1,4 +1,4 @@
-# 🛰 Hubble Public API
+# 🛰 Hubble Public API 
 
 Hubble Public API is a TypeScript API (using Express) that serves public data of the Hubble Protocol.  
 
