@@ -32,6 +32,8 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
     * [Simulator](#simulator)
     * [Leaderboard](#leaderboard)
     * [Points](#points)
+    * [Airdrop](#airdrop)
+    * [Tokens](#tokens)
 
 ## Development
 
@@ -3152,4 +3154,44 @@ Example response when no metrics are found (404 Not Found):
 {
   "metadata": "Airdrop metrics for source not found"
 }
+```
+
+### Tokens
+
+#### Get solflare token infos
+
+Fetches all token infos from Solflare that are used by Kamino Liquidity/Lending/Farms.
+
+```http request
+GET https://api.hubbleprotocol.io/tokens
+```
+
+Example request:
+- https://api.hubbleprotocol.io/tokens
+
+Example response:
+
+```json
+[
+    {
+      "address": "27G8MtK7VtTcCHkpASjSDdkWWYfoqT6ggEuKidVJidD4",
+      "chainId": 101,
+      "name": "Jupiter Perpetuals Liquidity Provider Token",
+      "symbol": "JLP",
+      "verified": true,
+      "decimals": 6,
+      "holders": null,
+      "logoURI": "https://assets.coingecko.com/coins/images/33094/large/jlp.png?1700631386",
+      "tags": [],
+      "extensions": {
+        "coingeckoId": "jupiter-perpetuals-liquidity-provider-token"
+      }
+    }
+]
+```
+
+Example empty response when user has 0 airdrop allocations to claim:
+
+```json
+[]
 ```
