@@ -2217,7 +2217,7 @@ Example response:
 This endpoint is not open to the public, it is private for analytical purposes only, add authorization headers to the request.
 
 ```http request
-POST https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/transactions?programId={programId}
+POST https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/transactions?programId={programId}?includeRawJson={true|false, false by default}
 ```
 
 ```json
@@ -2279,7 +2279,9 @@ Example response:
                 }
             ],
             "timestamp": "2024-02-19T00:20:45.000Z",
-            "signature": "NysWUiARXCRntcCmbyyRv43aLv2m4rKF39nCTJKsaV59ASu9cDLVpxuMVWn9HujorM81iXHUYtRYw29jNnAHhTD"
+            "signature": "NysWUiARXCRntcCmbyyRv43aLv2m4rKF39nCTJKsaV59ASu9cDLVpxuMVWn9HujorM81iXHUYtRYw29jNnAHhTD",
+            "obligation": "7vbVt9y3dtajhwgbrbSb7RR3SuainvcpLAJYGge9fRco",
+            "wallet": "3YFyQwu7rSQmxvSrGawxr3fq4CyFT6NQkYry8jkCSQuk"
         }
     ],
     "paginationToken": "eyJsYXN0SWQiOjIwNzh9"
