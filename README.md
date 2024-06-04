@@ -413,6 +413,34 @@ Example response:
 ]
 ```
 
+#### Get staking rate history
+
+```http request
+GET https://api.hubbleprotocol.io/staking-yields/tokens/:mint/history?start={start timestamp}&end={end timestamp}
+```
+
+Example request:
+https://api.hubbleprotocol.io/staking-yields/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history?start=2024-01-01T00:00Z&end=2024-02-01T01:00Z
+
+Example response (first item in array is epoch timestamp, second is stake rate):
+
+```json
+[
+  [
+    1704067200000,
+    "0.8636310820345713"
+  ],
+  [
+    1704067500000,
+    "0.8636310820345713"
+  ],
+  [
+    1704067800000,
+    "0.8636310820345713"
+  ]
+]
+```
+
 #### Get yield history for specific source
 
 ```http request
