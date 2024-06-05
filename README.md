@@ -2205,6 +2205,11 @@ Example response:
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/transactions/
 ```
 
+Query params:
+
+* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+* useLogPrices: scans logs for token prices instead of using scope prices
+
 Example response:
 
 ```json
