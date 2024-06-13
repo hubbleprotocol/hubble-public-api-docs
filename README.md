@@ -387,7 +387,9 @@ Please use the route above to get monthly data instead.
 GET https://api.hubbleprotocol.io/staking/lido/eligible-loans?env=devnet&start=2022-06-01&end=2022-07-01
 ```
 
-#### Get staking yields
+#### Get staking yields (DEPRECATED)
+
+:warning: **DEPRECATED, PLEASE USE /v2/staking-yields INSTEAD!** :warning:
 
 ```http request
 GET https://api.hubbleprotocol.io/staking-yields
@@ -413,14 +415,80 @@ Example response:
 ]
 ```
 
-#### Get staking rate history
+#### Get staking yields v2
 
 ```http request
-GET https://api.hubbleprotocol.io/staking-yields/tokens/:mint/history?start={start timestamp}&end={end timestamp}
+GET https://api.hubbleprotocol.io/v2/staking-yields
 ```
 
 Example request:
-https://api.hubbleprotocol.io/staking-yields/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history?start=2024-01-01T00:00Z&end=2024-02-01T01:00Z
+https://api.hubbleprotocol.io/v2/staking-yields
+
+Example response:
+
+```json
+[
+  {
+    "apy": "0.252619403785070711510296827413476389122",
+    "tokenMint": "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+  },
+  {
+    "apy": "0.263020843260597671599388280100460408894",
+    "tokenMint": "J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn"
+  },
+  {
+    "apy": "0.24426365077443429533690036384035569496",
+    "tokenMint": "bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1"
+  },
+  {
+    "apy": "0.2727867352767135230363060182415164271",
+    "tokenMint": "jupSoLaHXQiZZTSfEWMTRRgpnyFm8f6sZdosWBjx93v"
+  },
+  {
+    "apy": "0.282542463074495351542281213938801414377",
+    "tokenMint": "he1iusmfkpAdwvxLNGV8Y1iSbj4rUy6yMhEA3fotn9A"
+  }
+]
+```
+
+#### Get epochs
+
+```http request
+GET https://api.hubbleprotocol.io/epochs
+```
+
+Example request:
+https://api.hubbleprotocol.io/epochs
+
+Example response:
+
+```json
+[
+    {
+        "epoch": 627,
+        "first_slot": 270864000,
+        "last_slot": 271295999,
+        "start_block_time": "2024-06-09T18:21:01.000Z",
+        "end_block_time": "2024-06-11T23:21:40.000Z"
+    },
+    {
+        "epoch": 626,
+        "first_slot": 270432000,
+        "last_slot": 270863999,
+        "start_block_time": "2024-06-07T14:10:07.000Z",
+        "end_block_time": "2024-06-09T18:21:00.000Z"
+    }
+]
+```
+
+#### Get staking rate history
+
+```http request
+GET https://api.hubbleprotocol.io/staking-rates/tokens/:mint/history?start={start timestamp}&end={end timestamp}&interpolate={true/false}
+```
+
+Example request:
+https://api.hubbleprotocol.io/staking-rates/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history?start=2024-01-01T00:00Z&end=2024-02-01T01:00Z&interpolate=false
 
 Example response (first item in array is epoch timestamp, second is stake rate):
 
@@ -438,6 +506,34 @@ Example response (first item in array is epoch timestamp, second is stake rate):
     1704067800000,
     "0.8636310820345713"
   ]
+]
+```
+
+#### Get staking yield history
+
+```http request
+GET https://api.hubbleprotocol.io/staking-yields/tokens/:mint/history?start={start timestamp}&end={end timestamp}
+```
+
+Example request:
+https://api.hubbleprotocol.io/staking-yields/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history?start=2024-01-01T00:00Z&end=2024-02-01T01:00Z
+
+Example response:
+
+```json
+[
+  {
+    "apy": "0.0685815525901495360734829436051179078079",
+    "epoch": 587,
+    "startBlockTime": "2024-03-11T21:37:21.000Z",
+    "endBlockTime": "2024-03-14T00:25:05.000Z"
+  },
+  {
+    "apy": "0.0772467014510651101771957924044147574663",
+    "epoch": 586,
+    "startBlockTime": "2024-03-09T19:55:31.000Z",
+    "endBlockTime": "2024-03-11T21:37:20.000Z"
+  }
 ]
 ```
 
@@ -1944,6 +2040,37 @@ Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c
     }
   ]
 }
+```
+
+#### Get KLend reserve borrow APY and staking APY history
+
+Get history of klend reserve borrow interest APY and staking APY. This will only return data for reserves that contain a LST token with staking yield.
+
+```http request
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/:reservePubkey/borrow-and-staking-apys/history?env={cluster}&start={date}&end={date}'
+```
+
+Query params:
+
+* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+* start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z
+* end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z
+
+Example: https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/reserves/FBSyPnxtHKLBZ4UeeUyAnbtFuAmTHLtso9YtsqRDRWpM/borrow-and-staking-apys/history?env=mainnet-beta&start=2023-10-15T00%3A00Z&end=2023-11-14T00%3A00Z'
+
+```json
+[
+  {
+    "createdOn": "2023-10-17T15:00:06.009Z",
+    "borrowInterestApy": "0.027610992938039702",
+    "stakingApy": "0.066527842899023711405366628964490454572"
+  },
+  {
+    "createdOn": "2023-10-17T15:05:06.009Z",
+    "borrowInterestApy": "0.017610992938039702",
+    "stakingApy": "0.078527842899023711405366628964490454572"
+  }
+]
 ```
 
 #### Get KLend obligation history
