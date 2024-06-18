@@ -2128,6 +2128,61 @@ Example response:
 }
 ```
 
+#### Get KLend obligation history V2
+
+```http request
+GET https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/obligations/:obligationPubkey/metrics/history?env={cluster}&start={date}&end={date}&useStakeRateForObligation={true|false}'
+```
+
+Query params:
+
+* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+* start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z (optional, default since beginning of strategy)
+* end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z (optional, default now)
+* useStakeRateForObligation: uses stake rate to calc net sol value
+
+Example: https://api.hubbleprotocol.io/v2/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/obligations/63QrAB1okxCc4FpsgcKYHjYTp1ua8ch6mLReyKRdc22o/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02&frequency=day&useStakeRateForObligation=true
+
+Example response:
+
+```json
+{
+  "obligation": "63QrAB1okxCc4FpsgcKYHjYTp1ua8ch6mLReyKRdc22o",
+  "market": "9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs",
+  "history": [
+    {
+      "timestamp": "2023-07-11T09:51:40.498Z",
+      "stats": {
+        "leverage": 1.8849400779844114,
+        "positions": 2,
+        "borrowLimit": 0.20884206942858852,
+        "loanToValue": 0.46947915656326233,
+        "netAccountValue": 0.14772676109110466,
+        "userTotalBorrow": 0.13072933148034668,
+        "userTotalDeposit": 0.2784560925714514,
+        "borrowUtilization": 0.6259722087510164,
+        "liquidationThreshold": 0.22276487405716108
+      },
+      "deposits": [
+        {
+          "amount": "11442889",
+          "marketValue": "0.27845609257145136",
+          "mintAddress": "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+        }
+      ],
+      "borrows": [
+        {
+          "amount": "6024369",
+          "marketValue": "0.13072933148034669",
+          "mintAddress": "So11111111111111111111111111111111111111112"
+        }
+      ],
+      "tag": 1
+    }
+  ]
+}
+```
+
 #### Get all user obligations
 
 ```http request
