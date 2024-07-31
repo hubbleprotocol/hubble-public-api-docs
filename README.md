@@ -2504,7 +2504,7 @@ Example response:
 ```
 
 
-#### Get PnL per obligation
+#### Get PnL per obligation (DEPRECATED)
 
 You can specify pnl mode with query param `positionMode` with one of these values: {`obligation_all_time`, `current_obligation`}. By default, pnl mode is set to `current_obligation` position
 
@@ -2512,6 +2512,28 @@ These parameters specify whether we return the current position PnL or the accum
 
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/pnl/?positionMode=current_obligation
+```
+
+Example response:
+
+```json
+{
+  "usd": "25.21",
+  "sol": "1.0"
+}
+```
+
+:warning: **DEPRECATED, PLEASE USE v2 version (wo useStakeRate to get similar result)** :warning:
+
+#### Get PnL per obligation v2
+
+You can specify pnl mode with query param `positionMode` with one of these values: {`obligation_all_time`, `current_obligation`}. By default, pnl mode is set to `current_obligation` position
+For xSOL pairs, `useStakeRate` query param can be set to true to calculate the PnL using the stake rate. By default, it is set to false.
+
+These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the user's obligation (even before they were closed).
+
+```http request
+GET https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/obligations/:obligationPubkey/pnl/?positionMode=current_obligation&useStakeRate=true
 ```
 
 Example response:
