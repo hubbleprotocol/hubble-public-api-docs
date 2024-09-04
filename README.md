@@ -451,6 +451,42 @@ Example response:
 ]
 ```
 
+#### Get median staking yields v2
+
+```http request
+GET https://api.hubbleprotocol.io/v2/staking-yields/median
+```
+
+Example request:
+https://api.hubbleprotocol.io/v2/staking-yields/median
+
+Example response:
+
+```json
+[
+  {
+    "apy": "0.252619403785070711510296827413476389122",
+    "tokenMint": "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+  },
+  {
+    "apy": "0.263020843260597671599388280100460408894",
+    "tokenMint": "J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn"
+  },
+  {
+    "apy": "0.24426365077443429533690036384035569496",
+    "tokenMint": "bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1"
+  },
+  {
+    "apy": "0.2727867352767135230363060182415164271",
+    "tokenMint": "jupSoLaHXQiZZTSfEWMTRRgpnyFm8f6sZdosWBjx93v"
+  },
+  {
+    "apy": "0.282542463074495351542281213938801414377",
+    "tokenMint": "he1iusmfkpAdwvxLNGV8Y1iSbj4rUy6yMhEA3fotn9A"
+  }
+]
+```
+
 #### Get epochs
 
 ```http request
@@ -533,6 +569,36 @@ Example response:
     "epoch": 586,
     "startBlockTime": "2024-03-09T19:55:31.000Z",
     "endBlockTime": "2024-03-11T21:37:20.000Z"
+  }
+]
+```
+
+#### Get median staking yield history
+
+```http request
+GET https://api.hubbleprotocol.io/staking-yields/tokens/:mint/history/median
+```
+
+Example request:
+https://api.hubbleprotocol.io/staking-yields/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history
+
+Example response:
+
+```json
+[
+  {
+    "startEpoch": 502,
+    "startBlockTime": "2023-09-11T05:22:50.000Z",
+    "endBlockTime": "2023-10-05T01:18:02.000Z",
+    "endEpoch": 512,
+    "apy": 0.06882309627010348
+  },
+  {
+    "startEpoch": 503,
+    "startBlockTime": "2023-09-13T10:14:26.000Z",
+    "endBlockTime": "2023-10-07T03:15:54.000Z",
+    "endEpoch": 513,
+    "apy": 0.06900975295240162
   }
 ]
 ```
