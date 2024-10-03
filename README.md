@@ -2116,13 +2116,20 @@ Get history of klend reserve borrow interest APY and staking APY. This will only
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/:reservePubkey/borrow-and-staking-apys/history?env={cluster}&start={date}&end={date}'
 ```
 
+Median:
+```http request
+GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/:reservePubkey/borrow-and-staking-apys/history/median?env={cluster}&start={date}&end={date}'
+```
+
 Query params:
 
 * env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
 * start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z
 * end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z
 
-Example: https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/reserves/FBSyPnxtHKLBZ4UeeUyAnbtFuAmTHLtso9YtsqRDRWpM/borrow-and-staking-apys/history?env=mainnet-beta&start=2023-10-15T00%3A00Z&end=2023-11-14T00%3A00Z'
+Examples: 
+- https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/reserves/FBSyPnxtHKLBZ4UeeUyAnbtFuAmTHLtso9YtsqRDRWpM/borrow-and-staking-apys/history?env=mainnet-beta&start=2023-10-15T00%3A00Z&end=2023-11-14T00%3A00Z'
+- https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/reserves/FBSyPnxtHKLBZ4UeeUyAnbtFuAmTHLtso9YtsqRDRWpM/borrow-and-staking-apys/history/median?env=mainnet-beta&start=2023-10-15T00%3A00Z&end=2023-11-14T00%3A00Z'
 
 ```json
 [
