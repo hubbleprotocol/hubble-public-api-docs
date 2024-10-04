@@ -56,7 +56,7 @@ docker-compose up db flyway
 ```
 
 ### Local API Setup
-You will need to use [npm](https://www.npmjs.com/) to install the dependencies.
+You will need to use [yarn](https://www.yarnpkg.com/) to install the dependencies.
 
 We are using private nodes without rate limit for fetching mainnet-beta and devnet chain data.
 You will have to add an `.env` file in the root of this repository with the correct environment variables inside.
@@ -71,7 +71,7 @@ cp .env.example .env
 # ...
 ```
 
-We also use Redis for caching API responses from PostgreSQL database. You can use docker-compose to run an instance of Redis locally.
+We also use Redis for caching API responses from PostgreSQL database. You can use docker-compose to run an instance of the Redis cluster locally.
 
 Run the API with yarn (for debugging) and dependencies with docker-compose:
 
@@ -128,20 +128,19 @@ To access the local cache, you will need to install [redis-cli](https://redis.io
 ```shell
 # make sure local redis is running first:
 docker-compose up redis
-# connect to redis-cli
-redis-cli
+
 # a few examples below
 
-# list all keys:
-KEYS *
+# list all keys in all cluster nodes:
+for port in {7001..7006}; do echo "Keys from localhost:$port:"; redis-cli -c -h localhost -p $port --scan; done
 # get specific redis key contents:
-GET strategies-leaderboard-mainnet-beta
+for port in {7001..7006}; do value=$(redis-cli -c -h localhost -p $port GET strategies-leaderboard-mainnet-beta); if [ "$value" ]; then echo "$value"; break; fi; done
 # delete specific redis key:
-DEL strategies-leaderboard-mainnet-beta
+for port in {7001..7006}; redis-cli -c -h localhost -p $port DEL strategies-leaderboard-mainnet-beta; done
 # check when a specific redis key will expire:
-TTL strategies-leaderboard-mainnet-beta
-# clear entire cache - delete all redis keys (useful when testing locally, not enabled in production)
-FLUSHALL
+for port in {7001..7006}; do redis-cli -c -h localhost -p $port TTL staking-yields-v2; done 
+# clear entire cache in the cluster - delete all redis keys (useful when testing locally, not enabled in production)
+for port in {7001..7006}; do redis-cli -c -h localhost -p $port FLUSHALL; done
 ```
 
 ### Production cache
