@@ -34,6 +34,7 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
     * [Points](#points)
     * [Airdrop](#airdrop)
     * [Tokens](#tokens)
+    * [KVaults](#kvaults)
 
 ## Development
 
@@ -3505,4 +3506,119 @@ Example empty response when user has 0 airdrop allocations to claim:
 
 ```json
 []
+```
+
+### KVaults
+
+#### Get all kvault user transactions
+
+Get all instructions for the specified KVault shareholder.
+
+```http request
+// GET https://api.kamino.finance/kvaults/shareholders/:shareholderPubkey/transactions?env={cluster}
+```
+
+Example request:
+- https://api.kamino.finance/kvaults/shareholders/2frn6q2bDmfiGDnaiSFWqoJBm77fMHpGVnUV9yKYa7ts/transactions?env=mainnet-beta
+
+Example response:
+
+```json
+[
+  {
+    "createdOn": "2024-10-30T11:49:03.000Z",
+    "instruction": "invest",
+    "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "tokenAmount": "1.531763",
+    "usdValue": "1.53167261066537",
+    "transaction": "3w1DghgGN8jJ2nhdYMXtjPPqBS3qf7ohcfazWwQH9qfeq53Gh7RNkJZwvezxqUg68PYnscqVz1xtMvZR4j2HboCZ"
+  },
+  {
+    "createdOn": "2024-10-30T08:49:57.000Z",
+    "instruction": "deposit",
+    "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "tokenAmount": "1",
+    "usdValue": "0.99994099",
+    "transaction": "57KvZHPjcRunvw3HHBgCPbDyxaZubyfFhAGr5idkQiEmtQuNu9nJyoyJ7KBdHkZTVxXUPVSuD3vWQqgaMgoepCLC"
+  },
+  {
+    "createdOn": "2024-10-30T08:04:58.000Z",
+    "instruction": "withdraw",
+    "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "tokenAmount": "6.09",
+    "usdValue": "6.0896406291",
+    "transaction": "3YhSNJPqpmXYUw76fr7ZkWSkgXcTkgKLNTxKhb4dMhXmZi69NTP8BTdZ96Z6fvMqK5GdFMbR1nUDbjLg6edNAEYw"
+  }
+]
+```
+
+#### Get kvault metrics
+
+```http request
+GET https://api.kamino.finance/kvaults/:vaultPubkey/metrics
+```
+
+Example request:
+- https://api.kamino.finance/kvaults/6grCt9ChoQEJrR2e118z78PerPjF9GckYHZNnKDMfBKt/metrics
+
+Example response:
+
+```json
+{
+  "apy7d": "0.12",
+  "apy24h": "0.1",
+  "apy30d": "0.11",
+  "apy90d": "0.15",
+  "apy180d": "0.12525",
+  "apy365d": "0.12458939831489045",
+  "tokenPrice": "0.99951785",
+  "solPrice": "176.16243353",
+  "tokensAvailable": "5",
+  "tokensAvailableUsd": "4.99758925",
+  "tokensInvested": "0",
+  "tokensInvestedUsd": "0",
+  "sharePrice": "0.99951785",
+  "tokensPerShare": "1",
+  "apy": "0.060121900226019375",
+  "numberOfHolders": 1,
+  "sharesIssued": "5",
+  "cumulativeInterestEarned": "8",
+  "cumulativeInterestEarnedUsd": "6",
+  "cumulativeInterestEarnedSol": "4",
+  "interestEarnedPerSecond": "10",
+  "interestEarnedPerSecondUsd": "2",
+  "interestEarnedPerSecondSol": "11",
+  "cumulativePerformanceFees": "1",
+  "cumulativePerformanceFeesUsd": "7",
+  "cumulativePerformanceFeesSol": "5",
+  "cumulativeManagementFees": "12",
+  "cumulativeManagementFeesUsd": "9",
+  "cumulativeManagementFeesSol": "3"
+}
+```
+
+#### Get kvault metrics history
+
+```http request
+GET https://api.kamino.finance/kvaults/:vaultPubkey/metrics/history?start={date}&end=${date}
+```
+
+Example request:
+- https://api.kamino.finance/kvaults/6grCt9ChoQEJrR2e118z78PerPjF9GckYHZNnKDMfBKt/metrics/history?start=2024-10-20T00%3A00Z&end=2024-10-22T00%3A00Z'
+
+Example response:
+
+```json
+[
+  {
+    "timestamp": "2024-10-20T11:30:00.000Z",
+    "tvl": "4.99758925",
+    "apy": "0.060121900226019375"
+  },
+  {
+    "timestamp": "2024-10-20T11:35:00.000Z",
+    "tvl": "5.23758925",
+    "apy": "0.070121900226019375"
+  }
+]
 ```
