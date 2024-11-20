@@ -35,6 +35,7 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
     * [Airdrop](#airdrop)
     * [Tokens](#tokens)
     * [KVaults](#kvaults)
+    * [Limo](#limo)
 
 ## Development
 
@@ -3619,6 +3620,74 @@ Example response:
     "timestamp": "2024-10-20T11:35:00.000Z",
     "tvl": "5.23758925",
     "apy": "0.070121900226019375"
+  }
+]
+```
+
+### Limo
+
+#### Get all limo user transactions
+
+Get all instructions for the specified Limo user (maker).
+
+```http request
+// GET https://api.kamino.finance/limo/makers/:makerPubkey/transactions?env={cluster}
+```
+
+Example request:
+- https://api.kamino.finance/limo/makers/7bfsDRVpujyxzYcNWHnN3ietYb5XEsAidgdc9cintAuj/transactions?env=mainnet-beta
+
+Example response:
+
+```json
+[
+  {
+    "transactionSignature": "3DA1t96dsHaTjvDm9w6Z1dnBL5G21uq21wYK1mYxbDaBfxQnau2yCEkinn5LoaJPW3Ud12iPBQdfj7cuNtXzJ7qQ",
+    "ixName": "closeOrderAndClaimTip",
+    "order": "Bh5fXLmfh9WNZPfL3sp1RCa7itrV1BXQGoJcqRfkz3Hh",
+    "orderStatus": "Cancelled",
+    "orderType": "ExactIn",
+    "updatedOn": "2024-11-19T19:12:22.000Z",
+    "inMint": "So11111111111111111111111111111111111111112",
+    "outMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "initialInAmount": "0.01",
+    "remainingInAmount": "0.01",
+    "expectedOutAmount": "2.41",
+    "filledOutAmount": "0",
+    "numberOfFills": "0",
+    "totalFilled": "0",
+    "orderPriceInOut": "0.00414937759336099585",
+    "orderPriceOutIn": "241",
+    "executionPriceInOut": "0",
+    "executionPriceOutIn": "0",
+    "surplus": "0",
+    "tipAmount": "0",
+    "networkFee": "0.001138901",
+    "solPrice": "240.123"
+  },
+  {
+    "transactionSignature": "5Szg5BFsF8XCRCCN6NobRzSxBqoKEJXzkFs9L9473GRN21fm9d5zsdHpT4saPDgjuj4gxRW7CrJC3aFgvPDYdEAN",
+    "ixName": "createOrder",
+    "order": "Bh5fXLmfh9WNZPfL3sp1RCa7itrV1BXQGoJcqRfkz3Hh",
+    "orderStatus": "Active",
+    "orderType": "ExactIn",
+    "updatedOn": "2024-11-19T19:12:22.000Z",
+    "inMint": "So11111111111111111111111111111111111111112",
+    "outMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "initialInAmount": "0.01",
+    "remainingInAmount": "0.01",
+    "expectedOutAmount": "2.41",
+    "filledOutAmount": "0",
+    "numberOfFills": "0",
+    "totalFilled": "0",
+    "orderPriceInOut": "0.00414937759336099585",
+    "orderPriceOutIn": "241",
+    "executionPriceInOut": "0",
+    "executionPriceOutIn": "0",
+    "surplus": "0",
+    "tipAmount": "0",
+    "networkFee": "0.001125865",
+    "solPrice": "240.123"
   }
 ]
 ```
