@@ -3631,11 +3631,18 @@ Example response:
 Get all instructions for the specified Limo user (maker).
 
 ```http request
-// GET https://api.kamino.finance/limo/makers/:makerPubkey/transactions?env={cluster}
+// GET https://api.kamino.finance/limo/makers/:makerPubkey/transactions?env={cluster}&in={inTokenMint}&out={outTokenMint}
 ```
 
-Example request:
-- https://api.kamino.finance/limo/makers/7bfsDRVpujyxzYcNWHnN3ietYb5XEsAidgdc9cintAuj/transactions?env=mainnet-beta
+Query params:
+* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+* in: input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
+* out: output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+Example requests:
+- Fetch all txs for all pairs: https://api.kamino.finance/limo/makers/7bfsDRVpujyxzYcNWHnN3ietYb5XEsAidgdc9cintAuj/transactions?env=mainnet-beta
+- Fetch txs for SOL/USDC pair: https://api.kamino.finance/limo/makers/CBd9omWgziKgBhmAqrGREDJqsSvM1HrarEMzE89zawMa/transactions?env=mainnet-beta&in=So11111111111111111111111111111111111111112&out=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+- Fetch txs for SOL input token and any output token: https://api.kamino.finance/limo/makers/CBd9omWgziKgBhmAqrGREDJqsSvM1HrarEMzE89zawMa/transactions?env=mainnet-beta&in=So11111111111111111111111111111111111111112
 
 Example response:
 
