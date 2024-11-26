@@ -3698,3 +3698,235 @@ Example response:
   }
 ]
 ```
+
+#### Get limo maker metrics
+
+```http request
+// GET https://api.kamino.finance/limo/makers/:makerPubkey/metrics
+```
+
+Example request:
+- https://api.kamino.finance/limo/makers/CBd9omWgziKgBhmAqrGREDJqsSvM1HrarEMzE89zawMa/metrics
+
+Example response:
+
+```json
+{
+  "totalVolumeUsd": "500.123",
+  "totalOrders": 3,
+  "totalTipsSol": "0.000043296",
+  "totalTipsUsd": "1.24585",
+  "totalSurplusUsd": "38.385940",
+  "favoritePair": {
+    "inTokenPubkey": "So11111111111111111111111111111111111111112",
+    "outTokenPubkey": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "tradeCount": 6
+  }
+}
+```
+
+#### Get limo maker pair metrics
+
+```http request
+// GET https://api.kamino.finance/limo/makers/:makerPubkey/metrics/pair?in={inTokenMint}&out={outTokenMint}
+```
+
+Query params:
+* in: input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
+* out: output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+Example request:
+- https://api.kamino.finance/limo/makers/CBd9omWgziKgBhmAqrGREDJqsSvM1HrarEMzE89zawMa/metrics/pair?in=So11111111111111111111111111111111111111112&out=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+
+Example response:
+
+```json
+{
+  "totalVolumeUsd": "100.123",
+  "totalOrders": 2,
+  "totalTipsSol": "0.000043296",
+  "totalTipsUsd": "0.3248",
+  "totalSurplusUsd": "0.1"
+}
+```
+
+#### Get limo global metrics
+
+Get metrics for all trades
+
+```http request
+// GET https://api.kamino.finance/limo/metrics
+```
+
+Example request:
+- https://api.kamino.finance/limo/metrics
+
+Example response:
+
+```json
+{
+  "allTime": {
+    "totalVolumeUsd": "32179.204554150009005121121",
+    "totalSurplus": "0.01794400389018700094",
+    "totalSurplusUsd": "4.3134619210239461983798395146",
+    "totalTipAmount": "0.002224553",
+    "totalTipAmountUsd": "0.5417640091257365",
+    "totalTrades": "10"
+  },
+  "daily": {
+    "totalVolumeUsd": "1.598927244",
+    "totalSurplus": "0",
+    "totalSurplusUsd": "0",
+    "totalTipAmount": "0.000730568",
+    "totalTipAmountUsd": "0.182642",
+    "totalTrades": "1"
+  }
+}
+```
+
+#### Get limo pair metrics
+
+Get metrics for a specific token pair
+
+```http request
+// GET https://api.kamino.finance/limo/metrics/pair?in={inTokenMint}&out={outTokenMint}
+```
+
+Query params:
+* in: input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
+* out: output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+Example request:
+- https://api.kamino.finance/limo/metrics/pair?in=So11111111111111111111111111111111111111112&out=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+
+Example response:
+
+```json
+{
+  "allTime": {
+    "totalVolumeUsd": "32179.204554150009005121121",
+    "totalSurplus": "0.01794400389018700094",
+    "totalSurplusUsd": "4.3134619210239461983798395146",
+    "totalTipAmount": "0.002224553",
+    "totalTipAmountUsd": "0.5417640091257365",
+    "totalTrades": "10"
+  },
+  "daily": {
+    "totalVolumeUsd": "1.598927244",
+    "totalSurplus": "0",
+    "totalSurplusUsd": "0",
+    "totalTipAmount": "0.000730568",
+    "totalTipAmountUsd": "0.182642",
+    "totalTrades": "1"
+  }
+}
+```
+
+#### Get limo weekly leaderboard metrics
+
+```http request
+// GET https://api.kamino.finance/limo/leaderboard/weekly/metrics
+```
+
+Example request:
+- https://api.kamino.finance/limo/leaderboard/weekly/metrics
+
+Example response:
+
+```json
+{
+  "weeklyVolumeUsd": "1.598927244",
+  "weeklyTickets": "0.001598927244",
+  "weeklyTipsUsd": "0.182642",
+  "weeklySurplusUsd": "0"
+}
+```
+
+#### Get limo weekly leaderboard
+
+```http request
+GET https://api.kamino.finance/limo/weekly/leaderboard?offset={offset}&limit=${limit}
+```
+
+Example requests:
+- get first 20 leaderboard ranks: https://api.kamino.finance/limo/weekly/leaderboard?offset=0&limit=20
+- get leaderboard ranks between 100-200: https://api.kamino.finance/limo/weekly/leaderboard?offset=100&limit=100
+
+To implement pagination fetch the first page (offset = 0, limit = 20 for example) and then look at the property `totalLeaderboardCount` to calculate the amount of pages you will display.
+
+Example response:
+
+```json
+{
+  "totalLeaderboardCount": 9,
+  "leaderboard": [
+    {
+      "rank": 1,
+      "maker": "tsTSFNQsjqKArV5SvtEVePkZ6Crbkf65KhgmniyrFkV",
+      "volumeUsd": "23.57484499976425155",
+      "tickets": "0.02357484499976425155",
+      "tipsUsd": "0",
+      "surplusUsd": "0"
+    },
+    {
+      "rank": 2,
+      "maker": "4RHjaQ2c6mFVsjyu7nR4o69QTVn8hS6yn4WTspwR2R19",
+      "volumeUsd": "1.59892724398401072756",
+      "tickets": "0.00159892724398401073",
+      "tipsUsd": "0.1754275283464144",
+      "surplusUsd": "0"
+    },
+    {
+      "rank": 3,
+      "maker": "AoDMpV5zPYP9trk6d52ZU5nqpYRKHtHYmnoABxapDXQR",
+      "volumeUsd": "0.09549704199904502958",
+      "tickets": "0.00009549704199904502958",
+      "tipsUsd": "0.0044768876250952",
+      "surplusUsd": "0.000000003151099999968489"
+    }
+  ]
+}
+```
+
+#### Get last 500 limo trades
+
+Get last 500 limo trades (fills)
+
+```http request
+// GET https://api.kamino.finance/limo/trades?in={inTokenMint:optional}&out={outTokenMint:optional}
+```
+
+Query params:
+* in (optional): input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
+* out (optional): output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+If no query params are used, it will return trades for all pairs.
+
+Example request:
+- Get all trades: https://api.kamino.finance/limo/trades
+- Get SOL -> USDC trades: https://api.kamino.finance/limo/trades?in=So11111111111111111111111111111111111111112&out=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+
+Example response:
+
+```json
+[
+  {
+    "updatedOn": "2024-11-26T09:30:33.000Z",
+    "inMint": "So11111111111111111111111111111111111111112",
+    "outMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "sizeUsd": "23.94585489",
+    "tipAmountUsd": "0.001",
+    "surplusUsd": "0.01",
+    "order": "FqWpdGoN1CS21FVQG4weL9ndon9cfzhWDZmrScfALN8x"
+  },
+  {
+    "updatedOn": "2024-11-22T14:44:18.000Z",
+    "inMint": "So11111111111111111111111111111111111111112",
+    "outMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "sizeUsd": "119.72927445",
+    "tipAmountUsd": "0.0021632847358122",
+    "surplusUsd": "0.48982",
+    "order": "G1VtPA6y7EMWQSgRUv13L9LSTSgFtcZYij8cXNQddXue"
+  }
+]
+```
