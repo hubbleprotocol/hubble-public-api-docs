@@ -630,6 +630,36 @@ Example response (please note APR/APY is in decimal format, not in percentage, m
 ]
 ```
 
+#### Get USDs rewards yield
+
+Wrapper over Allez API
+
+```http request
+GET https://api.hubbleprotocol.io/yields/usds-rewards
+```
+
+Example request:
+- https://api.kamino.finance/yields/usds-rewards
+
+Example response:
+
+```json
+{
+  "timestamp_hour": "2024-11-28 14:00:00",
+  "usds_balance_total": 58012704.78112555,
+  "usds_flagged_addresses": 452091.5947593333,
+  "usds_total_supply": 58464796.37588488,
+  "bridged_usds_total": 159993178.337911,
+  "effective_bridged_usds_total": 155287132.57078904,
+  "net_usds_supply_in_kamino_total": 35401432.65644375,
+  "effective_usds_balance_total": 34337023.08437288,
+  "hourly_rewards_per_unit": 0.000017335168915938846,
+  "per_unit_rewards_apr": 0.1518560797036242,
+  "per_unit_rewards_apy": 0.163991170143378,
+  "accrued_rewards_total": 129166.66666666612
+}
+```
+
 ### Stability
 
 You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
