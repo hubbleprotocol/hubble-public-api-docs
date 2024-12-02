@@ -3194,6 +3194,8 @@ Total positions value and total returns are both in USD.
 
 ### Raydium
 
+:warning: **DEPRECATED, PLEASE USE /v2/raydium INSTEAD!** :warning:
+
 These endpoints use Raydium's API directly and cache their responses to avoid rate-limits.
 
 #### Get AMM Pools
@@ -3211,6 +3213,28 @@ GET https://api.hubbleprotocol.io/raydium/positionLine/:poolPubkey
 ```
 
 Example request: https://api.hubbleprotocol.io/raydium/positionLine/2QdhepnKRTLjjSqPL1PtKNwqrUkoLee5Gqs8bvZhRdMv
+
+### Raydium V2
+
+This is a backwards compatible v2 endpoint that uses the new Raydium API.
+
+These endpoints use Raydium's API directly and cache their responses to avoid rate-limits.
+
+#### Get AMM Pools
+
+```http request
+GET https://api.kamino.finance/v2/raydium/ammPools
+```
+
+Example request: https://api.kamino.finance/v2/raydium/ammPools
+
+#### Get pool liquidity distribution
+
+```http request
+GET https://api.kamino.finance/v2/raydium/positionLine/:poolPubkey
+```
+
+Example request: https://api.kamino.finance/v2/raydium/positionLine/2QdhepnKRTLjjSqPL1PtKNwqrUkoLee5Gqs8bvZhRdMv
 
 ### Points
 
