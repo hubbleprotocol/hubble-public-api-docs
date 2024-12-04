@@ -825,7 +825,7 @@ GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7V
 #### Get strategy state history v2:
 
 ```http request
-GET https://api.hubbleprotocol.io/v2/strategies/:strategyPubkey/history?env={cluster}&start={start}&end={end}&frequency={frequency}
+GET https://api.hubbleprotocol.io/v2/strategies/:strategyPubkey/history?env={cluster}&start={start}&end={end}&frequency={frequency}&includePerfFee={true/false}
 ```
 
 Query params:
@@ -833,6 +833,7 @@ Query params:
 * start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z` (optional, default since beginning of strategy)
 * end: end date (exclusive), e.g. `2023-05-02T00:00:00.000Z` (optional, default now)
 * frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
+* includePerfFee: add perfFee field to the response (optional, default false)
 
 
 Example requests:
