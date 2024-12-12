@@ -3985,3 +3985,119 @@ Example response:
   }
 ]
 ```
+
+#### Bulk get Limo transactions
+
+This endpoint is not open to the public, it is private for analytical purposes only, add authorization headers to the request.
+
+```http request
+POST https://api.kamino.finance/limo/transactions
+```
+
+```json
+{
+    "start": "2024-01-01T00:00Z",
+    "end": "2024-01-02T00:00Z",
+    "paginationToken": ""
+}
+```
+
+Example cURL request:
+```bash
+curl --location 'https://api.kamino.finance/limo/transactions' --header 'Content-Type: application/json' --header 'Authorization: Basic ENTER_CREDENTIALS' --data '{
+    "start": "2024-01-01",
+    "end": "2024-01-02",
+    "paginationToken": ""
+}'
+```
+
+Example Python request:
+```python
+import requests
+import json
+
+url = "https://api.kamino.finance/limo/transactions"
+
+payload = json.dumps({
+  "start": "2024-01-01",
+  "end": "2024-01-02",
+  "paginationToken": ""
+})
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic ADD-CREDENTIALS-HERE'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+Example response:
+```json
+{
+  "result": [
+    {
+      "maker": "DAnimibJrqNQd8NEjEWKwcB8VZzTKT3DWvFvfHjufDF",
+      "taker": null,
+      "transactionSignature": "3DYGcEUzzzyYXX7sHEM5Ras7CDzdRdEnMdzEjayqZXJMH6a7KGqaV8jw6SN15PAkM2pPBhqGT7N5DRSDXhyqcfUL",
+      "ixName": "createOrder",
+      "initialInAmount": "0.001",
+      "remainingInAmount": "0.001",
+      "expectedOutAmount": "0.000004062",
+      "cumulativeFilledOutAmount": "0",
+      "lastFilledOutAmount": "0",
+      "numberOfFills": "0",
+      "volumeUsd": "0",
+      "fillRatio": "0",
+      "orderPriceInOut": "246.1841457410142787",
+      "orderPriceOutIn": "0.004062",
+      "executionPriceInOut": "0",
+      "executionPriceOutIn": "0",
+      "surplus": "0",
+      "tipAmount": "0",
+      "networkFee": "0.000288189",
+      "solPrice": "0",
+      "inTokenPrice": "0",
+      "outTokenPrice": "0",
+      "updatedOn": "2024-11-28T12:01:25.000Z",
+      "orderStatus": "Active",
+      "inMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "outMint": "So11111111111111111111111111111111111111112",
+      "orderPubkey": "BvaSkA7RN3XW3ApxxouZtZNCb6yKdBtSir3xncCsCMCV",
+      "orderType": "ExactIn"
+    },
+    {
+      "maker": "DAnimibJrqNQd8NEjEWKwcB8VZzTKT3DWvFvfHjufDF",
+      "taker": "76qh9UEKv8We4Um5bznSPvn2jkNrckq2hKeNQt8JNNKQ",
+      "transactionSignature": "5tPfMkqgZd6QA8sCnR9mmcnFMu9z1qCLwevUmkAszN61QxPMepSdBeEX39pZqKJvhAXtNi2A7SKgQrJiQSdv1WQt",
+      "ixName": "takeOrder",
+      "initialInAmount": "0.001",
+      "remainingInAmount": "0",
+      "expectedOutAmount": "0.000004062",
+      "cumulativeFilledOutAmount": "0.000004062",
+      "lastFilledOutAmount": "0.000004062",
+      "numberOfFills": "1",
+      "volumeUsd": "0",
+      "fillRatio": "1",
+      "orderPriceInOut": "246.1841457410142787",
+      "orderPriceOutIn": "0.004062",
+      "executionPriceInOut": "246.1841457410142787",
+      "executionPriceOutIn": "0.004062",
+      "surplus": "0",
+      "tipAmount": "0.000000047",
+      "networkFee": "0.00025",
+      "solPrice": "0",
+      "inTokenPrice": "0",
+      "outTokenPrice": "0",
+      "updatedOn": "2024-11-28T13:03:36.000Z",
+      "orderStatus": "Filled",
+      "inMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "outMint": "So11111111111111111111111111111111111111112",
+      "orderPubkey": "HtT3sFFRC1ScVzxLfXURu3sRha8TBwZbuYVrV8EBSn18",
+      "orderType": "ExactIn"
+    }
+  ],
+  "paginationToken": "eyJsYXN0SWQiOjEwNjU3fQ=="
+}
+```
