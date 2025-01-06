@@ -630,7 +630,9 @@ Example response (please note APR/APY is in decimal format, not in percentage, m
 ]
 ```
 
-#### Get USDs rewards yield
+#### Get USDs rewards yield 
+
+:warning: **DEPRECATED, THIS ENDPOINT IS NO LONGER AVAILABLE** :warning:
 
 Wrapper over Allez API
 
@@ -642,7 +644,6 @@ Example request:
 - https://api.kamino.finance/yields/usds-rewards
 
 Example response:
-
 ```json
 {
   "timestamp_hour": "2024-11-28 14:00:00",
