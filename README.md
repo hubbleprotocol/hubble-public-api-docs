@@ -3680,6 +3680,88 @@ Example response:
 ]
 ```
 
+#### Get user vault metrics history
+
+Get timeseries of usd/sol/interest/apy... of specific kvault user position.
+
+```http request
+GET https://api.kamino.finance/kvaults/:vaultPubkey/users/:userPubkey/metrics/history?start={date}&end=${date}
+```
+
+Example request:
+- https://api.kamino.finance/kvaults/GJZhNhQHFn3NpLhPgQjeyivNzAn548rGYg4EcuaxeCEf/users/sadmBTQm5HJsyzWHEjV4YwG9CiahZKVDVqAyS4Wx1zH/metrics/history?start=2024-10-20T00%3A00Z&end=2024-10-22T00%3A00Z'
+
+Example response:
+
+```json
+[
+  {
+    "createdOn": "2025-01-14T11:53:54.734Z",
+    "sharesAmount": "1",
+    "usdAmount": "1.001009996801491595755991446853909208564",
+    "solAmount": "0.005352941291953978820943628975408093773161",
+    "apy": "0.07502216110843518",
+    "cumulativeInterestEarned": "0",
+    "cumulativeInterestEarnedUsd": "0",
+    "cumulativeInterestEarnedSol": "0",
+    "interestEarnedPerSecond": "0",
+    "interestEarnedPerSecondUsd": "0",
+    "interestEarnedPerSecondSol": "0"
+  },
+  {
+    "createdOn": "2025-01-14T11:54:25.530Z",
+    "sharesAmount": "1",
+    "usdAmount": "1.001004212610976305808977819266756417541",
+    "solAmount": "0.005350380274689194798426453878491338313099",
+    "apy": "0.07502220627483847",
+    "cumulativeInterestEarned": "0.000000002024844825466749284216827600944849020349",
+    "cumulativeInterestEarnedUsd": "0.00000000202470104123569289035015536401690592662",
+    "cumulativeInterestEarnedSol": "0.00000000001082205287120021365776673941575854315707",
+    "interestEarnedPerSecond": "0.00000000006575025410659661267230153856437081675242",
+    "interestEarnedPerSecondUsd": "0.00000000006574558518105250324683567843211736078072",
+    "interestEarnedPerSecondSol": "0.0000000000003514109907520526580023154776522543481129"
+  }
+]
+```
+
+#### Get user total metrics history
+
+Get timeseries of total usd/sol/interest/apy of all user kvault positions.
+
+```http request
+GET https://api.kamino.finance/kvaults/users/:userPubkey/metrics/history?start={date}&end=${date}
+```
+
+Example request:
+- https://api.kamino.finance/kvaults/users/sadmBTQm5HJsyzWHEjV4YwG9CiahZKVDVqAyS4Wx1zH/metrics/history?start=2024-10-20T00%3A00Z&end=2024-10-22T00%3A00Z'
+
+Example response:
+
+```json
+[
+  {
+    "createdOn": "2025-01-14T11:53:41.210Z",
+    "usdAmount": "3.289742433439577096054433205125205428826",
+    "solAmount": "0.01759203021760035613791855718659833263546",
+    "weightedApy": "0.04573439694192186076452675960806281533141",
+    "cumulativeInterestEarnedUsd": "0",
+    "cumulativeInterestEarnedSol": "0",
+    "interestEarnedPerSecondUsd": "0",
+    "interestEarnedPerSecondSol": "0"
+  },
+  {
+    "createdOn": "2025-01-14T11:54:25.530Z",
+    "usdAmount": "3.289908683294689302333866319938107452865",
+    "solAmount": "0.01758460384368975125597048731253291655472",
+    "weightedApy": "0.04590131297089078620453886143250344888991",
+    "cumulativeInterestEarnedUsd": "0.00000007792300015875231989706197228607687055565",
+    "cumulativeInterestEarnedSol": "0.0000000004164994290149102036996178990966197185186",
+    "interestEarnedPerSecondUsd": "0.000000002530296147511115725938296013257035461894",
+    "interestEarnedPerSecondSol": "0.00000000001352446515829686334893879082828573239386"
+  }
+]
+```
+
 ### Limo
 
 #### Get all limo user transactions
