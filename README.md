@@ -3762,6 +3762,183 @@ Example response:
 ]
 ```
 
+#### Get user vault pnl
+
+```http request
+GET https://api.kamino.finance/kvaults/:vaultPubkey/users/:userPubkey/pnl
+```
+
+Example request:
+- https://api.kamino.finance/kvaults/GJZhNhQHFn3NpLhPgQjeyivNzAn548rGYg4EcuaxeCEf/users/sadmBTQm5HJsyzWHEjV4YwG9CiahZKVDVqAyS4Wx1zH/pnl
+
+Example response:
+
+```json
+{
+  "totalCostBasis": {
+    "token": "1.020063426210193217882166040928",
+    "sol": "0.025288434916229183793264807637",
+    "usd": "6.000060406018646063098648036787"
+  },
+  "totalPnl": {
+    "token": "4.991144525511436482070882061898",
+    "sol": "-0.00173901651987720818426570281",
+    "usd": "0.011449308342160062665337709055"
+  }
+}
+```
+
+#### Get user vault pnl history
+
+```http request
+GET https://api.kamino.finance/kvaults/:vaultPubkey/users/:userPubkey/pnl/history
+```
+
+Example request:
+- https://api.kamino.finance/kvaults/GJZhNhQHFn3NpLhPgQjeyivNzAn548rGYg4EcuaxeCEf/users/sadmBTQm5HJsyzWHEjV4YwG9CiahZKVDVqAyS4Wx1zH/pnl/history
+
+Example response:
+
+```json
+{
+  "history": [
+    {
+      "timestamp": "2025-01-15T10:04:43.000Z",
+      "type": "buy",
+      "position": "0.999965",
+      "quantity": "0.999965",
+      "tokenPrice": {
+        "token": "0.99999698",
+        "sol": "189.10328327",
+        "usd": "1"
+      },
+      "sharePrice": {
+        "token": "1.000098429655231150972450076681",
+        "sol": "0.005288620017929811336661590793",
+        "usd": "1.000095409357973592174374139882"
+      },
+      "investment": {
+        "token": "1.000063426210193217882166040928",
+        "sol": "0.005288434916229183793264807637",
+        "usd": "1.000060406018646063098648036787"
+      },
+      "costBasis": {
+        "token": "1.000063426210193217882166040928",
+        "sol": "0.005288434916229183793264807637",
+        "usd": "1.000060406018646063098648036787"
+      },
+      "realizedPnl": {
+        "token": "0",
+        "sol": "0",
+        "usd": "0"
+      },
+      "pnl": {
+        "token": "0",
+        "sol": "0",
+        "usd": "0"
+      },
+      "positionValue": {
+        "token": "1.000063426210193217882166040928",
+        "sol": "0.005288434916229183793264807637",
+        "usd": "1.000060406018646063098648036787"
+      }
+    },
+    {
+      "timestamp": "2025-01-14T22:34:04.000Z",
+      "type": "sell",
+      "position": "5.999965",
+      "quantity": "5",
+      "tokenPrice": {
+        "token": "250",
+        "sol": "250",
+        "usd": "1"
+      },
+      "sharePrice": {
+        "token": "0.004",
+        "sol": "0.004",
+        "usd": "1"
+      },
+      "investment": {
+        "token": "1.020063426210193217882166040928",
+        "sol": "0.025288434916229183793264807637",
+        "usd": "6.000060406018646063098648036787"
+      },
+      "costBasis": {
+        "token": "1.020063426210193217882166040928",
+        "sol": "0.025288434916229183793264807637",
+        "usd": "6.000060406018646063098648036787"
+      },
+      "realizedPnl": {
+        "token": "0",
+        "sol": "0",
+        "usd": "0"
+      },
+      "pnl": {
+        "token": "-0.996063566210193217882166040928",
+        "sol": "-0.001288574916229183793264807637",
+        "usd": "-0.000095406018646063098648036787"
+      },
+      "positionValue": {
+        "token": "0.02399986",
+        "sol": "0.02399986",
+        "usd": "5.999965"
+      }
+    },
+    {
+      "timestamp": 1737712924618,
+      "type": "mark-to-market",
+      "position": "5.999965",
+      "quantity": "5.999965",
+      "tokenPrice": {
+        "token": "0.99998362",
+        "sol": "264.07338454",
+        "usd": "1"
+      },
+      "sharePrice": {
+        "token": "1.0019723663536509348902348102",
+        "sol": "0.003794233015158408519892261112",
+        "usd": "1.001955954046290062087921308153"
+      },
+      "investment": {
+        "token": "1.020063426210193217882166040928",
+        "sol": "0.025288434916229183793264807637",
+        "usd": "6.000060406018646063098648036787"
+      },
+      "costBasis": {
+        "token": "1.020063426210193217882166040928",
+        "sol": "0.025288434916229183793264807637",
+        "usd": "6.000060406018646063098648036787"
+      },
+      "realizedPnl": {
+        "token": "0",
+        "sol": "0",
+        "usd": "0"
+      },
+      "pnl": {
+        "token": "4.991735702878890013676521662053",
+        "sol": "-0.002523169623434263218209437191",
+        "usd": "0.01164024980070268927670673489"
+      },
+      "positionValue": {
+        "token": "6.011799129089083231558687702982",
+        "sol": "0.022765265292794920575055370446",
+        "usd": "6.011700655819348752375354771677"
+      }
+    }
+  ],
+  "totalPnl": {
+    "token": "4.991735702878890013676521662053",
+    "sol": "-0.002523169623434263218209437191",
+    "usd": "0.01164024980070268927670673489"
+  },
+  "totalCostBasis": {
+    "token": "1.020063426210193217882166040928",
+    "sol": "0.025288434916229183793264807637",
+    "usd": "6.000060406018646063098648036787"
+  }
+}
+```
+
 ### Limo
 
 #### Get all limo user transactions
