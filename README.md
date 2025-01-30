@@ -36,6 +36,7 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
     * [Tokens](#tokens)
     * [KVaults](#kvaults)
     * [Limo](#limo)
+    * [Slot](#slot)
 
 ## Development
 
@@ -4359,5 +4360,26 @@ Example response:
     }
   ],
   "paginationToken": "eyJsYXN0SWQiOjEwNjU3fQ=="
+}
+```
+
+### Slot
+
+#### Get recent slot duration
+
+Fetch median slot duration (in milliseconds) from the last 10 epochs.
+
+```http request
+// GET https://api.kamino.finance/slots/duration
+```
+
+Example request:
+- https://api.kamino.finance/slots/duration
+
+Example response:
+
+```json
+{
+    "recentSlotDurationInMs": 441
 }
 ```
