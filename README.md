@@ -37,6 +37,7 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
     * [KVaults](#kvaults)
     * [Limo](#limo)
     * [Slot](#slot)
+    * [Data](#data)
 
 ## Development
 
@@ -4382,4 +4383,43 @@ Example response:
 {
     "recentSlotDurationInMs": 441
 }
+```
+
+### Data
+
+#### Get owner net value history
+
+```http request
+GET https://api.kamino.finance/owners/:ownerPubkey/net-values/history?start={date}&end=${date}
+```
+
+Example request:
+- https://api.kamino.finance/owners/DAnimibJrqNQd8NEjEWKwcB8VZzTKT3DWvFvfHjufDF/net-values/history?start=2025-02-25T00:00Z&end=2025-02-26T15:00Z
+
+Example response:
+
+```json
+[
+    {
+        "createdOn": "2025-02-25T20:00:42.414Z",
+        "klendUsd": "12106.302965",
+        "strategiesUsd": "31.398135",
+        "kvaultsUsd": "0.200337",
+        "stakingUsd": "3854.553228"
+    },
+    {
+        "createdOn": "2025-02-25T20:06:18.801Z",
+        "klendUsd": "12127.114367",
+        "strategiesUsd": "31.251037",
+        "kvaultsUsd": "0.200329",
+        "stakingUsd": "3837.520045"
+    },
+    {
+        "createdOn": "2025-02-26T10:47:33.799Z",
+        "klendUsd": "11807.027686",
+        "strategiesUsd": "31.500079",
+        "kvaultsUsd": "0.20034",
+        "stakingUsd": "3893.594326"
+    }
+]
 ```
