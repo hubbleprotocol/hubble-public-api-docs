@@ -1,43 +1,44 @@
-# 🛰 Hubble Public API 
+# 🛰 Hubble Public API
 
-Hubble Public API is a TypeScript API (using Express) that serves public data of the Hubble Protocol.  
+Hubble Public API is a TypeScript API (using Express) that serves public data of the Hubble Protocol.
 
 ## Table of contents
 
 - [Development](#development)
-    * [Database](#database)
-    * [Local API Setup](#local-api-setup)
-    * [Tests](#tests)
-    * [Deployment](#deployment)
+  - [Database](#database)
+  - [Local API Setup](#local-api-setup)
+  - [Tests](#tests)
+  - [Deployment](#deployment)
 - [Usage](#usage)
-    * [Metrics](#metrics)
-    * [Metrics History](#metrics-history)
-    * [Config](#config)
-    * [IDL](#idl)
-    * [Circulating Supply Value (HBB)](#circulating-supply-value-hbb)
-    * [Circulating Supply (HBB)](#circulating-supply-hbb)
-    * [API Version](#api-version)
-    * [Maintenance mode](#maintenance-mode)
-    * [Borrowing version](#borrowing-version)
-    * [Loans](#loans)
-    * [Staking](#staking)
-    * [Stability](#stability)
-    * [Strategies (Kamino)](#strategies-kamino)
-    * [Whirlpools (Kamino)](#whirlpools-kamino)
-    * [Prices](#prices)
-    * [Borrowing Market State](#borrowing-market-state)
-    * [Transactions](#transactions)
-    * [Kamino Lending](#kamino-lending)
-    * [Trades](#trades)
-    * [Simulator](#simulator)
-    * [Leaderboard](#leaderboard)
-    * [Points](#points)
-    * [Airdrop](#airdrop)
-    * [Tokens](#tokens)
-    * [KVaults](#kvaults)
-    * [Limo](#limo)
-    * [Slot](#slot)
-    * [Data](#data)
+  - [Metrics](#metrics)
+  - [Metrics History](#metrics-history)
+  - [Config](#config)
+  - [IDL](#idl)
+  - [Circulating Supply Value (HBB)](#circulating-supply-value-hbb)
+  - [Circulating Supply (HBB)](#circulating-supply-hbb)
+  - [API Version](#api-version)
+  - [Maintenance mode](#maintenance-mode)
+  - [Borrowing version](#borrowing-version)
+  - [Loans](#loans)
+  - [Staking](#staking)
+  - [Stability](#stability)
+  - [Strategies (Kamino)](#strategies-kamino)
+  - [Whirlpools (Kamino)](#whirlpools-kamino)
+  - [Prices](#prices)
+  - [Borrowing Market State](#borrowing-market-state)
+  - [Transactions](#transactions)
+  - [Kamino Lending](#kamino-lending)
+  - [Trades](#trades)
+  - [Simulator](#simulator)
+  - [Leaderboard](#leaderboard)
+  - [Points](#points)
+  - [Airdrop](#airdrop)
+  - [Tokens](#tokens)
+  - [KVaults](#kvaults)
+  - [Limo](#limo)
+  - [Slot](#slot)
+  - [Data](#data)
+  - [KSwap](#kswap)
 
 ## Development
 
@@ -60,17 +61,16 @@ docker-compose up db flyway
 ```
 
 ### Local API Setup
+
 You will need to use [yarn](https://www.yarnpkg.com/) to install the dependencies.
 
-We are using private nodes without rate limit for fetching mainnet-beta and devnet chain data.
-You will have to add an `.env` file in the root of this repository with the correct environment variables inside.
-Please take a look at the example `.env.example` file:
+We are using private nodes without rate limit for fetching mainnet-beta and devnet chain data. You will have to add an `.env` file in the root of this repository with the correct environment variables inside. Please take a look at the example `.env.example` file:
 
 ```shell
 cd hubble-public-api
 cp .env.example .env
 # edit .env with actual endpoints with your favorite editor
-# nano .env  
+# nano .env
 # code .env
 # ...
 ```
@@ -95,6 +95,7 @@ docker-compose up -d
 API will be available at http://localhost:8888.
 
 Some routes are protected by basic authentication - for local dev API you can use these credentials:
+
 - user: `hubble`
 - password: `development`
 
@@ -123,7 +124,7 @@ Deployments are done automatically, everything that gets pushed to the `master` 
 
 ## Cache
 
-We cache all the endpoint responses with Redis. 
+We cache all the endpoint responses with Redis.
 
 ### Local development cache
 
@@ -142,7 +143,7 @@ for port in {7001..7006}; do value=$(redis-cli -c -h localhost -p $port GET stra
 # delete specific redis key:
 for port in {7001..7006}; redis-cli -c -h localhost -p $port DEL strategies-leaderboard-mainnet-beta; done
 # check when a specific redis key will expire:
-for port in {7001..7006}; do redis-cli -c -h localhost -p $port TTL staking-yields-v2; done 
+for port in {7001..7006}; do redis-cli -c -h localhost -p $port TTL staking-yields-v2; done
 # clear entire cache in the cluster - delete all redis keys (useful when testing locally, not enabled in production)
 for port in {7001..7006}; do redis-cli -c -h localhost -p $port FLUSHALL; done
 ```
@@ -154,8 +155,9 @@ for port in {7001..7006}; do redis-cli -c -h localhost -p $port FLUSHALL; done
 Make sure you have everything required to access the Kubernetes clusters: [Developer Setup](https://github.com/hubbleprotocol/hubble-infrastructure/blob/6e53b122a6b74a6a53c019b9fadd3364ffb4c718/README.md#L8).
 
 To access the production redis cache:
+
 ```shell
-# connect to the prod kubernetes cluster 
+# connect to the prod kubernetes cluster
 export NAME=k8s.hubbleprotocol.io
 export KOPS_STATE_STORE=s3://k8s.hubbleprotocol.io-kops-state-store
 kops export kubecfg k8s.hubbleprotocol.io --admin
@@ -170,7 +172,7 @@ redis-cli -p 6380
 A very common use case is to clear certain redis keys in production to force a refresh:
 
 ```shell
-# the commands below support wildcard (*) usage 
+# the commands below support wildcard (*) usage
 
 # WARNING - POTENTIALLY DANGEROUS, DOUBLE CHECK BEFORE EXECUTING, MAKE A BACKUP IF NECESSARY
 
@@ -182,7 +184,6 @@ redis-cli -p 6380 KEYS "*transactions*" | xargs redis-cli DEL
 # clear all redis keys that start with "strategies" in their name
 redis-cli -p 6380 KEYS "strategies*" | xargs redis-cli DEL
 ```
-
 
 ## Usage
 
@@ -214,8 +215,7 @@ You may also specify the environment (`mainnet-beta`[default],`devnet`,`localnet
 GET https://api.hubbleprotocol.io/history?env=devnet
 ```
 
-History endpoint will only return the historical data of the current year by default.
-**Warning:** the maximum allowed period for the history endpoint is 1 year per request.
+History endpoint will only return the historical data of the current year by default. **Warning:** the maximum allowed period for the history endpoint is 1 year per request.
 
 ```http request
 GET https://api.hubbleprotocol.io/history?year=2022
@@ -247,8 +247,9 @@ GET https://api.hubbleprotocol.io/idl
 
 ### Circulating Supply Value HBB
 
-#### Get circulating supply value of HBB (number of HBB issued * HBB price).
-This is also included in the `/metrics` endpoint, but we need this for external services like CoinMarketCap. 
+#### Get circulating supply value of HBB (number of HBB issued \* HBB price).
+
+This is also included in the `/metrics` endpoint, but we need this for external services like CoinMarketCap.
 
 ```http request
 GET https://api.hubbleprotocol.io/circulating-supply-value
@@ -263,6 +264,7 @@ GET https://api.hubbleprotocol.io/circulating-supply-value?env=devnet
 ### Circulating Supply HBB
 
 #### Get circulating supply of HBB (number of HBB issued).
+
 This is also included in the `/metrics` endpoint, but we need this for external services like CoinGecko.
 
 ```http request
@@ -285,7 +287,7 @@ GET https://api.hubbleprotocol.io/version
 
 ### Maintenance mode
 
-#### Get maintenance mode parameter that specifies if Hubble webapp/smart contracts are in maintenance mode.  
+#### Get maintenance mode parameter that specifies if Hubble webapp/smart contracts are in maintenance mode.
 
 ```http request
 GET https://api.hubbleprotocol.io/maintenance-mode
@@ -316,7 +318,7 @@ GET https://api.hubbleprotocol.io/loans?env=mainnet-beta
 GET https://api.hubbleprotocol.io/loans/HrwbdQYwSnAyVpVHuGQ661HiNbWmGjDp5DdDR9YMw7Bu
 ```
 
-#### Get a specific user's list of loans by specifying their public key: 
+#### Get a specific user's list of loans by specifying their public key:
 
 ```http request
 // GET https://api.hubbleprotocol.io/owners/:pubkey/loans
@@ -365,7 +367,8 @@ GET https://api.hubbleprotocol.io/staking/usdh/users
 GET https://api.hubbleprotocol.io/staking/lido
 ```
 
-#### Get eligible loans for LIDO staking rewards for a specified month and year. 
+#### Get eligible loans for LIDO staking rewards for a specified month and year.
+
 Months are to be input from 1 (January) - 12 (December) and years from 2022 and above.
 
 ```http request
@@ -373,6 +376,7 @@ GET https://api.hubbleprotocol.io/staking/lido/eligible-loans/years/2022/months/
 ```
 
 #### Get single loan data for LIDO staking rewards for a specified month and year.
+
 Months are to be input from 1 (January) - 12 (December) and years from 2022 and above.
 
 ```http request
@@ -381,10 +385,10 @@ GET https://api.hubbleprotocol.io/staking/lido/eligible-loans/6Hfhr9d9NRkhiPLbpR
 ```
 
 #### Get eligible loans for LIDO staking rewards for a specified time interval (start date is inclusive, end date is exclusive).
+
 If no start/end date is specified it will use `start date: today - 14 days` and `end date = today`.
 
-Please note: This route is not exposed to the public and requires basic authentication.
-Please use the route above to get monthly data instead.
+Please note: This route is not exposed to the public and requires basic authentication. Please use the route above to get monthly data instead.
 
 ```http request
 GET https://api.hubbleprotocol.io/staking/lido/eligible-loans?env=devnet&start=2022-06-01&end=2022-07-01
@@ -398,23 +402,22 @@ GET https://api.hubbleprotocol.io/staking/lido/eligible-loans?env=devnet&start=2
 GET https://api.hubbleprotocol.io/staking-yields
 ```
 
-Example request:
-https://api.hubbleprotocol.io/staking-yields
+Example request: https://api.hubbleprotocol.io/staking-yields
 
 Example response:
 
 ```json
 [
-    {
-        "apy": "0.076269480000000005",
-        "token": "cgntSOL",
-        "tokenMint": "CgnTSoL3DgY9SFHxcLj6CgCgKKoTBr6tp4CPAEWy25DE"
-    },
-    {
-        "apy": "6.88",
-        "token": "LDO",
-        "tokenMint": "HZRCwxP2Vq9PCpPXooayhJ2bxTpo5xfpQrwB1svh332p"
-    }
+  {
+    "apy": "0.076269480000000005",
+    "token": "cgntSOL",
+    "tokenMint": "CgnTSoL3DgY9SFHxcLj6CgCgKKoTBr6tp4CPAEWy25DE"
+  },
+  {
+    "apy": "6.88",
+    "token": "LDO",
+    "tokenMint": "HZRCwxP2Vq9PCpPXooayhJ2bxTpo5xfpQrwB1svh332p"
+  }
 ]
 ```
 
@@ -424,8 +427,7 @@ Example response:
 GET https://api.hubbleprotocol.io/v2/staking-yields
 ```
 
-Example request:
-https://api.hubbleprotocol.io/v2/staking-yields
+Example request: https://api.hubbleprotocol.io/v2/staking-yields
 
 Example response:
 
@@ -460,8 +462,7 @@ Example response:
 GET https://api.hubbleprotocol.io/v2/staking-yields/median
 ```
 
-Example request:
-https://api.hubbleprotocol.io/v2/staking-yields/median
+Example request: https://api.hubbleprotocol.io/v2/staking-yields/median
 
 Example response:
 
@@ -496,27 +497,26 @@ Example response:
 GET https://api.hubbleprotocol.io/epochs
 ```
 
-Example request:
-https://api.hubbleprotocol.io/epochs
+Example request: https://api.hubbleprotocol.io/epochs
 
 Example response:
 
 ```json
 [
-    {
-        "epoch": 627,
-        "first_slot": 270864000,
-        "last_slot": 271295999,
-        "start_block_time": "2024-06-09T18:21:01.000Z",
-        "end_block_time": "2024-06-11T23:21:40.000Z"
-    },
-    {
-        "epoch": 626,
-        "first_slot": 270432000,
-        "last_slot": 270863999,
-        "start_block_time": "2024-06-07T14:10:07.000Z",
-        "end_block_time": "2024-06-09T18:21:00.000Z"
-    }
+  {
+    "epoch": 627,
+    "first_slot": 270864000,
+    "last_slot": 271295999,
+    "start_block_time": "2024-06-09T18:21:01.000Z",
+    "end_block_time": "2024-06-11T23:21:40.000Z"
+  },
+  {
+    "epoch": 626,
+    "first_slot": 270432000,
+    "last_slot": 270863999,
+    "start_block_time": "2024-06-07T14:10:07.000Z",
+    "end_block_time": "2024-06-09T18:21:00.000Z"
+  }
 ]
 ```
 
@@ -526,25 +526,15 @@ Example response:
 GET https://api.hubbleprotocol.io/staking-rates/tokens/:mint/history?start={start timestamp}&end={end timestamp}&interpolate={true/false}
 ```
 
-Example request:
-https://api.hubbleprotocol.io/staking-rates/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history?start=2024-01-01T00:00Z&end=2024-02-01T01:00Z&interpolate=false
+Example request: https://api.hubbleprotocol.io/staking-rates/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history?start=2024-01-01T00:00Z&end=2024-02-01T01:00Z&interpolate=false
 
 Example response (first item in array is epoch timestamp, second is stake rate):
 
 ```json
 [
-  [
-    1704067200000,
-    "0.8636310820345713"
-  ],
-  [
-    1704067500000,
-    "0.8636310820345713"
-  ],
-  [
-    1704067800000,
-    "0.8636310820345713"
-  ]
+  [1704067200000, "0.8636310820345713"],
+  [1704067500000, "0.8636310820345713"],
+  [1704067800000, "0.8636310820345713"]
 ]
 ```
 
@@ -554,8 +544,7 @@ Example response (first item in array is epoch timestamp, second is stake rate):
 GET https://api.hubbleprotocol.io/staking-yields/tokens/:mint/history?start={start timestamp}&end={end timestamp}
 ```
 
-Example request:
-https://api.hubbleprotocol.io/staking-yields/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history?start=2024-01-01T00:00Z&end=2024-02-01T01:00Z
+Example request: https://api.hubbleprotocol.io/staking-yields/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history?start=2024-01-01T00:00Z&end=2024-02-01T01:00Z
 
 Example response:
 
@@ -582,8 +571,7 @@ Example response:
 GET https://api.hubbleprotocol.io/staking-yields/tokens/:mint/history/median
 ```
 
-Example request:
-https://api.hubbleprotocol.io/staking-yields/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history
+Example request: https://api.hubbleprotocol.io/staking-yields/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/history
 
 Example response:
 
@@ -612,8 +600,7 @@ Example response:
 GET https://api.hubbleprotocol.io/yields/:source/history
 ```
 
-Example request, get JLP pool yield history:
-https://api.hubbleprotocol.io/yields/5BUwFW4nRbftYTDMbgxykoFWqWHPzahFSNAaaaJtVKsq/history
+Example request, get JLP pool yield history: https://api.hubbleprotocol.io/yields/5BUwFW4nRbftYTDMbgxykoFWqWHPzahFSNAaaaJtVKsq/history
 
 Example response (please note APR/APY is in decimal format, not in percentage, multiply by 100 to get percentage):
 
@@ -632,7 +619,7 @@ Example response (please note APR/APY is in decimal format, not in percentage, m
 ]
 ```
 
-#### Get USDs rewards yield 
+#### Get USDs rewards yield
 
 :warning: **DEPRECATED, THIS ENDPOINT IS NO LONGER AVAILABLE** :warning:
 
@@ -643,9 +630,11 @@ GET https://api.hubbleprotocol.io/yields/usds-rewards
 ```
 
 Example request:
+
 - https://api.kamino.finance/yields/usds-rewards
 
 Example response:
+
 ```json
 {
   "timestamp_hour": "2024-11-28 14:00:00",
@@ -732,30 +721,30 @@ Example response:
 
 ```json
 [
-    {
-        "apr": "0.03089658127477581433161189171198501610943",
-        "apy": "0.031377485860868284369015169698693427029",
-        "totalReturn": "9959.75762697216",
-        "totalInvestment": "322357.9184504589828735999999999999999998",
-        "strategy": "2dczcMRpxWHZTcsiEjPT4YBcSseTaUmWFzw24HxYMFod",
-        "token": "RAY",
-        "rewardsPerDay": "137.8944",
-        "rewardsPerHour": "5.7456",
-        "rewardsPerSecond": "0.001596",
-        "rewardIsOption": false      
-    },
-    {
-        "apr": "0.1837059453843344336978185004649421142565",
-        "apy": "0.201606883863164306468378664554523674214",
-        "totalReturn": "39084.02775504",
-        "totalInvestment": "212753.2000843610114423811349599999999999",
-        "strategy": "6K4jM79yijUEFxdFhCFZSjav1nZji1gsxUWQE6XrC8YD",
-        "token": "LDO",
-        "rewardsPerDay": "48.386592",
-        "rewardsPerHour": "2.016108",
-        "rewardsPerSecond": "0.00056003",
-        "rewardIsOption": false      
-    }
+  {
+    "apr": "0.03089658127477581433161189171198501610943",
+    "apy": "0.031377485860868284369015169698693427029",
+    "totalReturn": "9959.75762697216",
+    "totalInvestment": "322357.9184504589828735999999999999999998",
+    "strategy": "2dczcMRpxWHZTcsiEjPT4YBcSseTaUmWFzw24HxYMFod",
+    "token": "RAY",
+    "rewardsPerDay": "137.8944",
+    "rewardsPerHour": "5.7456",
+    "rewardsPerSecond": "0.001596",
+    "rewardIsOption": false
+  },
+  {
+    "apr": "0.1837059453843344336978185004649421142565",
+    "apy": "0.201606883863164306468378664554523674214",
+    "totalReturn": "39084.02775504",
+    "totalInvestment": "212753.2000843610114423811349599999999999",
+    "strategy": "6K4jM79yijUEFxdFhCFZSjav1nZji1gsxUWQE6XrC8YD",
+    "token": "LDO",
+    "rewardsPerDay": "48.386592",
+    "rewardsPerHour": "2.016108",
+    "rewardsPerSecond": "0.00056003",
+    "rewardIsOption": false
+  }
 ]
 ```
 
@@ -769,18 +758,18 @@ GET https://api.hubbleprotocol.io/strategies/ByXB4xCxVhmUEmQj3Ut7byZ1Hbva1zhKjaV
 Example response:
 
 ```json
-    {
-        "apr": "0.03089658127477581433161189171198501610943",
-        "apy": "0.031377485860868284369015169698693427029",
-        "totalReturn": "9959.75762697216",
-        "totalInvestment": "322357.9184504589828735999999999999999998",
-        "strategy": "2dczcMRpxWHZTcsiEjPT4YBcSseTaUmWFzw24HxYMFod",
-        "token": "RAY",
-        "rewardsPerDay": "137.8944",
-        "rewardsPerHour": "5.7456",
-        "rewardsPerSecond": "0.001596",
-        "rewardIsOption": false  
-    }
+{
+  "apr": "0.03089658127477581433161189171198501610943",
+  "apy": "0.031377485860868284369015169698693427029",
+  "totalReturn": "9959.75762697216",
+  "totalInvestment": "322357.9184504589828735999999999999999998",
+  "strategy": "2dczcMRpxWHZTcsiEjPT4YBcSseTaUmWFzw24HxYMFod",
+  "token": "RAY",
+  "rewardsPerDay": "137.8944",
+  "rewardsPerHour": "5.7456",
+  "rewardsPerSecond": "0.001596",
+  "rewardIsOption": false
+}
 ```
 
 #### Get rewards for eligible shareholders of a specific strategy:
@@ -832,12 +821,12 @@ GET https://api.hubbleprotocol.io/v2/strategies/:strategyPubkey/history?env={clu
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z` (optional, default since beginning of strategy)
-* end: end date (exclusive), e.g. `2023-05-02T00:00:00.000Z` (optional, default now)
-* frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
-* includePerfFee: add perfFee field to the response (optional, default false)
 
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z` (optional, default since beginning of strategy)
+- end: end date (exclusive), e.g. `2023-05-02T00:00:00.000Z` (optional, default now)
+- frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
+- includePerfFee: add perfFee field to the response (optional, default false)
 
 Example requests:
 
@@ -845,38 +834,37 @@ Example requests:
 - https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/history?env=mainnet-beta&start=2023-01-01&end=2023-02-01&frequency=hour
 - https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/history?env=mainnet-beta&start=2023-01-01&end=2023-02-01&frequency=day
 
-
 Example response:
 
 ```js
 [
   {
-    "timestamp": "2023-06-06T00:00:00.000Z",
-    "feesCollectedCumulativeA": "4528.851182",
-    "feesCollectedCumulativeB": "4388.399699",
-    "rewardsCollectedCumulative0": "6816.973791",
-    "rewardsCollectedCumulative1": "869.925191",
-    "rewardsCollectedCumulative2": "0",
-    "kaminoRewardsIssuedCumulative0": "0",
-    "kaminoRewardsIssuedCumulative1": "0",
-    "kaminoRewardsIssuedCumulative2": "0",
-    "sharePrice": "1.009166844496339887986660123337354133388",
-    "sharesIssued": "2000370.229713",
-    "tokenAAmounts": "1941835.079462",
-    "tokenBAmounts": "83285.638712",
-    "tokenAPrice": "0.9966972458",
-    "tokenBPrice": "0.99999998",
-    "reward0Price": "0.042612354",
-    "reward1Price": "0.6421835081",
-    "reward2Price": "0.99999998",
-    "kaminoReward0Price": "0",
-    "kaminoReward1Price": "0",
-    "kaminoReward2Price": "0",
-    "totalValueLocked": "2018707.312543886771519599999999999999998983602957644",
-    "solPrice": "0",
-    "profitAndLoss": "0"
-  }
-]
+    timestamp: '2023-06-06T00:00:00.000Z',
+    feesCollectedCumulativeA: '4528.851182',
+    feesCollectedCumulativeB: '4388.399699',
+    rewardsCollectedCumulative0: '6816.973791',
+    rewardsCollectedCumulative1: '869.925191',
+    rewardsCollectedCumulative2: '0',
+    kaminoRewardsIssuedCumulative0: '0',
+    kaminoRewardsIssuedCumulative1: '0',
+    kaminoRewardsIssuedCumulative2: '0',
+    sharePrice: '1.009166844496339887986660123337354133388',
+    sharesIssued: '2000370.229713',
+    tokenAAmounts: '1941835.079462',
+    tokenBAmounts: '83285.638712',
+    tokenAPrice: '0.9966972458',
+    tokenBPrice: '0.99999998',
+    reward0Price: '0.042612354',
+    reward1Price: '0.6421835081',
+    reward2Price: '0.99999998',
+    kaminoReward0Price: '0',
+    kaminoReward1Price: '0',
+    kaminoReward2Price: '0',
+    totalValueLocked: '2018707.312543886771519599999999999999998983602957644',
+    solPrice: '0',
+    profitAndLoss: '0',
+  },
+];
 ```
 
 #### Get user's shares history aggregated by the hour for a specific year (default current year, or use query param `year`):
@@ -897,23 +885,23 @@ Sample response:
 
 ```json
 {
-    "feesAEarned": "31.32619353486741639998339868",
-    "feesBEarned": "24.70081628219520072196336092",
-    "feesAEarnedUsd": "31.256576407153470503340282981001181676",
-    "feesBEarnedUsd": "24.698716826795158937664218970228174",
-    "rewards0Earned": "0",
-    "rewards1Earned": "0",
-    "rewards2Earned": "0",
-    "rewards0EarnedUsd": "0",
-    "rewards1EarnedUsd": "0",
-    "rewards2EarnedUsd": "0",
-    "kaminoRewards0Earned": "712379.5022312449919715809869996",
-    "kaminoRewards1Earned": "0",
-    "kaminoRewards2Earned": "0",
-    "kaminoRewards0EarnedUsd": "0.61236142011797819509877101642485616",
-    "kaminoRewards1EarnedUsd": "0",
-    "kaminoRewards2EarnedUsd": "0",
-    "lastCalculated": "2023-01-12T13:10:21.212Z"
+  "feesAEarned": "31.32619353486741639998339868",
+  "feesBEarned": "24.70081628219520072196336092",
+  "feesAEarnedUsd": "31.256576407153470503340282981001181676",
+  "feesBEarnedUsd": "24.698716826795158937664218970228174",
+  "rewards0Earned": "0",
+  "rewards1Earned": "0",
+  "rewards2Earned": "0",
+  "rewards0EarnedUsd": "0",
+  "rewards1EarnedUsd": "0",
+  "rewards2EarnedUsd": "0",
+  "kaminoRewards0Earned": "712379.5022312449919715809869996",
+  "kaminoRewards1Earned": "0",
+  "kaminoRewards2Earned": "0",
+  "kaminoRewards0EarnedUsd": "0.61236142011797819509877101642485616",
+  "kaminoRewards1EarnedUsd": "0",
+  "kaminoRewards2EarnedUsd": "0",
+  "lastCalculated": "2023-01-12T13:10:21.212Z"
 }
 ```
 
@@ -924,12 +912,9 @@ Sample response:
 
 #### Get latest fees and rewards earned for a strategy shareholder:
 
-Fetch strategy shareholder fees and rewards for only the latest position.
-This endpoint takes a look at when the user's position was last closed (fully withdrawn)
-and opened again and only calculates the fees and rewards after that time.
+Fetch strategy shareholder fees and rewards for only the latest position. This endpoint takes a look at when the user's position was last closed (fully withdrawn) and opened again and only calculates the fees and rewards after that time.
 
-For all-time fees and rewards of a strategy shareholder use endpoint
-mentioned in the previous section (`Get fees and rewards earned for a strategy shareholder` above).
+For all-time fees and rewards of a strategy shareholder use endpoint mentioned in the previous section (`Get fees and rewards earned for a strategy shareholder` above).
 
 ```http request
 // GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/fees-and-rewards/latest-position?env={cluster}
@@ -944,23 +929,23 @@ Sample response:
 
 ```json
 {
-    "feesAEarned": "31.32619353486741639998339868",
-    "feesBEarned": "24.70081628219520072196336092",
-    "feesAEarnedUsd": "31.256576407153470503340282981001181676",
-    "feesBEarnedUsd": "24.698716826795158937664218970228174",
-    "rewards0Earned": "0",
-    "rewards1Earned": "0",
-    "rewards2Earned": "0",
-    "rewards0EarnedUsd": "0",
-    "rewards1EarnedUsd": "0",
-    "rewards2EarnedUsd": "0",
-    "kaminoRewards0Earned": "712379.5022312449919715809869996",
-    "kaminoRewards1Earned": "0",
-    "kaminoRewards2Earned": "0",
-    "kaminoRewards0EarnedUsd": "0.61236142011797819509877101642485616",
-    "kaminoRewards1EarnedUsd": "0",
-    "kaminoRewards2EarnedUsd": "0",
-    "lastCalculated": "2023-01-12T13:10:21.212Z"
+  "feesAEarned": "31.32619353486741639998339868",
+  "feesBEarned": "24.70081628219520072196336092",
+  "feesAEarnedUsd": "31.256576407153470503340282981001181676",
+  "feesBEarnedUsd": "24.698716826795158937664218970228174",
+  "rewards0Earned": "0",
+  "rewards1Earned": "0",
+  "rewards2Earned": "0",
+  "rewards0EarnedUsd": "0",
+  "rewards1EarnedUsd": "0",
+  "rewards2EarnedUsd": "0",
+  "kaminoRewards0Earned": "712379.5022312449919715809869996",
+  "kaminoRewards1Earned": "0",
+  "kaminoRewards2Earned": "0",
+  "kaminoRewards0EarnedUsd": "0.61236142011797819509877101642485616",
+  "kaminoRewards1EarnedUsd": "0",
+  "kaminoRewards2EarnedUsd": "0",
+  "lastCalculated": "2023-01-12T13:10:21.212Z"
 }
 ```
 
@@ -976,10 +961,11 @@ GET https://api.hubbleprotocol.io/strategies/fees-and-rewards?env={cluster}&peri
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* period: time period for fees and rewards `"24h" (default) | "7d" | "30d"`
-* status: strategy status `"LIVE" (default) | "STAGING" | "SHADOW" | "IGNORED" | "DEPRECATED"`, status query param can also be used multiple times, for example:
-  * https://api.hubbleprotocol.io/strategies/fees-and-rewards?status=LIVE&status=STAGING&status=SHADOW
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- period: time period for fees and rewards `"24h" (default) | "7d" | "30d"`
+- status: strategy status `"LIVE" (default) | "STAGING" | "SHADOW" | "IGNORED" | "DEPRECATED"`, status query param can also be used multiple times, for example:
+  - https://api.hubbleprotocol.io/strategies/fees-and-rewards?status=LIVE&status=STAGING&status=SHADOW
 
 Example response:
 
@@ -1069,10 +1055,9 @@ Sample response:
 
 #### Get PnL history for a strategy shareholder:
 
-Return PnL history data for strategy shareholder with mark to market analysis. 
+Return PnL history data for strategy shareholder with mark to market analysis.
 
-Returns hourly timeseries if user's latest position is under 15 days old, otherwise it returns daily timeseries data.
-This is an optimization for frontend charts. 
+Returns hourly timeseries if user's latest position is under 15 days old, otherwise it returns daily timeseries data. This is an optimization for frontend charts.
 
 ```http request
 // GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/pnl/history?env={cluster}&start={date}&end={date}
@@ -1080,9 +1065,10 @@ GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7V
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
-* end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
+- end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
 
 Example request:
 
@@ -1161,8 +1147,7 @@ Sample response:
 
 `"a"` and `"b"` properties in the response refer to the token A and token B that the strategy contains.
 
-Transaction type can be `buy`, `sell` or `mark-to-market`. Buys and sells are actual transactions of the user.
-Mark to market represents potential position and PnL if they bought/sold at that specific time.
+Transaction type can be `buy`, `sell` or `mark-to-market`. Buys and sells are actual transactions of the user. Mark to market represents potential position and PnL if they bought/sold at that specific time.
 
 #### Get volume for strategies:
 
@@ -1173,9 +1158,10 @@ GET https://api.hubbleprotocol.io/strategies/volume?env={cluster}&status={strate
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* status: strategy status `"LIVE" (default) | "STAGING" | "SHADOW" | "IGNORED" | "DEPRECATED"`, status query param can also be used multiple times, for example:
-  * https://api.hubbleprotocol.io/strategies/volume?status=LIVE&status=STAGING&status=SHADOW
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- status: strategy status `"LIVE" (default) | "STAGING" | "SHADOW" | "IGNORED" | "DEPRECATED"`, status query param can also be used multiple times, for example:
+  - https://api.hubbleprotocol.io/strategies/volume?status=LIVE&status=STAGING&status=SHADOW
 
 Example response:
 
@@ -1217,14 +1203,15 @@ Example response:
 
 #### Get volume for all strategies v2:
 
-Return 24h/7d/30d volume (in USD) for every single Kamino strategy. 
+Return 24h/7d/30d volume (in USD) for every single Kamino strategy.
 
 ```http request
 GET https://api.hubbleprotocol.io/v2/strategies/volume?env={cluster}
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
 
 Example request: https://api.hubbleprotocol.io/v2/strategies/volume?env=mainnet-beta
 
@@ -1278,7 +1265,8 @@ GET https://api.hubbleprotocol.io/v2/strategies/:strategyPubkey/volume?env={clus
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
 
 Example request: https://api.hubbleprotocol.io/v2/strategies/BfyQYYr2T9eJfMfq5gPXcq3SUkJSh2ahtk7ZNUCzkx9e/volume?env=mainnet-beta
 
@@ -1311,7 +1299,8 @@ GET https://api.hubbleprotocol.io/strategies/all-time-volume?env={cluster}
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
 
 Example request:
 
@@ -1333,7 +1322,8 @@ GET https://api.hubbleprotocol.io/strategies/all-time-fees-and-rewards?env={clus
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
 
 Example request:
 
@@ -1423,7 +1413,8 @@ GET https://api.hubbleprotocol.io/strategies/tvl?env={cluster}
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
 
 Example request:
 
@@ -1439,20 +1430,23 @@ Example response:
 
 #### Get all strategies with filters
 
-* The current filters that are supported are:
-  * `strategyType` which can be: 
-    * `NON_PEGGED`: e.g. SOL-BONK
-    * `PEGGED`: e.g. BSOL-JitoSOL
-    * `STABLE`: e.g. USDH-USDC
+- The current filters that are supported are:
 
-  * `strategyCreationStatus` which can be:
-    * `IGNORED`
-    * `SHADOW`
-    * `LIVE`
-    * `DEPRECATED`
-    * `STAGING`
+  - `strategyType` which can be:
+
+    - `NON_PEGGED`: e.g. SOL-BONK
+    - `PEGGED`: e.g. BSOL-JitoSOL
+    - `STABLE`: e.g. USDH-USDC
+
+  - `strategyCreationStatus` which can be:
+    - `IGNORED`
+    - `SHADOW`
+    - `LIVE`
+    - `DEPRECATED`
+    - `STAGING`
 
 If no filters are provided all strategies are fetched
+
 ```http request
 GET https://api.hubbleprotocol.io/strategies?env={cluster}&type={type}&status={status}
 ```
@@ -1460,11 +1454,13 @@ GET https://api.hubbleprotocol.io/strategies?env={cluster}&type={type}&status={s
 Examples:
 
 Get all `NON_PEGGED` strategies
+
 ```http request
 GET https://api.hubbleprotocol.io/strategies?type=NON_PEGGED
 ```
 
 Get all `STAGING` strategies
+
 ```http request
 GET https://api.hubbleprotocol.io/strategies?status=STAGING
 ```
@@ -1475,26 +1471,26 @@ GET https://api.hubbleprotocol.io/strategies?status=STAGING
 GET https://api.hubbleprotocol.io/strategies/tokens/{tokenMint}/amounts?env={cluster}
 ```
 
-Example request to get total MSOL stored in Kamino:
-https://api.hubbleprotocol.io/strategies/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/amounts?env=mainnet-beta
+Example request to get total MSOL stored in Kamino: https://api.hubbleprotocol.io/strategies/tokens/mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So/amounts?env=mainnet-beta
 
 Example response:
+
 ```json
 {
-    "totalTokenAmount": "2643,805199154",
-    "vaults": [
-        {
-            "address": "9zBNQtnenpQY6mCoRqbPpeePeSy17h34DZP82oegt1fL",
-            "frontendUrl": "https://app.kamino.finance/liquidity/9zBNQtnenpQY6mCoRqbPpeePeSy17h34DZP82oegt1fL",
-            "amount": "1641.613204799"
-        },
-        {
-            "address": "F3v6sBb5gXL98kaMkaKm5GfEoBNUaSd3ZGErbjqgzTho",
-            "frontendUrl": "https://app.kamino.finance/liquidity/F3v6sBb5gXL98kaMkaKm5GfEoBNUaSd3ZGErbjqgzTho",
-            "amount": "1002.191994355"
-        }
-    ],
-    "timestamp": "2023-02-21T12:09:21.304Z"
+  "totalTokenAmount": "2643,805199154",
+  "vaults": [
+    {
+      "address": "9zBNQtnenpQY6mCoRqbPpeePeSy17h34DZP82oegt1fL",
+      "frontendUrl": "https://app.kamino.finance/liquidity/9zBNQtnenpQY6mCoRqbPpeePeSy17h34DZP82oegt1fL",
+      "amount": "1641.613204799"
+    },
+    {
+      "address": "F3v6sBb5gXL98kaMkaKm5GfEoBNUaSd3ZGErbjqgzTho",
+      "frontendUrl": "https://app.kamino.finance/liquidity/F3v6sBb5gXL98kaMkaKm5GfEoBNUaSd3ZGErbjqgzTho",
+      "amount": "1002.191994355"
+    }
+  ],
+  "timestamp": "2023-02-21T12:09:21.304Z"
 }
 ```
 
@@ -1505,19 +1501,21 @@ GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/ranges/history?env=
 ```
 
 Example requests:
-  - https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/ranges/history?env=mainnet-beta&start=2020-01-01&end=2024-01-01
-  - https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/ranges/history?env=mainnet-beta&period=24h
+
+- https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/ranges/history?env=mainnet-beta&start=2020-01-01&end=2024-01-01
+- https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/ranges/history?env=mainnet-beta&period=24h
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* period: time period for fees and rewards `"24h" (default) | "7d" | "30d"`
-* start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
-* end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
 
-You can either use a custom range with start/end query params, or a fixed range with period query param.
-Fixed range should generally be faster due to caching.
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- period: time period for fees and rewards `"24h" (default) | "7d" | "30d"`
+- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
+- end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
+
+You can either use a custom range with start/end query params, or a fixed range with period query param. Fixed range should generally be faster due to caching.
 
 Example response:
+
 ```json
 [
   {
@@ -1552,19 +1550,21 @@ GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/metrics/history?env
 ```
 
 Example requests:
+
 - https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/metrics/history?env=mainnet-beta&start=2020-01-01&end=2024-01-01
 - https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/metrics/history?env=mainnet-beta&period=24h
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* period: time period for fees and rewards `"24h" (default) | "7d" | "30d"`
-* start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z`
-* end: end date (exclusive), e.g. `2023-06-01T00:00:00.000Z`
 
-You can either use a custom range with start/end query params, or a fixed range with period query param.
-Fixed range should generally be faster due to caching.
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- period: time period for fees and rewards `"24h" (default) | "7d" | "30d"`
+- start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z`
+- end: end date (exclusive), e.g. `2023-06-01T00:00:00.000Z`
+
+You can either use a custom range with start/end query params, or a fixed range with period query param. Fixed range should generally be faster due to caching.
 
 Example response:
+
 ```json
 [
   {
@@ -1591,10 +1591,11 @@ GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/histor
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z` (optional, default since beginning of strategy)
-* end: end date (exclusive), e.g. `2023-05-02T00:00:00.000Z` (optional, default now)
-* frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- start: start date (inclusive), e.g. `2023-05-01T00:00:00.000Z` (optional, default since beginning of strategy)
+- end: end date (exclusive), e.g. `2023-05-02T00:00:00.000Z` (optional, default now)
+- frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
 
 Example requests:
 
@@ -1602,40 +1603,39 @@ Example requests:
 - https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/history?env=mainnet-beta&start=2023-01-01&end=2023-02-01&frequency=hour
 - https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/history?env=mainnet-beta&start=2023-01-01&end=2023-02-01&frequency=day
 
-
 Example response:
 
 ```json
 [
-    {
-        "timestamp": "2023-06-06T11:00:00.000Z",
-        "shareholders": [
-            {
-                "sharesAmount": "25215.549995",
-                "sharePrice": "1.067670377475403913338573081893682618365",
-                "sharesUsd": "26921.89578141156925960743690845138333804",
-                "tokenAAmount": "820.4214362237481540135710513269",
-                "tokenAPrice": "19.98425069",
-                "tokenAUsd": "16395.507652945230041231933551843626740561",
-                "tokenBAmount": "0.408879105380424526340758204",
-                "tokenBPrice": "25744.5",
-                "tokenBUsd": "10526.388128466339218379649582878",
-                "wallet": "7tH1k4PsMu3sNUYJxD5ezxhAmYYXyVVZz5c3dbaxcvUV"
-            },
-            {
-                "sharesAmount": "0.853582",
-                "sharePrice": "1.067670377475403913338573081893682618365",
-                "sharesUsd": "0.9113442161462102231553658883889733967492",
-                "tokenAAmount": "0.027772424972431754280993115411983",
-                "tokenAPrice": "19.98425069",
-                "tokenAUsd": "0.55501110291829251646784712055717090201827",
-                "tokenBAmount": "0.00001384113551352396460160423028",
-                "tokenBPrice": "25744.5",
-                "tokenBUsd": "0.35633311322791770668600010644346",
-                "wallet": "BUfcRmRPQNqMbPSKh6a7Pp3tSTneNMt2zWYr5DefW5hd"
-            }
-        ]
-    }
+  {
+    "timestamp": "2023-06-06T11:00:00.000Z",
+    "shareholders": [
+      {
+        "sharesAmount": "25215.549995",
+        "sharePrice": "1.067670377475403913338573081893682618365",
+        "sharesUsd": "26921.89578141156925960743690845138333804",
+        "tokenAAmount": "820.4214362237481540135710513269",
+        "tokenAPrice": "19.98425069",
+        "tokenAUsd": "16395.507652945230041231933551843626740561",
+        "tokenBAmount": "0.408879105380424526340758204",
+        "tokenBPrice": "25744.5",
+        "tokenBUsd": "10526.388128466339218379649582878",
+        "wallet": "7tH1k4PsMu3sNUYJxD5ezxhAmYYXyVVZz5c3dbaxcvUV"
+      },
+      {
+        "sharesAmount": "0.853582",
+        "sharePrice": "1.067670377475403913338573081893682618365",
+        "sharesUsd": "0.9113442161462102231553658883889733967492",
+        "tokenAAmount": "0.027772424972431754280993115411983",
+        "tokenAPrice": "19.98425069",
+        "tokenAUsd": "0.55501110291829251646784712055717090201827",
+        "tokenBAmount": "0.00001384113551352396460160423028",
+        "tokenBPrice": "25744.5",
+        "tokenBUsd": "0.35633311322791770668600010644346",
+        "wallet": "BUfcRmRPQNqMbPSKh6a7Pp3tSTneNMt2zWYr5DefW5hd"
+      }
+    ]
+  }
 ]
 ```
 
@@ -1646,12 +1646,12 @@ GET https://api.hubbleprotocol.io/strategies/start-date-overrides?env={cluster}
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
 
 Example request:
 
 - https://api.hubbleprotocol.io/strategies/start-date-overrides?env=mainnet-beta
-
 
 Example response:
 
@@ -1685,7 +1685,7 @@ GET https://api.hubbleprotocol.io/whirlpools/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRG
 
 #### Get whirlpools TVL
 
-Get all unique Orca/Raydium pools from Kamino strategies and return their TVL: 
+Get all unique Orca/Raydium pools from Kamino strategies and return their TVL:
 
 ```http request
 GET https://api.hubbleprotocol.io/whirlpools/tvl?env={cluster}
@@ -1696,16 +1696,17 @@ Example request:
 https://api.hubbleprotocol.io/whirlpools/tvl
 
 Response example:
+
 ```json
 [
-    {
-        "tvl": "10628.86524130715",
-        "pool": "3BScXnPjT4hut1G5yJ5UGQWhUmoYxyBFQf3juLBeMH2S"
-    },
-    {
-        "tvl": "522635.86139358365",
-        "pool": "4nFbdT7DeXATvaRZfR3WqALGJnogMjqe9vf2H6C1WXBr"
-    }
+  {
+    "tvl": "10628.86524130715",
+    "pool": "3BScXnPjT4hut1G5yJ5UGQWhUmoYxyBFQf3juLBeMH2S"
+  },
+  {
+    "tvl": "522635.86139358365",
+    "pool": "4nFbdT7DeXATvaRZfR3WqALGJnogMjqe9vf2H6C1WXBr"
+  }
 ]
 ```
 
@@ -1722,6 +1723,7 @@ Example request:
 https://api.hubbleprotocol.io/whirlpools/fees
 
 Response example:
+
 ```json
 [
   {
@@ -1789,24 +1791,22 @@ GET https://api.hubbleprotocol.io/ktokens/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRGRwu
 GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope(default)|birdeye}
 ```
 
-Example request: https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope
-Example response:
+Example request: https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope Example response:
 
 ```json
 [
-    {
-        "usdPrice": "22.382246552631578",
-        "token": "SOL",
-        "mint": "So11111111111111111111111111111111111111112"
-    },
-    {
-        "usdPrice": "1580.8847893915756",
-        "token": "ETH",
-        "mint": "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs"
-    }
+  {
+    "usdPrice": "22.382246552631578",
+    "token": "SOL",
+    "mint": "So11111111111111111111111111111111111111112"
+  },
+  {
+    "usdPrice": "1580.8847893915756",
+    "token": "ETH",
+    "mint": "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs"
+  }
 ]
 ```
-
 
 #### Get specific token price:
 
@@ -1815,17 +1815,17 @@ GET https://api.hubbleprotocol.io/prices?env={cluster}&source={priceSource:scope
 ```
 
 Example requests:
+
 - https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope&token=SOL
-- https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope&token=So11111111111111111111111111111111111111112
-Example response:
+- https://api.hubbleprotocol.io/prices?env=mainnet-beta&source=scope&token=So11111111111111111111111111111111111111112 Example response:
 
 ```json
 [
-    {
-        "usdPrice": "22.382246552631578",
-        "token": "SOL",
-        "mint": "So11111111111111111111111111111111111111112"
-    }
+  {
+    "usdPrice": "22.382246552631578",
+    "token": "SOL",
+    "mint": "So11111111111111111111111111111111111111112"
+  }
 ]
 ```
 
@@ -1836,13 +1836,13 @@ GET https://api.hubbleprotocol.io/prices/history?env={cluster}&token={name or mi
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* token: name (deprecated soon) or mint (**use of mint recommended!**) pubkey, e.g. `"SOL"` or `"So11111111111111111111111111111111111111112"`
-* start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z` (optional, default 1 day ago) 
-* end: end date (inclusive), e.g. `2023-05-01T00:55:00.000Z` (optional, default now)
-* frequency: frequency of the prices, e.g. `"minute" (default) | "hour" | "day"` for price every minute/hour/day for the specified timeseries
-* type: price type, e.g. `"spot" (default) | "TWAP"`
 
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- token: name (deprecated soon) or mint (**use of mint recommended!**) pubkey, e.g. `"SOL"` or `"So11111111111111111111111111111111111111112"`
+- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z` (optional, default 1 day ago)
+- end: end date (inclusive), e.g. `2023-05-01T00:55:00.000Z` (optional, default now)
+- frequency: frequency of the prices, e.g. `"minute" (default) | "hour" | "day"` for price every minute/hour/day for the specified timeseries
+- type: price type, e.g. `"spot" (default) | "TWAP"`
 
 Example requests:
 
@@ -1852,20 +1852,16 @@ Example requests:
 - https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=So11111111111111111111111111111111111111112&start=2020-01-01&end=2023-01-01&frequency=day
 - (not recommended, deprecated soon): https://api.hubbleprotocol.io/prices/history?env=mainnet-beta&token=USDH
 
-
 Example response:
 
 ```js
 [
-    [
-        "17.35422124",  // <-- token price
-        1668162327      // <-- seconds since epoch
-    ],
-    [
-        "16.51238765",
-        1668172327
-    ]
-]
+  [
+    '17.35422124', // <-- token price
+    1668162327, // <-- seconds since epoch
+  ],
+  ['16.51238765', 1668172327],
+];
 ```
 
 #### Get token price moving averages:
@@ -1873,22 +1869,22 @@ Example response:
 ```http request
 GET https://api.hubbleprotocol.io/prices/moving-averages?env={cluster:optional, default mainnet}&token={tokenName:required}&durationInSec={duration:optional, default 3600}
 ```
-Example request:
-https://api.hubbleprotocol.io/prices/moving-averages?env=mainnet-beta&token=SOL&durationInSec=3600
+
+Example request: https://api.hubbleprotocol.io/prices/moving-averages?env=mainnet-beta&token=SOL&durationInSec=3600
 
 Example response:
 
 ```json
 [
-    {
-        "pair": "SOL/USD",
-        "sma": "21.8084071408819895",
-        "priceCount": "2",
-        "start": "2023-02-14T15:36:42.498Z",
-        "end": "2023-02-14T15:39:03.759Z",
-        "ema": "21.8084071408819895",
-        "source": "birdeye"
-    }
+  {
+    "pair": "SOL/USD",
+    "sma": "21.8084071408819895",
+    "priceCount": "2",
+    "start": "2023-02-14T15:36:42.498Z",
+    "end": "2023-02-14T15:39:03.759Z",
+    "ema": "21.8084071408819895",
+    "source": "birdeye"
+  }
 ]
 ```
 
@@ -1907,7 +1903,7 @@ You can specify start/end date range with query params `start` and `end`. Otherw
 GET https://api.hubbleprotocol.io/bms/FqkHHpETrpfgcA5SeH7PKKFDLGWM4tM7ZV31HfutTXNV/history?env=mainnet-beta&start=2020-01-01&end=2023-01-01
 ```
 
-#### Get BMS loans closest to a snapshot timestamp 
+#### Get BMS loans closest to a snapshot timestamp
 
 Please note: This route is not exposed to the public and requires basic authentication.
 
@@ -1971,8 +1967,7 @@ Example response:
 
 :warning: **DEPRECATED, PLEASE USE V2 TRANSACTIONS (`Get all kamino transactions v2`) INSTEAD!** :warning:
 
-Get shareholder's Kamino transactions (`withdraw`, `deposit` and `depositAndInvest` instructions).
-Returns the last 1000 transactions ordered by timestamp descending.
+Get shareholder's Kamino transactions (`withdraw`, `deposit` and `depositAndInvest` instructions). Returns the last 1000 transactions ordered by timestamp descending.
 
 ```http request
 // GET https://api.hubbleprotocol.io/shareholders/:shareholderPubkey/transactions?env={cluster}
@@ -2026,8 +2021,8 @@ Example response:
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market?env={cluster}
 ```
-Example: 
-https://api.hubbleprotocol.io/kamino-market?env=mainnet-beta
+
+Example: https://api.hubbleprotocol.io/kamino-market?env=mainnet-beta
 
 #### Get Kamino Market config
 
@@ -2036,30 +2031,31 @@ https://api.hubbleprotocol.io/kamino-market?env=mainnet-beta
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey?env={cluster}
 ```
-Example: 
-https://api.hubbleprotocol.io/kamino-market/J5ndTP1GJe6ZWzGiZQR2UKJmWWMJojbWxCxZ2yUXwakR?env=mainnet-beta
+
+Example: https://api.hubbleprotocol.io/kamino-market/J5ndTP1GJe6ZWzGiZQR2UKJmWWMJojbWxCxZ2yUXwakR?env=mainnet-beta
 
 #### Get All Kamino Markets config V2
 
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market?programId={programId}
 ```
-Example: 
-https://api.hubbleprotocol.io/kamino-market?programId=KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD
+
+Example: https://api.hubbleprotocol.io/kamino-market?programId=KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD
 
 #### Get Kamino Market config V2
 
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey?programId={programId}
 ```
-Example: 
-https://api.hubbleprotocol.io/kamino-market/6WVSwDQXrBZeQVnu6hpnsRZhodaJTZBUaC334SiiBKdb?programId=SLendK7ySfcEzyaFqy93gDnD3RtrpXJcnRwb6zFHJSh
+
+Example: https://api.hubbleprotocol.io/kamino-market/6WVSwDQXrBZeQVnu6hpnsRZhodaJTZBUaC334SiiBKdb?programId=SLendK7ySfcEzyaFqy93gDnD3RtrpXJcnRwb6zFHJSh
 
 #### Get KLend Market metrics history
 
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/metrics/history?env={cluster}&start={date}&end={date}'
 ```
+
 Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02
 
 Example response:
@@ -2092,10 +2088,10 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/:reserveP
 
 Query params:
 
-* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
-* start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z (optional, default since beginning of strategy)
-* end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z (optional, default now)
-* frequency: frequency of the snapshots, e.g. "hour" (default) | "day"
+- env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+- start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z (optional, default since beginning of strategy)
+- end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z (optional, default now)
+- frequency: frequency of the snapshots, e.g. "hour" (default) | "day"
 
 Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/reserves/HcHkvZEDechu7bruV8zvMN11v9yHg3iY4QHNgrYUATmm/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02&frequency=hour
 
@@ -2152,17 +2148,19 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/:reserveP
 ```
 
 Median:
+
 ```http request
 GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/reserves/:reservePubkey/borrow-and-staking-apys/history/median?env={cluster}&start={date}&end={date}'
 ```
 
 Query params:
 
-* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
-* start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z
-* end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z
+- env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+- start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z
+- end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z
 
-Examples: 
+Examples:
+
 - https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/reserves/FBSyPnxtHKLBZ4UeeUyAnbtFuAmTHLtso9YtsqRDRWpM/borrow-and-staking-apys/history?env=mainnet-beta&start=2023-10-15T00%3A00Z&end=2023-11-14T00%3A00Z'
 - https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/reserves/FBSyPnxtHKLBZ4UeeUyAnbtFuAmTHLtso9YtsqRDRWpM/borrow-and-staking-apys/history/median?env=mainnet-beta&start=2023-10-15T00%3A00Z&end=2023-11-14T00%3A00Z'
 
@@ -2189,10 +2187,10 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:oblig
 
 Query params:
 
-* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
-* start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z (optional, default since beginning of strategy)
-* end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z (optional, default now)
-* frequency: frequency of the snapshots, e.g. "hour" (default) | "day"
+- env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+- start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z (optional, default since beginning of strategy)
+- end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z (optional, default now)
+- frequency: frequency of the snapshots, e.g. "hour" (default) | "day"
 
 Example: https://api.hubbleprotocol.io/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/obligations/63QrAB1okxCc4FpsgcKYHjYTp1ua8ch6mLReyKRdc22o/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02&frequency=day
 
@@ -2244,10 +2242,10 @@ GET https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/obligations/:ob
 
 Query params:
 
-* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
-* start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z (optional, default since beginning of strategy)
-* end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z (optional, default now)
-* useStakeRateForObligation: uses stake rate to calc net sol value
+- env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+- start: start date (inclusive), e.g. 2023-05-01T00:00:00.000Z (optional, default since beginning of strategy)
+- end: end date (exclusive), e.g. 2023-05-02T00:00:00.000Z (optional, default now)
+- useStakeRateForObligation: uses stake rate to calc net sol value
 
 Example: https://api.hubbleprotocol.io/v2/kamino-market/9pMFoVgsG2cNiUCSBEE69iWFN7c1bz9gu9TtPeXkAMTs/obligations/63QrAB1okxCc4FpsgcKYHjYTp1ua8ch6mLReyKRdc22o/metrics/history?env=mainnet-beta&start=2023-01-01&end=2023-01-02&frequency=day&useStakeRateForObligation=true
 
@@ -2299,7 +2297,7 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/
 
 Query params:
 
-* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+- env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
 
 Example: https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/users/AcNSmd5CxwLs21TYUmhWt7CW2v159TdYRkvQxb1iBYRj/obligations
 
@@ -2497,8 +2495,8 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:oblig
 
 Query params:
 
-* env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
-* useLogPrices: scans logs for token prices instead of using scope prices
+- env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
+- useLogPrices: scans logs for token prices instead of using scope prices
 
 Example response:
 
@@ -2545,14 +2543,15 @@ POST https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/transactions?p
 
 ```json
 {
-    "start": "2024-01-01T00:00Z",
-    "end": "2024-01-02T00:00Z",
-    "instruction": "depositReserveLiquidityAndObligationCollateral",
-    "paginationToken": ""
+  "start": "2024-01-01T00:00Z",
+  "end": "2024-01-02T00:00Z",
+  "instruction": "depositReserveLiquidityAndObligationCollateral",
+  "paginationToken": ""
 }
 ```
 
 Example cURL request:
+
 ```bash
 curl --location 'https://api.hubbleprotocol.io/v2/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/transactions?programId=KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD' --header 'Content-Type: application/json' --header 'Authorization: Basic ENTER_CREDENTIALS' --data '{
     "start": "2024-01-01",
@@ -2563,6 +2562,7 @@ curl --location 'https://api.hubbleprotocol.io/v2/kamino-market/7u3HeHxYDLhnCoEr
 ```
 
 Example Python request:
+
 ```python
 import requests
 import json
@@ -2586,31 +2586,31 @@ print(response.text)
 ```
 
 Example response:
+
 ```json
 {
-    "result": [
+  "result": [
+    {
+      "ixs": [
         {
-            "ixs": [
-                {
-                    "solPrice": "100.123",
-                    "liquidityToken": "SOL",
-                    "liquidityUsdValue": "100.123",
-                    "liquidityTokenMint": "So11111111111111111111111111111111111111112",
-                    "liquidityTokenPrice": "100.123",
-                    "liquidityTokenAmount": "1",
-                    "isLiquidationWithdrawal": false
-                }
-            ],
-            "timestamp": "2024-02-19T00:20:45.000Z",
-            "signature": "NysWUiARXCRntcCmbyyRv43aLv2m4rKF39nCTJKsaV59ASu9cDLVpxuMVWn9HujorM81iXHUYtRYw29jNnAHhTD",
-            "obligation": "7vbVt9y3dtajhwgbrbSb7RR3SuainvcpLAJYGge9fRco",
-            "wallet": "3YFyQwu7rSQmxvSrGawxr3fq4CyFT6NQkYry8jkCSQuk"
+          "solPrice": "100.123",
+          "liquidityToken": "SOL",
+          "liquidityUsdValue": "100.123",
+          "liquidityTokenMint": "So11111111111111111111111111111111111111112",
+          "liquidityTokenPrice": "100.123",
+          "liquidityTokenAmount": "1",
+          "isLiquidationWithdrawal": false
         }
-    ],
-    "paginationToken": "eyJsYXN0SWQiOjIwNzh9"
+      ],
+      "timestamp": "2024-02-19T00:20:45.000Z",
+      "signature": "NysWUiARXCRntcCmbyyRv43aLv2m4rKF39nCTJKsaV59ASu9cDLVpxuMVWn9HujorM81iXHUYtRYw29jNnAHhTD",
+      "obligation": "7vbVt9y3dtajhwgbrbSb7RR3SuainvcpLAJYGge9fRco",
+      "wallet": "3YFyQwu7rSQmxvSrGawxr3fq4CyFT6NQkYry8jkCSQuk"
+    }
+  ],
+  "paginationToken": "eyJsYXN0SWQiOjIwNzh9"
 }
 ```
-
 
 #### Get PnL per obligation (DEPRECATED)
 
@@ -2635,8 +2635,7 @@ Example response:
 
 #### Get PnL per obligation v2
 
-You can specify pnl mode with query param `positionMode` with one of these values: {`obligation_all_time`, `current_obligation`}. By default, pnl mode is set to `current_obligation` position
-For xSOL pairs, `useStakeRate` query param can be set to true to calculate the PnL using the stake rate. By default, it is set to false.
+You can specify pnl mode with query param `positionMode` with one of these values: {`obligation_all_time`, `current_obligation`}. By default, pnl mode is set to `current_obligation` position For xSOL pairs, `useStakeRate` query param can be set to true to calculate the PnL using the stake rate. By default, it is set to false.
 
 These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the user's obligation (even before they were closed).
 
@@ -2886,30 +2885,30 @@ Example response:
 
 ```json
 [
-    {
-        "reserve": "d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q",
-        "liquidityToken": "SOL",
-        "liquidityTokenMint": "So11111111111111111111111111111111111111112",
-        "maxLtv": "0.65",
-        "borrowApy": "0.05450988511483601",
-        "supplyApy": "0.038266801210808055",
-        "totalSupply": "3270.370813041054416388850832278062044876",
-        "totalBorrow": "2314.442149604473429941074038490263985018",
-        "totalBorrowUsd": "132328.2299036357776146495065685745631077",
-        "totalSupplyUsd": "186983.4512356222993385157984997158629711"
-    },
-    {
-        "reserve": "G31zKdH2SkDZPhmoQraep5xbTSPyk3VZxAeBdC3nmq5J",
-        "liquidityToken": "STEP",
-        "liquidityTokenMint": "StepAscQoEioFxxWGnh2sLBDFp9d8rvKz2Yp39iDpyT",
-        "maxLtv": "0",
-        "borrowApy": "0.00009999925246972907",
-        "supplyApy": "0",
-        "totalSupply": "14.957139738",
-        "totalBorrow": "0",
-        "totalBorrowUsd": "0",
-        "totalSupplyUsd": "0.5941041438503336806162179231"
-    }
+  {
+    "reserve": "d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q",
+    "liquidityToken": "SOL",
+    "liquidityTokenMint": "So11111111111111111111111111111111111111112",
+    "maxLtv": "0.65",
+    "borrowApy": "0.05450988511483601",
+    "supplyApy": "0.038266801210808055",
+    "totalSupply": "3270.370813041054416388850832278062044876",
+    "totalBorrow": "2314.442149604473429941074038490263985018",
+    "totalBorrowUsd": "132328.2299036357776146495065685745631077",
+    "totalSupplyUsd": "186983.4512356222993385157984997158629711"
+  },
+  {
+    "reserve": "G31zKdH2SkDZPhmoQraep5xbTSPyk3VZxAeBdC3nmq5J",
+    "liquidityToken": "STEP",
+    "liquidityTokenMint": "StepAscQoEioFxxWGnh2sLBDFp9d8rvKz2Yp39iDpyT",
+    "maxLtv": "0",
+    "borrowApy": "0.00009999925246972907",
+    "supplyApy": "0",
+    "totalSupply": "14.957139738",
+    "totalBorrow": "0",
+    "totalBorrowUsd": "0",
+    "totalSupplyUsd": "0.5941041438503336806162179231"
+  }
 ]
 ```
 
@@ -2920,9 +2919,11 @@ GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/leverage/metrics?e
 ```
 
 Query params:
+
 - env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
 
 Example request:
+
 - https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/leverage/metrics?env=mainnet-beta
 
 Example response:
@@ -2981,67 +2982,64 @@ curl --location 'https://api.hubbleprotocol.io/trades?env=mainnet-beta&source=he
     "start": "2023-01-01T00:00Z",
     "end": "2023-02-01T00:00Z",
     "paginationToken": "MzQ3OTQzMQ=="
-}' 
+}'
 ```
 
 Query params:
-  * env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-  * source: trades fetched from source`"hellomoon" (default)`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- source: trades fetched from source`"hellomoon" (default)`
 
 Body params:
-  * tokenAMint: public key of the first mint, e.g. SOL mint: `"So11111111111111111111111111111111111111112"`
-  * tokenBMint: public key of the second mint, e.g. USDC mint: `"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"`
-  * start: start of the date range to fetch trades from, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
-  * end: end of the date range to fetch trades to, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
-  * paginationToken: pagination token to use for retrieving results. 
-  If the response contains a `paginationToken` JSON property, 
-  you can use that in the next request to fetch more data from the last trade onwards.
-  If the property does not exist, you've reached the end.
 
-Please note that the response will contain both "directions" (buys, sells) of the trade.
-For example, if you input tokenA/tokenB mints for SOL/USDC in the request body, 
-the response will contain trades with (source = SOL, destination = USDC) or (source = USDC, destination = SOL).
+- tokenAMint: public key of the first mint, e.g. SOL mint: `"So11111111111111111111111111111111111111112"`
+- tokenBMint: public key of the second mint, e.g. USDC mint: `"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"`
+- start: start of the date range to fetch trades from, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
+- end: end of the date range to fetch trades to, e.g. date ISO string: `"2023-01-01T00:00Z"` or epoch in ms: `1678381747854`
+- paginationToken: pagination token to use for retrieving results. If the response contains a `paginationToken` JSON property, you can use that in the next request to fetch more data from the last trade onwards. If the property does not exist, you've reached the end.
 
-Example response: 
+Please note that the response will contain both "directions" (buys, sells) of the trade. For example, if you input tokenA/tokenB mints for SOL/USDC in the request body, the response will contain trades with (source = SOL, destination = USDC) or (source = USDC, destination = SOL).
+
+Example response:
 
 ```json
 {
-    "trades": [
-        {
-            "transactionId": "67enaV7ufBGu5quuzZFwn4B2kqpNiqRunAwXbytt6TCkVkEJzUmNRyCYnDPvPi8yP8aDpHL16oVecqrqa3rvvbv9",
-            "sourceAmount": "30.202777503",
-            "destinationAmount": "704.59445",
-            "tradedOn": "2023-01-16T12:54:49.000Z",
-            "aggregator": "Jupiter v3",
-            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-            "sourceMint": "So11111111111111111111111111111111111111112",
-            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-        },
-        {
-            "transactionId": "4rZRGF8P667EjprBZomP7MiwHhUDwa6Dnuw2i5MvLn8jbVfVdzBg9DcvoHpkuykrRJpf4LTbPMaFiTR13QCgMxPb",
-            "sourceAmount": "30.202526264",
-            "destinationAmount": "704.766755",
-            "tradedOn": "2023-01-16T12:54:49.000Z",
-            "aggregator": "Jupiter v3",
-            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-            "sourceMint": "So11111111111111111111111111111111111111112",
-            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"          
-        },
-        {
-            "transactionId": "3PXDTVaYKoDcMdyyyxGu4pMLbv2ApAx9biapEJv1rjPZdePTdGgqK6LstV8MBiAWtA3zaYJDJ86fT8hveNUN2VEN",
-            "sourceAmount": "0.04293291",
-            "destinationAmount": "1.001095",
-            "tradedOn": "2023-01-16T12:54:42.000Z",
-            "aggregator": "Jupiter v3",
-            "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
-            "sourceMint": "So11111111111111111111111111111111111111112",
-            "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-        }
-    ],
-    "source": "hellomoon",
-    "start": "2023-01-01T00:00:00.000Z",
-    "end": "2023-02-01T00:00:00.000Z",
-    "paginationToken": "MTQ2MTAzMA=="
+  "trades": [
+    {
+      "transactionId": "67enaV7ufBGu5quuzZFwn4B2kqpNiqRunAwXbytt6TCkVkEJzUmNRyCYnDPvPi8yP8aDpHL16oVecqrqa3rvvbv9",
+      "sourceAmount": "30.202777503",
+      "destinationAmount": "704.59445",
+      "tradedOn": "2023-01-16T12:54:49.000Z",
+      "aggregator": "Jupiter v3",
+      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+      "sourceMint": "So11111111111111111111111111111111111111112",
+      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "transactionId": "4rZRGF8P667EjprBZomP7MiwHhUDwa6Dnuw2i5MvLn8jbVfVdzBg9DcvoHpkuykrRJpf4LTbPMaFiTR13QCgMxPb",
+      "sourceAmount": "30.202526264",
+      "destinationAmount": "704.766755",
+      "tradedOn": "2023-01-16T12:54:49.000Z",
+      "aggregator": "Jupiter v3",
+      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+      "sourceMint": "So11111111111111111111111111111111111111112",
+      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    {
+      "transactionId": "3PXDTVaYKoDcMdyyyxGu4pMLbv2ApAx9biapEJv1rjPZdePTdGgqK6LstV8MBiAWtA3zaYJDJ86fT8hveNUN2VEN",
+      "sourceAmount": "0.04293291",
+      "destinationAmount": "1.001095",
+      "tradedOn": "2023-01-16T12:54:42.000Z",
+      "aggregator": "Jupiter v3",
+      "programId": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+      "sourceMint": "So11111111111111111111111111111111111111112",
+      "destinationMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    }
+  ],
+  "source": "hellomoon",
+  "start": "2023-01-01T00:00:00.000Z",
+  "end": "2023-02-01T00:00:00.000Z",
+  "paginationToken": "MTQ2MTAzMA=="
 }
 ```
 
@@ -3055,9 +3053,10 @@ GET https://api.hubbleprotocol.io/simulator/pools/7qbRF6YsyGuLUVs6Y1q64bdVrfe4Zc
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
-* end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
+- end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
 
 Example request:
 
@@ -3103,14 +3102,17 @@ GET https://api.hubbleprotocol.io/strategies/leaderboard?env={cluster}&period={2
 ```
 
 Example requests:
+
 - https://api.hubbleprotocol.io/strategies/leaderboard?env=mainnet-beta
 - https://api.hubbleprotocol.io/strategies/leaderboard?env=mainnet-beta&period=24h
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* period: leaderboard time period `"24h" | "7d" (default) | "30d" | "90d" | "180d" | "1y"`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- period: leaderboard time period `"24h" | "7d" (default) | "30d" | "90d" | "180d" | "1y"`
 
 Example response:
+
 ```json
 {
   "period": "24h",
@@ -3135,8 +3137,7 @@ Example response:
 
 Leaderboard response is always ordered by profit and loss (PnL) descending.
 
-APY and PNL properties are in decimal form, to convert to percentage multiply it by 100.
-Volume and fees are both in USD.
+APY and PNL properties are in decimal form, to convert to percentage multiply it by 100. Volume and fees are both in USD.
 
 #### Get user leaderboard
 
@@ -3145,14 +3146,17 @@ GET https://api.hubbleprotocol.io/users/leaderboard?env={cluster}&period={24h/7d
 ```
 
 Example requests:
+
 - https://api.hubbleprotocol.io/users/leaderboard?env=mainnet-beta
 - https://api.hubbleprotocol.io/users/leaderboard?env=mainnet-beta&period=24h
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* period: leaderboard time period `"24h" | "7d" (default) | "30d" | "90d" | "180d" | "1y" | "all-time"`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- period: leaderboard time period `"24h" | "7d" (default) | "30d" | "90d" | "180d" | "1y" | "all-time"`
 
 Example response:
+
 ```json
 {
   "period": "24h",
@@ -3193,8 +3197,7 @@ Example response:
 
 Leaderboard response is always ordered by USD profit and loss (PnL) descending.
 
-PNL is in decimal form, to convert to percentage multiply it by 100.
-Total positions value and total returns are both in USD.
+PNL is in decimal form, to convert to percentage multiply it by 100. Total positions value and total returns are both in USD.
 
 ### Raydium
 
@@ -3249,8 +3252,9 @@ GET https://api.hubbleprotocol.io/points/leaderboard?offset={offset}&limit=${lim
 ```
 
 Example requests:
+
 - get first 20 leaderboard ranks: https://api.hubbleprotocol.io/points/leaderboard?offset=0&limit=20
-- get  leaderboard ranks between 100-200: https://api.hubbleprotocol.io/points/leaderboard?offset=100&limit=100
+- get leaderboard ranks between 100-200: https://api.hubbleprotocol.io/points/leaderboard?offset=100&limit=100
 - get first 20 leaderboard ranks for season 2: https://api.hubbleprotocol.io/points/leaderboard?offset=0&limit=20&source=Season2
 
 To implement pagination fetch the first page (offset = 0, limit = 20 for example) and then look at the property `totalLeaderboardCount` to calculate the amount of pages you will display.
@@ -3308,6 +3312,7 @@ GET https://api.hubbleprotocol.io/points/users/:userPubkey/breakdown?env={solana
 ```
 
 Example requests:
+
 - https://api.hubbleprotocol.io/points/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/breakdown?env=mainnet-beta&source=Season1
 - https://api.hubbleprotocol.io/points/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/breakdown?env=mainnet-beta&source=Season2
 
@@ -3390,53 +3395,54 @@ GET https://api.hubbleprotocol.io/points/rules?env={solana cluster}
 ```
 
 Example request:
+
 - https://api.hubbleprotocol.io/points/rules?env=mainnet-beta
 
 Example response:
 
 ```json
 {
-    "strategies": {
-        "defaultRate": 2,
-        "defaultBoost": 2,
-        "strategyRates": {
-            "Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN": 2
-        },
-        "strategyBoosts": {
-            "Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN": 2
-        },
-        "tokenRates": {
-            "So11111111111111111111111111111111111111112": 2
-        },
-        "tokenBoosts": {
-            "So11111111111111111111111111111111111111112": 2
-        }
+  "strategies": {
+    "defaultRate": 2,
+    "defaultBoost": 2,
+    "strategyRates": {
+      "Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN": 2
     },
-    "lending": [
-        {
-            "market": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
-            "defaultRates": {
-                "borrowRate": 2,
-                "depositRate": 2
-            },
-            "defaultBoosts": {
-                "borrowBoost": 2,
-                "depositBoost": 2
-            },
-            "tokenRates": {
-                "So11111111111111111111111111111111111111112": {
-                    "depositRate": 1,
-                    "borrowRate": 3
-                }
-            },
-            "tokenBoosts": {
-                "So11111111111111111111111111111111111111112": {
-                    "depositBoost": 1,
-                    "borrowBoost": 3
-                }
-            }
+    "strategyBoosts": {
+      "Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN": 2
+    },
+    "tokenRates": {
+      "So11111111111111111111111111111111111111112": 2
+    },
+    "tokenBoosts": {
+      "So11111111111111111111111111111111111111112": 2
+    }
+  },
+  "lending": [
+    {
+      "market": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+      "defaultRates": {
+        "borrowRate": 2,
+        "depositRate": 2
+      },
+      "defaultBoosts": {
+        "borrowBoost": 2,
+        "depositBoost": 2
+      },
+      "tokenRates": {
+        "So11111111111111111111111111111111111111112": {
+          "depositRate": 1,
+          "borrowRate": 3
         }
-    ]
+      },
+      "tokenBoosts": {
+        "So11111111111111111111111111111111111111112": {
+          "depositBoost": 1,
+          "borrowBoost": 3
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -3447,6 +3453,7 @@ GET https://api.hubbleprotocol.io/points/metrics?source={source}
 ```
 
 Example request:
+
 - Fetch default points source (season 1): https://api.hubbleprotocol.io/points/metrics
 - Fetch custom points source: https://api.hubbleprotocol.io/points/metrics?source=Season2
 
@@ -3477,6 +3484,7 @@ GET https://api.hubbleprotocol.io/airdrop/users/:pubkey/allocations?source={sour
 ```
 
 Example requests:
+
 - get season 1 allocation: https://api.hubbleprotocol.io/airdrop/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/allocations?source=Season1
 
 Example response:
@@ -3507,6 +3515,7 @@ GET https://api.hubbleprotocol.io/airdrop/metrics?source={source}
 ```
 
 Example requests:
+
 - get season 1 airdrop metrics: https://api.hubbleprotocol.io/airdrop/metrics?source=Season1
 
 Example response:
@@ -3538,26 +3547,27 @@ GET https://api.hubbleprotocol.io/tokens
 ```
 
 Example request:
+
 - https://api.hubbleprotocol.io/tokens
 
 Example response:
 
 ```json
 [
-    {
-      "address": "27G8MtK7VtTcCHkpASjSDdkWWYfoqT6ggEuKidVJidD4",
-      "chainId": 101,
-      "name": "Jupiter Perpetuals Liquidity Provider Token",
-      "symbol": "JLP",
-      "verified": true,
-      "decimals": 6,
-      "holders": null,
-      "logoURI": "https://assets.coingecko.com/coins/images/33094/large/jlp.png?1700631386",
-      "tags": [],
-      "extensions": {
-        "coingeckoId": "jupiter-perpetuals-liquidity-provider-token"
-      }
+  {
+    "address": "27G8MtK7VtTcCHkpASjSDdkWWYfoqT6ggEuKidVJidD4",
+    "chainId": 101,
+    "name": "Jupiter Perpetuals Liquidity Provider Token",
+    "symbol": "JLP",
+    "verified": true,
+    "decimals": 6,
+    "holders": null,
+    "logoURI": "https://assets.coingecko.com/coins/images/33094/large/jlp.png?1700631386",
+    "tags": [],
+    "extensions": {
+      "coingeckoId": "jupiter-perpetuals-liquidity-provider-token"
     }
+  }
 ]
 ```
 
@@ -3578,6 +3588,7 @@ Get all instructions for the specified KVault shareholder.
 ```
 
 Example request:
+
 - https://api.kamino.finance/kvaults/shareholders/2frn6q2bDmfiGDnaiSFWqoJBm77fMHpGVnUV9yKYa7ts/transactions?env=mainnet-beta
 
 Example response:
@@ -3618,6 +3629,7 @@ GET https://api.kamino.finance/kvaults/:vaultPubkey/metrics
 ```
 
 Example request:
+
 - https://api.kamino.finance/kvaults/6grCt9ChoQEJrR2e118z78PerPjF9GckYHZNnKDMfBKt/metrics
 
 Example response:
@@ -3663,6 +3675,7 @@ GET https://api.kamino.finance/kvaults/:vaultPubkey/metrics/history?start={date}
 ```
 
 Example request:
+
 - https://api.kamino.finance/kvaults/6grCt9ChoQEJrR2e118z78PerPjF9GckYHZNnKDMfBKt/metrics/history?start=2024-10-20T00%3A00Z&end=2024-10-22T00%3A00Z'
 
 Example response:
@@ -3691,6 +3704,7 @@ GET https://api.kamino.finance/kvaults/:vaultPubkey/users/:userPubkey/metrics/hi
 ```
 
 Example request:
+
 - https://api.kamino.finance/kvaults/GJZhNhQHFn3NpLhPgQjeyivNzAn548rGYg4EcuaxeCEf/users/sadmBTQm5HJsyzWHEjV4YwG9CiahZKVDVqAyS4Wx1zH/metrics/history?start=2024-10-20T00%3A00Z&end=2024-10-22T00%3A00Z'
 
 Example response:
@@ -3735,6 +3749,7 @@ GET https://api.kamino.finance/kvaults/users/:userPubkey/metrics/history?start={
 ```
 
 Example request:
+
 - https://api.kamino.finance/kvaults/users/sadmBTQm5HJsyzWHEjV4YwG9CiahZKVDVqAyS4Wx1zH/metrics/history?start=2024-10-20T00%3A00Z&end=2024-10-22T00%3A00Z'
 
 Example response:
@@ -3771,6 +3786,7 @@ GET https://api.kamino.finance/kvaults/:vaultPubkey/users/:userPubkey/pnl
 ```
 
 Example request:
+
 - https://api.kamino.finance/kvaults/GJZhNhQHFn3NpLhPgQjeyivNzAn548rGYg4EcuaxeCEf/users/sadmBTQm5HJsyzWHEjV4YwG9CiahZKVDVqAyS4Wx1zH/pnl
 
 Example response:
@@ -3797,6 +3813,7 @@ GET https://api.kamino.finance/kvaults/:vaultPubkey/users/:userPubkey/pnl/histor
 ```
 
 Example request:
+
 - https://api.kamino.finance/kvaults/GJZhNhQHFn3NpLhPgQjeyivNzAn548rGYg4EcuaxeCEf/users/sadmBTQm5HJsyzWHEjV4YwG9CiahZKVDVqAyS4Wx1zH/pnl/history
 
 Example response:
@@ -3952,11 +3969,13 @@ Get all instructions for the specified Limo user (maker).
 ```
 
 Query params:
-* env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-* in: input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
-* out: output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- in: input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
+- out: output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
 
 Example requests:
+
 - Fetch all txs for all pairs: https://api.kamino.finance/limo/makers/7bfsDRVpujyxzYcNWHnN3ietYb5XEsAidgdc9cintAuj/transactions?env=mainnet-beta
 - Fetch txs for SOL/USDC pair: https://api.kamino.finance/limo/makers/CBd9omWgziKgBhmAqrGREDJqsSvM1HrarEMzE89zawMa/transactions?env=mainnet-beta&in=So11111111111111111111111111111111111111112&out=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 - Fetch txs for SOL input token and any output token: https://api.kamino.finance/limo/makers/CBd9omWgziKgBhmAqrGREDJqsSvM1HrarEMzE89zawMa/transactions?env=mainnet-beta&in=So11111111111111111111111111111111111111112
@@ -4023,6 +4042,7 @@ Example response:
 ```
 
 Example request:
+
 - https://api.kamino.finance/limo/makers/CBd9omWgziKgBhmAqrGREDJqsSvM1HrarEMzE89zawMa/metrics
 
 Example response:
@@ -4049,10 +4069,12 @@ Example response:
 ```
 
 Query params:
-* in: input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
-* out: output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+- in: input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
+- out: output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
 
 Example request:
+
 - https://api.kamino.finance/limo/makers/CBd9omWgziKgBhmAqrGREDJqsSvM1HrarEMzE89zawMa/metrics/pair?in=So11111111111111111111111111111111111111112&out=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 
 Example response:
@@ -4076,6 +4098,7 @@ Get metrics for all trades
 ```
 
 Example request:
+
 - https://api.kamino.finance/limo/metrics
 
 Example response:
@@ -4110,10 +4133,12 @@ Get metrics for a specific token pair
 ```
 
 Query params:
-* in: input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
-* out: output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+- in: input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
+- out: output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
 
 Example request:
+
 - https://api.kamino.finance/limo/metrics/pair?in=So11111111111111111111111111111111111111112&out=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 
 Example response:
@@ -4146,6 +4171,7 @@ Example response:
 ```
 
 Example request:
+
 - https://api.kamino.finance/limo/leaderboard/weekly/metrics
 
 Example response:
@@ -4166,6 +4192,7 @@ GET https://api.kamino.finance/limo/weekly/leaderboard?offset={offset}&limit=${l
 ```
 
 Example requests:
+
 - get first 20 leaderboard ranks: https://api.kamino.finance/limo/weekly/leaderboard?offset=0&limit=20
 - get leaderboard ranks between 100-200: https://api.kamino.finance/limo/weekly/leaderboard?offset=100&limit=100
 
@@ -4214,12 +4241,14 @@ Get last 500 limo trades (fills)
 ```
 
 Query params:
-* in (optional): input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
-* out (optional): output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+- in (optional): input token mint of the order, e.g. `So11111111111111111111111111111111111111112`
+- out (optional): output token mint of the order, e.g. `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
 
 If no query params are used, it will return trades for all pairs.
 
 Example request:
+
 - Get all trades: https://api.kamino.finance/limo/trades
 - Get SOL -> USDC trades: https://api.kamino.finance/limo/trades?in=So11111111111111111111111111111111111111112&out=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 
@@ -4258,13 +4287,14 @@ POST https://api.kamino.finance/limo/transactions
 
 ```json
 {
-    "start": "2024-01-01T00:00Z",
-    "end": "2024-01-02T00:00Z",
-    "paginationToken": ""
+  "start": "2024-01-01T00:00Z",
+  "end": "2024-01-02T00:00Z",
+  "paginationToken": ""
 }
 ```
 
 Example cURL request:
+
 ```bash
 curl --location 'https://api.kamino.finance/limo/transactions' --header 'Content-Type: application/json' --header 'Authorization: Basic ENTER_CREDENTIALS' --data '{
     "start": "2024-01-01",
@@ -4274,6 +4304,7 @@ curl --location 'https://api.kamino.finance/limo/transactions' --header 'Content
 ```
 
 Example Python request:
+
 ```python
 import requests
 import json
@@ -4296,6 +4327,7 @@ print(response.text)
 ```
 
 Example response:
+
 ```json
 {
   "result": [
@@ -4375,13 +4407,14 @@ Fetch median slot duration (in milliseconds) from the last 10 epochs.
 ```
 
 Example request:
+
 - https://api.kamino.finance/slots/duration
 
 Example response:
 
 ```json
 {
-    "recentSlotDurationInMs": 441
+  "recentSlotDurationInMs": 441
 }
 ```
 
@@ -4394,32 +4427,244 @@ GET https://api.kamino.finance/owners/:ownerPubkey/net-values/history?start={dat
 ```
 
 Example request:
+
 - https://api.kamino.finance/owners/DAnimibJrqNQd8NEjEWKwcB8VZzTKT3DWvFvfHjufDF/net-values/history?start=2025-02-25T00:00Z&end=2025-02-26T15:00Z
 
 Example response:
 
 ```json
 [
-    {
-        "createdOn": "2025-02-25T20:00:42.414Z",
-        "klendUsd": "12106.302965",
-        "strategiesUsd": "31.398135",
-        "kvaultsUsd": "0.200337",
-        "stakingUsd": "3854.553228"
-    },
-    {
-        "createdOn": "2025-02-25T20:06:18.801Z",
-        "klendUsd": "12127.114367",
-        "strategiesUsd": "31.251037",
-        "kvaultsUsd": "0.200329",
-        "stakingUsd": "3837.520045"
-    },
-    {
-        "createdOn": "2025-02-26T10:47:33.799Z",
-        "klendUsd": "11807.027686",
-        "strategiesUsd": "31.500079",
-        "kvaultsUsd": "0.20034",
-        "stakingUsd": "3893.594326"
-    }
+  {
+    "createdOn": "2025-02-25T20:00:42.414Z",
+    "klendUsd": "12106.302965",
+    "strategiesUsd": "31.398135",
+    "kvaultsUsd": "0.200337",
+    "stakingUsd": "3854.553228"
+  },
+  {
+    "createdOn": "2025-02-25T20:06:18.801Z",
+    "klendUsd": "12127.114367",
+    "strategiesUsd": "31.251037",
+    "kvaultsUsd": "0.200329",
+    "stakingUsd": "3837.520045"
+  },
+  {
+    "createdOn": "2025-02-26T10:47:33.799Z",
+    "klendUsd": "11807.027686",
+    "strategiesUsd": "31.500079",
+    "kvaultsUsd": "0.20034",
+    "stakingUsd": "3893.594326"
+  }
 ]
 ```
+
+## KSwap
+
+### Get Token by Mint
+
+Retrieves detailed information about a specific token using its mint address.
+
+```http request
+GET https://api.kamino.finance/kswap/tokens/:mint/metadata
+```
+
+#### Parameters
+
+| Parameter | Type   | Required | Description              |
+| --------- | ------ | -------- | ------------------------ |
+| mint      | string | Yes      | The token's mint address |
+
+#### Example Request
+
+https://api.kamino.finance/kswap/tokens/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/metadata
+
+#### Example Response
+
+```json
+{
+  "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "logo_url": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+  "name": "USD Coin",
+  "symbol": "USDC",
+  "decimals": 6,
+  "market_cap_usd": "33429747283.29",
+  "volume_usd": "1298374659.87",
+  "verified": true
+}
+```
+
+#### Status Codes
+
+| Status Code | Description           |
+| ----------- | --------------------- |
+| 200         | Success               |
+| 404         | Token not found       |
+| 500         | Internal server error |
+
+---
+
+### Search Tokens
+
+Searches for tokens by mint address, name, or symbol. Results are ranked by relevance to the search term, then by trading volume.
+
+```http request
+GET https://api.kamino.finance/kswap/tokens/search?query={search_term}
+```
+
+#### Parameters
+
+| Parameter | Type   | Required | Description                  |
+| --------- | ------ | -------- | ---------------------------- |
+| query     | string | Yes      | Search term for token lookup |
+
+#### Example Request
+
+https://api.kamino.finance/kswap/tokens/search?query=usd
+
+#### Example Response
+
+```json
+[
+  {
+    "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "logo_url": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    "name": "USD Coin",
+    "symbol": "USDC",
+    "decimals": 6,
+    "market_cap_usd": "9448162946.26864",
+    "volume_usd": "2330415223.6923323",
+    "verified": true
+  },
+  {
+    "mint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+    "logo_url": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
+    "name": "USDT",
+    "symbol": "USDT",
+    "decimals": 6,
+    "market_cap_usd": "2038600947.9178107",
+    "volume_usd": "500332625.71846175",
+    "verified": true
+  }
+]
+```
+
+#### Status Codes
+
+| Status Code | Description           |
+| ----------- | --------------------- |
+| 200         | Success               |
+| 500         | Internal server error |
+
+---
+
+### Get Tokens with Limit
+
+Retrieves a list of tokens sorted by trading volume in descending order.
+
+```http request
+GET https://api.kamino.finance/kswap/tokens?limit={limit}&offset={offset}
+```
+
+#### Parameters
+
+| Parameter | Type   | Required | Description                                                   |
+| --------- | ------ | -------- | ------------------------------------------------------------- |
+| limit     | number | No       | Maximum number of tokens to return (default: 1000, max: 1000) |
+| offset    | number | No       | Number of tokens to skip (default: 0)                         |
+
+#### Example Request
+
+https://api.kamino.finance/kswap/tokens?limit=10&offset=0
+
+#### Example Response
+
+```json
+[
+  {
+    "mint": "So11111111111111111111111111111111111111112",
+    "logo_url": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+    "name": "Wrapped SOL",
+    "symbol": "SOL",
+    "decimals": 9,
+    "market_cap_usd": "29845721638.45",
+    "volume_usd": "1837465998.34",
+    "verified": true
+  },
+  {
+    "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "logo_url": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    "name": "USD Coin",
+    "symbol": "USDC",
+    "decimals": 6,
+    "market_cap_usd": "33429747283.29",
+    "volume_usd": "1298374659.87",
+    "verified": true
+  }
+  /* Additional tokens... */
+]
+```
+
+#### Status Codes
+
+| Status Code | Description                       |
+| ----------- | --------------------------------- |
+| 200         | Success                           |
+| 400         | Invalid limit or offset parameter |
+| 500         | Internal server error             |
+
+---
+
+### Get Verified Tokens
+
+Retrieves a list of verified tokens sorted by trading volume in descending order.
+
+```http request
+GET https://api.kamino.finance/kswap/tokens/verified?limit={limit}&offset={offset}
+```
+
+#### Parameters
+
+| Parameter | Type   | Required | Description                                                   |
+| --------- | ------ | -------- | ------------------------------------------------------------- |
+| limit     | number | No       | Maximum number of tokens to return (default: 1000, max: 1000) |
+| offset    | number | No       | Number of tokens to skip (default: 0)                         |
+
+#### Example Request
+
+https://api.kamino.finance/kswap/tokens/verified?limit=5
+
+#### Example Response
+
+```json
+[
+  {
+    "mint": "So11111111111111111111111111111111111111112",
+    "logo_url": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+    "name": "Wrapped SOL",
+    "symbol": "SOL",
+    "decimals": 9,
+    "market_cap_usd": "29845721638.45",
+    "volume_usd": "1837465998.34",
+    "verified": true
+  },
+  {
+    "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "logo_url": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    "name": "USD Coin",
+    "symbol": "USDC",
+    "decimals": 6,
+    "market_cap_usd": "33429747283.29",
+    "volume_usd": "1298374659.87",
+    "verified": true
+  }
+  /* Additional verified tokens... */
+]
+```
+
+#### Status Codes
+
+| Status Code | Description                       |
+| ----------- | --------------------------------- |
+| 200         | Success                           |
+| 400         | Invalid limit or offset parameter |
+| 500         | Internal server error             |
