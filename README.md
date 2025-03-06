@@ -4465,7 +4465,7 @@ Example response:
 Retrieves detailed information about a specific token using its mint address.
 
 ```http request
-GET https://api.kamino.finance/kswap/tokens/:mint/metadata
+GET https://api.kamino.finance/kamino-swap/tokens/:mint/metadata
 ```
 
 #### Parameters
@@ -4476,7 +4476,7 @@ GET https://api.kamino.finance/kswap/tokens/:mint/metadata
 
 #### Example Request
 
-https://api.kamino.finance/kswap/tokens/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/metadata
+https://api.kamino.finance/kamino-swap/tokens/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/metadata
 
 #### Example Response
 
@@ -4508,7 +4508,7 @@ https://api.kamino.finance/kswap/tokens/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyT
 Searches for tokens by mint address, name, or symbol. Results are ranked by relevance to the search term, then by trading volume.
 
 ```http request
-GET https://api.kamino.finance/kswap/tokens/search?query={search_term}
+GET https://api.kamino.finance/kamino-swap/tokens/search?query={search_term}
 ```
 
 #### Parameters
@@ -4519,7 +4519,7 @@ GET https://api.kamino.finance/kswap/tokens/search?query={search_term}
 
 #### Example Request
 
-https://api.kamino.finance/kswap/tokens/search?query=usd
+https://api.kamino.finance/kamino-swap/tokens/search?query=usd
 
 #### Example Response
 
@@ -4562,7 +4562,7 @@ https://api.kamino.finance/kswap/tokens/search?query=usd
 Retrieves a list of tokens sorted by trading volume in descending order.
 
 ```http request
-GET https://api.kamino.finance/kswap/tokens?limit={limit}&offset={offset}
+GET https://api.kamino.finance/kamino-swap/tokens?limit={limit}&offset={offset}
 ```
 
 #### Parameters
@@ -4574,7 +4574,7 @@ GET https://api.kamino.finance/kswap/tokens?limit={limit}&offset={offset}
 
 #### Example Request
 
-https://api.kamino.finance/kswap/tokens?limit=10&offset=0
+https://api.kamino.finance/kamino-swap/tokens?limit=10&offset=0
 
 #### Example Response
 
@@ -4619,7 +4619,7 @@ https://api.kamino.finance/kswap/tokens?limit=10&offset=0
 Retrieves a list of verified tokens sorted by trading volume in descending order.
 
 ```http request
-GET https://api.kamino.finance/kswap/tokens/verified?limit={limit}&offset={offset}
+GET https://api.kamino.finance/kamino-swap/tokens/verified?limit={limit}&offset={offset}
 ```
 
 #### Parameters
@@ -4631,7 +4631,7 @@ GET https://api.kamino.finance/kswap/tokens/verified?limit={limit}&offset={offse
 
 #### Example Request
 
-https://api.kamino.finance/kswap/tokens/verified?limit=5
+https://api.kamino.finance/kamino-swap/tokens/verified?limit=5
 
 #### Example Response
 
