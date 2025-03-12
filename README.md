@@ -952,13 +952,13 @@ Fetch strategy shareholder fees and rewards for only the latest position. This e
 For all-time fees and rewards of a strategy shareholder use endpoint mentioned in the previous section (`Get fees and rewards earned for a strategy shareholder` above).
 
 ```http request
-// GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/fees-and-rewards/latest-position?env={cluster}
-GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/fees-and-rewards/latest-position?env=mainnet-beta
+// GET https://api.hubbleprotocol.io/v2/strategies/:strategyPubkey/shareholders/:shareholderPubkey/fees-and-rewards/latest-position?env={cluster}
+GET https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/fees-and-rewards/latest-position?env=mainnet-beta
 ```
 
 Example request:
 
-https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/fees-and-rewards/latest-position?env=mainnet-beta
+https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/fees-and-rewards/latest-position?env=mainnet-beta
 
 Sample response:
 
@@ -1059,13 +1059,13 @@ Example response:
 Caclulate profit and loss and cost basis for a Kamino strategy shareholder's latest position.
 
 ```http request
-// GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/pnl?env={cluster}
-GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl?env=mainnet-beta
+// GET https://api.hubbleprotocol.io/v2/strategies/:strategyPubkey/shareholders/:shareholderPubkey/pnl?env={cluster}
+GET https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl?env=mainnet-beta
 ```
 
 Example request:
 
-https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl?env=mainnet-beta
+https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl?env=mainnet-beta
 
 Sample response:
 
@@ -1095,8 +1095,8 @@ Return PnL history data for strategy shareholder with mark to market analysis.
 Returns hourly timeseries if user's latest position is under 15 days old, otherwise it returns daily timeseries data. This is an optimization for frontend charts.
 
 ```http request
-// GET https://api.hubbleprotocol.io/strategies/:strategyPubkey/shareholders/:shareholderPubkey/pnl/history?env={cluster}&start={date}&end={date}
-GET https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl/history?env=mainnet-beta
+// GET https://api.hubbleprotocol.io/v2/strategies/:strategyPubkey/shareholders/:shareholderPubkey/pnl/history?env={cluster}&start={date}&end={date}
+GET https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl/history?env=mainnet-beta
 ```
 
 Query params:
@@ -1107,7 +1107,7 @@ Query params:
 
 Example request:
 
-https://api.hubbleprotocol.io/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl/history?env=mainnet-beta
+https://api.hubbleprotocol.io/v2/strategies/Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN/shareholders/HZYHFagpyCqXuQjrSCN2jWrMHTVHPf9VWP79UGyvo95L/pnl/history?env=mainnet-beta
 
 Sample response:
 
@@ -1947,17 +1947,6 @@ Please note: This route is not exposed to the public and requires basic authenti
 GET https://api.hubbleprotocol.io/bms/FqkHHpETrpfgcA5SeH7PKKFDLGWM4tM7ZV31HfutTXNV/closest-loans?env=mainnet-beta&timestamp=2022-11-22T12:00:00.000Z
 ```
 
-### Debug
-
-Endpoints to help with debugging by using the Carpool service.
-
-#### Get program accounts
-
-```http request
-// GET https://api.hubbleprotocol.io/debug/accounts/:programId/:accountName?env={cluster}
-GET https://api.hubbleprotocol.io/debug/accounts/HubbLeXBb7qyLHt3x7gvYaRrxQmmgExb7fCJgDqFuB6T/BorrowingMarketState?env=mainnet-beta
-```
-
 ### Transactions
 
 #### Get all kamino transactions v2
@@ -1995,55 +1984,6 @@ Example response:
       "latestPosition": true
     }
   ]
-}
-```
-
-#### Get all kamino transactions
-
-:warning: **DEPRECATED, PLEASE USE V2 TRANSACTIONS (`Get all kamino transactions v2`) INSTEAD!** :warning:
-
-Get shareholder's Kamino transactions (`withdraw`, `deposit` and `depositAndInvest` instructions). Returns the last 1000 transactions ordered by timestamp descending.
-
-```http request
-// GET https://api.hubbleprotocol.io/shareholders/:shareholderPubkey/transactions?env={cluster}
-GET https://api.hubbleprotocol.io/shareholders/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/transactions?env=mainnet-beta
-```
-
-Example response:
-
-```json
-{
-  "transactions": [
-    {
-      "timestamp": "2023-01-12T20:39:48.758Z",
-      "transactionSignature": "3Qmbxcuhc58QDe2xSsKhVQTLRACbuyisdayMTA6sCpMVqX34fPFnqiB8d1BSYCqbNNGxZ5ekdrMk3CsZ4cV7gUqf",
-      "transactionName": "depositAndInvest",
-      "strategy": "HWg7yB3C1BnmTKFMU3KGD7E96xx2rUhv4gxrwbZLXHBt",
-      "tokenA": "SOL",
-      "tokenAAmount": "0.162654437",
-      "tokenAPrice": "0",
-      "tokenB": "BONK",
-      "tokenBAmount": "2854564.78389",
-      "tokenBPrice": "0",
-      "usdValue": "0",
-      "numberOfShares": "7.879718"
-    },
-    {
-      "timestamp": "2023-01-17T18:00:07.820Z",
-      "transactionSignature": "3GruXM2CJtpeoP9rbG8QGAEqeCCAGcpyVmD6k5A4ezAuZpSDgLB5HPKAWFWDa6bPiDKiWDYk7mmLoF4w3ZKRhpsU",
-      "transactionName": "withdraw",
-      "strategy": "Cfuy5T6osdazUeLego5LFycBQebm9PP3H7VNdCndXXEN",
-      "tokenA": "USDH",
-      "tokenAAmount": "3.928922",
-      "tokenAPrice": "10",
-      "tokenB": "USDC",
-      "tokenBAmount": "2.738213",
-      "tokenBPrice": "0",
-      "usdValue": "39.28922",
-      "numberOfShares": "6.604654"
-    }
-  ],
-  "lastUpdatedOn": "2023-01-18T14:49:31.344Z"
 }
 ```
 
@@ -2334,12 +2274,12 @@ Query params:
 
 - env: solana cluster, e.g. "mainnet-beta" (default) | "devnet"
 
-Example: https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/users/AcNSmd5CxwLs21TYUmhWt7CW2v159TdYRkvQxb1iBYRj/obligations
+Example: https://api.hubbleprotocol.io/kamino-market/7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF/v2/users/AcNSmd5CxwLs21TYUmhWt7CW2v159TdYRkvQxb1iBYRj/obligations
 
 #### Get KLend tx history per user (for all obligations)
 
 ```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/transactions/
+GET https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/users/:userPubkey/transactions/
 ```
 
 Example response:
@@ -2525,7 +2465,7 @@ Example response:
 #### Get KLend tx history per obligation
 
 ```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/transactions/
+GET https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/obligations/:obligationPubkey/transactions/
 ```
 
 Query params:
@@ -2647,26 +2587,6 @@ Example response:
 }
 ```
 
-#### Get PnL per obligation (DEPRECATED)
-
-You can specify pnl mode with query param `positionMode` with one of these values: {`obligation_all_time`, `current_obligation`}. By default, pnl mode is set to `current_obligation` position
-
-These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the obligation (even before it was closed).
-
-```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/pnl/?positionMode=current_obligation
-```
-
-Example response:
-
-```json
-{
-  "usd": "25.21",
-  "sol": "1.0"
-}
-```
-
-:warning: **DEPRECATED, PLEASE USE v2 version (wo useStakeRate to get similar result)** :warning:
 
 #### Get PnL per obligation v2
 
@@ -2687,20 +2607,11 @@ Example response:
 }
 ```
 
-#### Get PnL per user
-
-You can specify pnl mode with query param `positionMode` with one of these values: {`user_all_time`, `user_all_current_positions`}. By default, pnl mode is set to `user_all_current_positions` position
-
-These parameters specify whether we return the current position PnL or the accumulated PnL throughout the lifetime of the user's obligation (even before they were closed).
-
-```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/pnl/?positionMode=user_all_current_positions
-```
 
 #### Get interest fees earned per obligation
 
 ```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/obligations/:obligationPubkey/interest-fees/
+GET https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/obligations/:obligationPubkey/interest-fees/
 ```
 
 Query params:
@@ -2775,136 +2686,6 @@ Example response:
 }
 ```
 
-#### Get interest fees earned per user
-
-```http request
-GET https://api.hubbleprotocol.io/kamino-market/:marketPubkey/users/:userPubkey/interest-fees/
-```
-
-Query params:
-
-- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
-- end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
-- frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
-- positionMode: position mode, e.g. `"user_all_time" | "user_all_current_positions (default)"`
-
-Example response:
-
-```json
-{
-  "totalFeesEarnedObligation": {
-    "MX68wMfQRkQA13SrKnSX47wwjiV2TDBak7NMb4Qfg5g": {
-      "ts": 1695200400000,
-      "solFees": "0.000000001697888184902321902172852546261584381586",
-      "usdFees": "0.0000000341340184992168245010582859455671467486",
-      "nativeFees": "0.000000001602302340966625236782497000842808190647"
-    },
-    "598TqTp5HfFQcNwWhgXyxE5zFYgFUYnRJSAADdfVXm2N": {
-      "ts": 1695200400000,
-      "solFees": "0.00001252855751062609254654040779155507638912",
-      "usdFees": "0.0002501232156778048715929059083302644728593",
-      "nativeFees": "0.00001252855751062609254654040779155507638912"
-    }
-  },
-  "feesObligation": {
-    "MX68wMfQRkQA13SrKnSX47wwjiV2TDBak7NMb4Qfg5g": [
-      { "JITOSOL": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695121200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695124800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695128400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695132000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695135600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695139200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695142800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695146400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695150000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695153600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695157200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695160800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695164400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695168000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695171600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695175200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695178800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695182400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695186000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695189600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695193200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "JITOSOL": { "ts": 1695196800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      {
-        "JITOSOL": {
-          "ts": 1695200400000,
-          "solFees": "0.000000001697888184902321902172852546261584381586",
-          "usdFees": "0.0000000341340184992168245010582859455671467486",
-          "nativeFees": "0.000000001602302340966625236782497000842808190647"
-        }
-      }
-    ],
-    "598TqTp5HfFQcNwWhgXyxE5zFYgFUYnRJSAADdfVXm2N": [
-      { "SOL": { "ts": 1695117600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695121200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695124800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      {
-        "SOL": {
-          "ts": 1695128400000,
-          "solFees": "0.000001799717797858716590338358835351733653603",
-          "usdFees": "0.00003596415275114428523179196620477162156107",
-          "nativeFees": "0.000001799717797858716590338358835351733653604"
-        }
-      },
-      { "SOL": { "ts": 1695132000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695135600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695139200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695142800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695146400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695150000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695153600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695157200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695160800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695164400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      {
-        "SOL": {
-          "ts": 1695168000000,
-          "solFees": "0.000006064101667947088381984925284168149623453",
-          "usdFees": "0.0001209912293028143483368695347715114560122",
-          "nativeFees": "0.000006064101667947088381984925284168149623456"
-        }
-      },
-      { "SOL": { "ts": 1695171600000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695175200000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695178800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695182400000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      { "SOL": { "ts": 1695186000000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      {
-        "SOL": {
-          "ts": 1695189600000,
-          "solFees": "0.000003084857420134046011686340063997035617416",
-          "usdFees": "0.00006146691096373786754851793467830291215417",
-          "nativeFees": "0.000003084857420134046011686340063997035617417"
-        }
-      },
-      {
-        "SOL": {
-          "ts": 1695193200000,
-          "solFees": "0.0000004106794248750007481729916324997687533188",
-          "usdFees": "0.000008195525933433248949303575906066025362104",
-          "nativeFees": "0.0000004106794248750007481729916324997687533189"
-        }
-      },
-      { "SOL": { "ts": 1695196800000, "solFees": "0", "usdFees": "0", "nativeFees": "0" } },
-      {
-        "SOL": {
-          "ts": 1695200400000,
-          "solFees": "0.000001169201199811240814357791975538388741346",
-          "usdFees": "0.00002350539672667512152642289676961245776999",
-          "nativeFees": "0.000001169201199811240814357791975538388741347"
-        }
-      }
-    ]
-  }
-}
-```
 
 #### Get metrics for market reserves
 
