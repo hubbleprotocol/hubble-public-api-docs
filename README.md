@@ -4565,7 +4565,7 @@ GET https://api.kamino.finance/users/:wallet/referral-code
 
 ### Get Referral Code
 
-Retrieve the referral code associated with a given wallet.
+Retrieve the wallet associated with a given referral code.
 
 ```http
 GET https://api.kamino.finance/referral-codes/:code
