@@ -39,6 +39,7 @@ Hubble Public API is a TypeScript API (using Express) that serves public data of
   - [Slot](#slot)
   - [Data](#data)
   - [KSwap](#kswap)
+  - [Referrals](#referrals)
 
 ## Development
 
@@ -4484,3 +4485,265 @@ https://api.kamino.finance/kamino-swap/tokens/verified?limit=5
 | 200         | Success                           |
 | 400         | Invalid limit or offset parameter |
 | 500         | Internal server error             |
+
+
+## Referrals
+
+The following endpoints allow users to interact with the referral system on Kamino.
+
+### How to authenticate correctly
+
+Creating and updating a referral code requires API authentication by sending the signed message in the body of the request.
+
+You have to sign a message called "kamino-api-authentication" with the wallet that is creating the referral code.
+
+Please see https://solana.com/developers/cookbook/wallets/sign-message for more information.
+
+Example code on how to do it in TypeScript:
+
+```typescript
+// In Solana Web3.js v1, we can use the TweetNaCl crypto library:
+import { Keypair } from '@solana/web3.js';
+import nacl from 'tweetnacl';
+import nacl_util from 'tweetnacl-util';
+
+async function signMessageWithWalletProvider(provider: any) {
+  const message = 'kamino-api-authentication';
+  const encodedMessage = new TextEncoder().encode(message);
+  
+  // Request the user's public key and sign the message
+  const signedMessage = await provider.signMessage(encodedMessage, 'utf8');
+  
+  return {
+    walletAddress: signedMessage.publicKey.toBase58(),
+    signature: bs58.encode(Buffer.from(signedMessage.signature)),
+  };
+}
+
+function signMessageWithKeypair(keypair: Keypair){
+  const message = 'kamino-api-authentication';
+  const messageBytes = nacl_util.decodeUTF8(message);
+
+  // pass this signature to the API
+  const signature = bs58.encode(nacl.sign.detached(messageBytes, keypair.secretKey));
+  return signature;
+}
+```
+
+### Get User Referral Code
+
+Retrieve the referral code associated with a given wallet.
+
+```http
+GET https://api.kamino.finance/users/:wallet/referral-code
+```
+
+#### Parameters:
+
+- `wallet` (path parameter, string, required): The wallet public key.
+
+#### Example request:
+
+- https://api.kamino.finance/users/24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p/referral-code
+
+#### Example response:
+
+```json
+{
+    "code": "my-referral-code9",
+    "referrer": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
+    "pda": "BrzGZgme5PyW8PPp7VKSDcs8jKFWL76ik3Wo9Zfq4iyq"
+}
+```
+
+#### Possible Errors:
+
+- `400 Bad Request`: Invalid wallet address format.
+- `404 Not Found`: No referral code found for the given wallet.
+
+---
+
+### Get Referral Code
+
+Retrieve the referral code associated with a given wallet.
+
+```http
+GET https://api.kamino.finance/referral-codes/:code
+```
+
+#### Parameters:
+
+- `code` (path parameter, string, required): The referral code.
+
+#### Example request:
+
+- https://api.kamino.finance/referral-codes/my-referral-code
+
+#### Example response:
+
+```json
+{
+    "code": "my-referral-code9",
+    "referrer": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
+    "pda": "BrzGZgme5PyW8PPp7VKSDcs8jKFWL76ik3Wo9Zfq4iyq"
+}
+```
+
+#### Possible Errors:
+
+- `404 Not Found`: No referral code found for the given wallet.
+
+---
+
+### Create a Referral Code
+
+Allows a user to register a new referral code - please see [How to authenticate correctly](#how-to-authenticate-correctly) section to be able to use this endpoint.
+
+```http
+POST https://api.kamino.finance/users/:wallet/referral-code
+```
+
+#### Request Body:
+
+```json
+{
+    "wallet": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
+    "code": "my-referral-code9",
+    "signature": "4f7W3rm3FLAYdHUHiCYkAorRcL5EuXJd6DrhYDmPDtpqptMRzC6KRJxZdjzZMbhDX2XNVeBm9Tyvb3DYiSji8kwL"
+}
+```
+
+#### Example request:
+
+- `POST https://api.kamino.finance/users/24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p/referral-code`
+
+#### Example response:
+
+```json
+{
+    "code": "my-referral-code9",
+    "referrer": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
+    "pda": "BrzGZgme5PyW8PPp7VKSDcs8jKFWL76ik3Wo9Zfq4iyq"
+}
+```
+
+#### Possible Errors:
+
+- `400 Bad Request`: Invalid request format or missing parameters.
+- `403 Not Authorized`: Wallet is not authorized to create this referral code due to invalid signature.
+- `409 Conflict`: Referral code already exists.
+
+---
+
+### Update Referral Code
+
+Update an existing referral code. Please see [How to authenticate correctly](#how-to-authenticate-correctly) section to be able to use this endpoint.
+
+```http
+PUT https://api.kamino.finance/users/:wallet/referral-code
+```
+
+#### Request Body:
+
+```json
+{
+    "wallet": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
+    "code": "my-new-referral-code",
+    "signature": "4f7W3rm3FLAYdHUHiCYkAorRcL5EuXJd6DrhYDmPDtpqptMRzC6KRJxZdjzZMbhDX2XNVeBm9Tyvb3DYiSji8kwL"
+}
+```
+
+#### Example request:
+
+- `PUT https://api.kamino.finance/users/24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p/referral-code`
+
+#### Example response:
+
+```json
+{
+    "code": "my-new-referral-code",
+    "referrer": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
+    "pda": "BrzGZgme5PyW8PPp7VKSDcs8jKFWL76ik3Wo9Zfq4iyq"
+}
+```
+
+#### Possible Errors:
+
+- `400 Bad Request`: Invalid request format or missing parameters.
+- `403 Not Authorized`: Wallet is not authorized to create this referral code due to invalid signature. 
+- `404 Not Found`: Referral code does not exist.
+- `409 Conflict`: New referral code is already in use.
+
+---
+
+### Get Referral Code for a Referred User
+
+Retrieve the referral code used by a specific referred user (who they were referred by).
+
+```http
+GET https://api.kamino.finance/users/:wallet/referred-by
+```
+
+#### Parameters:
+
+- `wallet` (path parameter, string, required): The wallet public key of the referred user.
+
+#### Example request:
+
+- https://api.kamino.finance/users/24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p/referred-by
+
+#### Example response:
+
+```json
+{
+    "code": "my-referral-code9",
+    "referrer": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
+    "pda": "BrzGZgme5PyW8PPp7VKSDcs8jKFWL76ik3Wo9Zfq4iyq"
+}
+```
+
+#### Possible Errors:
+
+- `400 Bad Request`: Invalid wallet address format.
+- `404 Not Found`: No referral code found for the given referred user.
+
+---
+
+### Get User's Referred Users
+
+Retrieve all the referred users that the user has referred.
+
+```http
+GET https://api.kamino.finance/users/:wallet/referred-users
+```
+
+#### Parameters:
+
+- `wallet` (path parameter, string, required): The wallet public key of the referred user.
+
+#### Example request:
+
+- https://api.kamino.finance/users/24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p/referred-users
+
+#### Example response:
+
+```json
+[
+  {
+    "user": "Hy4czLTfeqW5ZTW4EocZh488JmJJEJ5hAAKUnPFubLCh",
+    "volumeUsd": "123.456",
+    "referredOn": "2024-02-05T12:56:23.000Z"
+  },
+  {
+    "user": "Hy4czLTfeqW5ZTW4EocZh488JmJJEJ5hAAKUnPFubLCc",
+    "volumeUsd": "0",
+    "referredOn": "2024-01-05T12:56:23.000Z"
+  },
+]
+```
+
+#### Possible Errors:
+
+- `400 Bad Request`: Invalid wallet address format.
+
+---
