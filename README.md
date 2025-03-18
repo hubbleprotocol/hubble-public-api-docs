@@ -4486,6 +4486,71 @@ https://api.kamino.finance/kamino-swap/tokens/verified?limit=5
 | 400         | Invalid limit or offset parameter |
 | 500         | Internal server error             |
 
+---
+
+### Get Batch Tokens
+
+Retrieves a list of tokens given by the user param
+
+```http request
+GET https://api.kamino.finance/kamino-swap/tokens/batch?mints=mint1,mint2,mint3
+```
+
+#### Parameters
+
+| Parameter | Type   | Required | Description                                                   |
+| --------- | ------ | -------- | ------------------------------------------------------------- |
+| mints     | string | Yes      | A comma separated list of mints to return (maxLength 100)     |
+
+#### Example Request
+
+https://api.kamino.finance/kamino-swap/tokens/batch?mints=So11111111111111111111111111111111111111112,EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v,DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263
+
+#### Example Response
+
+```json
+[
+    {
+        "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+        "logoUrl": "https://arweave.net/hQiPZOsRZXGXBJd_82PhVdlM_hACsT_q6wqwf5cSY7I",
+        "name": "Bonk",
+        "symbol": "Bonk",
+        "decimals": 5,
+        "marketCapUsd": "975289192.7060107",
+        "volumeUsd": "2645961.153572351",
+        "verified": true
+    },
+    {
+        "mint": "So11111111111111111111111111111111111111112",
+        "logoUrl": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+        "name": "Wrapped SOL",
+        "symbol": "SOL",
+        "decimals": 9,
+        "marketCapUsd": "64971616518.36973",
+        "volumeUsd": "1708739344.09589",
+        "verified": true
+    },
+    {
+        "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+        "logoUrl": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+        "name": "USD Coin",
+        "symbol": "USDC",
+        "decimals": 6,
+        "marketCapUsd": "9915651729.543299",
+        "volumeUsd": "679979407.2115899",
+        "verified": true
+    }
+  /* Additional verified tokens... */
+]
+```
+
+#### Status Codes
+
+| Status Code | Description                       |
+| ----------- | --------------------------------- |
+| 200         | Success                           |
+| 400         | Invalid mints parameters          |
+| 500         | Internal server error             |
 
 ## Referrals
 
