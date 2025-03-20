@@ -4552,6 +4552,154 @@ https://api.kamino.finance/kamino-swap/tokens/batch?mints=So11111111111111111111
 | 400         | Invalid mints parameters          |
 | 500         | Internal server error             |
 
+---
+
+### Get user swap transactions
+
+Fetch all kswap transactions for a user.
+
+```http request
+GET https://api.kamino.finance/kamino-swap/users/:wallet/transactions
+```
+
+#### Example request:
+
+- https://api.kamino.finance/kamino-swap/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/transactions
+
+#### Example response:
+
+The array of transactions is ordered by createdOn timestamp descending.
+
+```json
+[
+  {
+    "createdOn": "2023-12-08T05:47:17.000Z",
+    "transactionSignature": "3TAczNoFc4QYScNJmEL8S2htiqmNjxG5yFJV18KsJWFKB9cQPQkt9z8g9pe334tXQrmo8Z2g1jj8R5nECtr8v2QQ",
+    "inAmount": "1.58549",
+    "outAmount": "50.123",
+    "volumeUsd": "200.123"
+  },
+  {
+    "createdOn": "2023-12-08T05:47:06.000Z",
+    "transactionSignature": "2gkYufafjdqqUfQxVYUuBTV6MztDi8jahFpbtEWetAUkTSEBWsvkaUKwy5sxWB6U98S8D1Y89raFEyXZhezXeNeg",
+    "inAmount": "1.58549",
+    "outAmount": "50.123",
+    "volumeUsd": "200.456"
+  }
+]
+```
+
+---
+
+### Get user swap volume
+
+Fetches all-time kswap volume for a user.
+
+```http request
+GET https://api.kamino.finance/kamino-swap/users/:wallet/volume
+```
+
+#### Example request:
+
+- https://api.kamino.finance/kamino-swap/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/volume
+
+#### Example response:
+
+```json
+{
+  "cumulativeVolumeUsd": "400.123"
+}
+```
+
+---
+
+### Get user swap volume leaderboard metrics
+
+```http request
+GET https://api.kamino.finance/kamino-swap/leaderboard/users/:wallet/metrics
+```
+
+#### Example request:
+
+- https://api.kamino.finance/kamino-swap/leaderboard/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/metrics
+
+Example response:
+
+#### Example response:
+
+```json
+{
+  "leaderboardRank": 1,
+  "volumeUsd": "400.46",
+  "weeklyLeaderboardRank": 2,
+  "weeklyVolumeUsd": "300.123"
+}
+```
+
+---
+
+### Get swap metrics
+
+```http request
+GET https://api.kamino.finance/kamino-swap/metrics
+```
+
+#### Example request:
+
+- https://api.kamino.finance/kamino-swap/metrics
+
+#### Example response:
+
+```json
+{
+  "allTimeVolumeUsd": "1000.2458458",
+  "weeklyVolumeUsd": "20.5885",
+  "userCount": "4945"
+}
+```
+
+---
+
+### Get Swap Volume Leaderboard
+
+```http request
+GET https://api.kamino.finance/kamino-swap/leaderboard?offset={offset}&limit={limit}
+```
+
+#### Example request:
+
+- Get top 10 users on swap leaderboard: https://api.kamino.finance/kamino-swap/leaderboard?offset=0&limit=10
+- Get next 10 users on swap leaderboard: https://api.kamino.finance/kamino-swap/leaderboard?offset=10&limit=10
+
+Example response:
+
+#### Example response:
+
+```json
+{
+    "totalLeaderboardCount": 2,
+    "leaderboard": [
+        {
+            "wallet": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
+            "leaderboardRank": 1,
+            "volumeUsd": "600.1",
+            "weeklyLeaderboardRank": 1,
+            "weeklyVolumeUsd": "200.3"
+        },
+        {
+            "wallet": "GNt8N6ccG9RGgPxAEzEEb8HpdncR2KroS1LxM8Vyge75",
+            "leaderboardRank": 2,
+            "volumeUsd": "200",
+            "weeklyLeaderboardRank": null,
+            "weeklyVolumeUsd": null
+        }
+    ]
+}
+```
+
+---
+
+
 ## Referrals
 
 The following endpoints allow users to interact with the referral system on Kamino.
@@ -4810,5 +4958,96 @@ GET https://api.kamino.finance/users/:wallet/referred-users
 #### Possible Errors:
 
 - `400 Bad Request`: Invalid wallet address format.
+
+---
+
+### Get Referral Leaderboard
+
+```http request
+GET https://api.kamino.finance/referral/leaderboard?offset={offset}&limit={limit}
+```
+
+#### Example request:
+
+- Get top 10 users on referral leaderboard: https://api.kamino.finance/referral/leaderboard?offset=0&limit=10
+- Get next 10 users on referral leaderboard: https://api.kamino.finance/referral/leaderboard?offset=10&limit=10
+
+Example response:
+
+#### Example response:
+
+```json
+{
+    "totalLeaderboardCount": 2,
+    "leaderboard": [
+        {
+            "wallet": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
+            "leaderboardRank": 1,
+            "volumeUsd": "600.1",
+            "weeklyLeaderboardRank": 1,
+            "weeklyVolumeUsd": "200.3"
+        },
+        {
+            "wallet": "GNt8N6ccG9RGgPxAEzEEb8HpdncR2KroS1LxM8Vyge75",
+            "leaderboardRank": 2,
+            "volumeUsd": "200",
+            "weeklyLeaderboardRank": null,
+            "weeklyVolumeUsd": null
+        }
+    ]
+}
+```
+
+---
+
+### Get Referral metrics
+
+```http request
+GET https://api.kamino.finance/referral/metrics
+```
+
+#### Example request:
+
+- https://api.kamino.finance/referral/metrics
+
+Example response:
+
+#### Example response:
+
+```json
+{
+  "allTimeVolumeUsd": "800.2349",
+  "weeklyVolumeUsd": "10.484590",
+  "userCount": 2
+}
+```
+
+---
+
+### Get Referral user metrics
+
+```http request
+GET https://api.kamino.finance/referral/leaderboard/users/:wallet/metrics
+```
+
+#### Example request:
+
+- https://api.kamino.finance/referral/leaderboard/users/24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p/metrics
+
+Example response:
+
+#### Example response:
+
+If weekly leaderboard rank/volume are null, it means the user's referrals have not made any swaps. 
+
+```json
+{
+  "leaderboardRank": 1,
+  "volumeUsd": "600",
+  "weeklyLeaderboardRank": null,
+  "weeklyVolumeUsd": null,
+  "referredUsers": 2
+}
+```
 
 ---
