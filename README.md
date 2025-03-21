@@ -4653,8 +4653,9 @@ GET https://api.kamino.finance/kamino-swap/metrics
 ```json
 {
   "allTimeVolumeUsd": "1000.2458458",
-  "weeklyVolumeUsd": "20.5885",
-  "userCount": "4945"
+  "weeklyVolumeUsd": "100.54899",
+  "userCount": "4465",
+  "searchersCount24h": "57"
 }
 ```
 
