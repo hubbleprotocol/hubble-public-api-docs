@@ -4709,7 +4709,7 @@ The following endpoints allow users to interact with the referral system on Kami
 
 Creating and updating a referral code requires API authentication by sending the signed message in the body of the request.
 
-You have to sign a message called "kamino-api-authentication" with the wallet that is creating the referral code.
+You have to sign the referral code you're supplying in the body of the request with the wallet that is creating the referral code.
 
 Please see https://solana.com/developers/cookbook/wallets/sign-message for more information.
 
@@ -4722,7 +4722,7 @@ import nacl from 'tweetnacl';
 import nacl_util from 'tweetnacl-util';
 
 async function signMessageWithWalletProvider(provider: any) {
-  const message = 'kamino-api-authentication';
+  const message = 'my-referral-code';
   const encodedMessage = new TextEncoder().encode(message);
   
   // Request the user's public key and sign the message
@@ -4735,7 +4735,7 @@ async function signMessageWithWalletProvider(provider: any) {
 }
 
 function signMessageWithKeypair(keypair: Keypair){
-  const message = 'kamino-api-authentication';
+  const message = 'my-referral-code';
   const messageBytes = nacl_util.decodeUTF8(message);
 
   // pass this signature to the API
