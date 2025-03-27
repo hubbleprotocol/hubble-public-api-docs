@@ -2612,7 +2612,7 @@ Example response:
 #### Get interest fees earned per obligation
 
 ```http request
-GET https://api.hubbleprotocol.io/v2/kamino-market/:marketPubkey/obligations/:obligationPubkey/interest-fees/
+GET https://api.kamino.finance/v2/kamino-market/:marketPubkey/obligations/:obligationPubkey/interest-fees/
 ```
 
 Query params:
@@ -2687,6 +2687,74 @@ Example response:
 }
 ```
 
+#### Get interest fees paid per obligation
+
+```http request
+GET https://api.kamino.finance/v2/kamino-market/:marketPubkey/obligations/:obligationPubkey/interest-paid/
+```
+
+Query params:
+
+- env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
+
+Example response:
+
+```json
+{
+  "totalFeesPaidObligation": {
+    "uzARQQZSeLY29ykwZh4XehpEf6XwJcMjcJJwYbgK4Ve": {
+      "ts": 1742972400000,
+      "solFees": "0",
+      "usdFees": "2232.567996820126640786565461905920473664"
+    }
+  },
+  "historicalFeesObligation": {
+    "uzARQQZSeLY29ykwZh4XehpEf6XwJcMjcJJwYbgK4Ve": [
+      {
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": {
+          "ts": 1742572800000,
+          "solFees": "0",
+          "usdFees": "0",
+          "nativeFees": "0"
+        }
+      },
+      {
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": {
+          "ts": 1742576400000,
+          "solFees": "0",
+          "usdFees": "20.09918785299190537182024766849124494505",
+          "nativeFees": "20.10066706108093031748231119177184743531"
+        }
+      },
+      {
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": {
+          "ts": 1742580000000,
+          "solFees": "0",
+          "usdFees": "20.09995908102914681452713324418504285405",
+          "nativeFees": "20.10089115935220597631825512167503492542"
+        }
+      },
+      {
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": {
+          "ts": 1742583600000,
+          "solFees": "0",
+          "usdFees": "20.10071490277332916712852677133521975735",
+          "nativeFees": "20.10111793018782943310866059998024936135"
+        }
+      },
+      {
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": {
+          "ts": 1742587200000,
+          "solFees": "0",
+          "usdFees": "20.10121483273506965773714235577788849993",
+          "nativeFees": "20.10136800515926897136670417006366438506"
+        }
+      }
+    ]
+  }
+}
+```
 
 #### Get metrics for market reserves
 
