@@ -4775,11 +4775,26 @@ The following endpoints allow users to interact with the referral system on Kami
 
 ### How to authenticate correctly
 
-Creating and updating a referral code requires API authentication by sending the signed message in the body of the request.
+1. Fetch the referral message that needs to be signed from the API:
 
-You have to sign the referral code you're supplying in the body of the request with the wallet that is creating the referral code.
+```http request
+GET https://api.kamino.finance/users/:pubkey/referral-message
+```
+  
+Example response:
 
-Please see https://solana.com/developers/cookbook/wallets/sign-message for more information.
+```json
+  {
+      "message": "By signing this message you are requesting to create or update your referral code on Kamino Swap. Unique message ID: 726bbe0d-95a9-4da1-aadc-5ac350f03b79",
+      "session": "77869934-2e4a-4553-ba4c-fde396857fe0",
+      "expiresOn": "2025-04-04T14:18:31.405Z"
+  }
+```
+
+2. Sign the message with the wallet that is creating or updating the referral code. Save the `session` part of the response as well.
+3. Add the `signature` and `session` to the request body of the API endpoint you're calling.
+
+Please see https://solana.com/developers/cookbook/wallets/sign-message for more information on how to sign a message with a wallet.
 
 Example code on how to do it in TypeScript:
 
@@ -4891,7 +4906,8 @@ POST https://api.kamino.finance/users/:wallet/referral-code
 {
     "wallet": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
     "code": "my-referral-code9",
-    "signature": "4f7W3rm3FLAYdHUHiCYkAorRcL5EuXJd6DrhYDmPDtpqptMRzC6KRJxZdjzZMbhDX2XNVeBm9Tyvb3DYiSji8kwL"
+    "signature": "4f7W3rm3FLAYdHUHiCYkAorRcL5EuXJd6DrhYDmPDtpqptMRzC6KRJxZdjzZMbhDX2XNVeBm9Tyvb3DYiSji8kwL",
+    "session": "77869934-2e4a-4553-ba4c-fde396857fe0"
 }
 ```
 
@@ -4931,7 +4947,8 @@ PUT https://api.kamino.finance/users/:wallet/referral-code
 {
     "wallet": "24PNhTaNtomHhoy3fTRaMhAFCRj4uHqhZEEoWrKDbR5p",
     "code": "my-new-referral-code",
-    "signature": "4f7W3rm3FLAYdHUHiCYkAorRcL5EuXJd6DrhYDmPDtpqptMRzC6KRJxZdjzZMbhDX2XNVeBm9Tyvb3DYiSji8kwL"
+    "signature": "4f7W3rm3FLAYdHUHiCYkAorRcL5EuXJd6DrhYDmPDtpqptMRzC6KRJxZdjzZMbhDX2XNVeBm9Tyvb3DYiSji8kwL",
+    "session": "77869934-2e4a-4553-ba4c-fde396857fe0"
 }
 ```
 
