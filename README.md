@@ -2618,7 +2618,7 @@ GET https://api.kamino.finance/v2/kamino-market/:marketPubkey/obligations/:oblig
 Query params:
 
 - env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
-- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`
+- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`. Furthest start date is capped at the obligation creation date.
 - end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
 - frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
 - positionMode: position mode, e.g. `"obligation_all_time" | "current_obligation (default)"`
@@ -2696,6 +2696,8 @@ GET https://api.kamino.finance/v2/kamino-market/:marketPubkey/obligations/:oblig
 Query params:
 
 - env: solana cluster, e.g. `"mainnet-beta" (default) | "devnet"`
+- start: start date (inclusive), e.g. `2023-05-01T00:55:00.000Z`. Furthest start date is capped at the obligation creation date.
+- end: end date (exclusive), e.g. `2023-05-01T00:55:00.000Z`
 - frequency: frequency of the snapshots, e.g. `"hour" (default) | "day"`
 
 Example response:
