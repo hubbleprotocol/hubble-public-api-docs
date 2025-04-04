@@ -4641,18 +4641,22 @@ The array of transactions is ordered by createdOn timestamp descending.
 ```json
 [
   {
-    "createdOn": "2023-12-08T05:47:17.000Z",
-    "transactionSignature": "3TAczNoFc4QYScNJmEL8S2htiqmNjxG5yFJV18KsJWFKB9cQPQkt9z8g9pe334tXQrmo8Z2g1jj8R5nECtr8v2QQ",
-    "inAmount": "1.58549",
-    "outAmount": "50.123",
-    "volumeUsd": "200.123"
+    "createdOn": "2025-04-03T11:10:23.000Z",
+    "transactionSignature": "f228r3iu4cUmGQi7UpjFr8eeKEZkptRDsxMjVYmFu91FiBapW2iKwxturQBsqQRMXixreAXHgnqq8Sg8JbbuRZe",
+    "inAmount": "67171.864666",
+    "outAmount": "74121.92593",
+    "volumeUsd": "74207.03736617967072",
+    "inMint": "HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr",
+    "outMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
   },
   {
-    "createdOn": "2023-12-08T05:47:06.000Z",
-    "transactionSignature": "2gkYufafjdqqUfQxVYUuBTV6MztDi8jahFpbtEWetAUkTSEBWsvkaUKwy5sxWB6U98S8D1Y89raFEyXZhezXeNeg",
-    "inAmount": "1.58549",
-    "outAmount": "50.123",
-    "volumeUsd": "200.456"
+    "createdOn": "2025-04-03T11:08:56.000Z",
+    "transactionSignature": "3nYsPp59ijTTnmzVJzYpsYg2AtGcx9zwWYxb4AXmp4bGtkSMkVAnsmt8FEAmph8gTodB9QZXPAva486tYNhmhqVq",
+    "inAmount": "50000",
+    "outAmount": "55122.664699",
+    "volumeUsd": "55228.579",
+    "inMint": "HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr",
+    "outMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
   }
 ]
 ```
