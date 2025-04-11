@@ -3845,6 +3845,26 @@ Example response:
 }
 ```
 
+#### Vault shares token (Kvault)
+
+You may use the `env` query param for all the methods specified below (`mainnet-beta`[default],`devnet`,`localnet`,`testnet`).
+
+All mints must be valid kVault share token mints.
+
+##### Get kVault token metadata for mint
+
+```http request
+// GET https://api.hubbleprotocol.io/kvault-tokens/:mint/metadata
+GET https://api.hubbleprotocol.io/kvault-tokens/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRGRwusQyLPS/metadata
+```
+
+##### Get kVault token image for mint
+
+```http request
+// GET https://api.hubbleprotocol.io/kvault-tokens/:mint/metadata/image.svg
+GET https://api.hubbleprotocol.io/kvault-tokens/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRGRwusQyLPS/metadata/image.svg
+
+
 ### Limo
 
 #### Get all limo user transactions
