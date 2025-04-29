@@ -4649,12 +4649,19 @@ https://api.kamino.finance/kamino-swap/tokens/batch?mints=So11111111111111111111
 Fetch all kswap transactions for a user.
 
 ```http request
-GET https://api.kamino.finance/kamino-swap/users/:wallet/transactions
+GET https://api.kamino.finance/kamino-swap/users/:wallet/transactions?limit={limit}&offset={offset}
 ```
+
+#### Parameters
+
+| Parameter | Type   | Required | Description                                                   |
+| --------- | ------ | -------- | ------------------------------------------------------------- |
+| limit     | number | No       | Maximum number of tokens to return (default: 1000, max: 1000) |
+| offset    | number | No       | Number of tokens to skip (default: 0)                         |
 
 #### Example request:
 
-- https://api.kamino.finance/kamino-swap/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/transactions
+- https://api.kamino.finance/kamino-swap/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/transactions?limit=2
 
 #### Example response:
 
