@@ -4714,6 +4714,27 @@ GET https://api.kamino.finance/kamino-swap/users/:wallet/volume
 
 ---
 
+### Get user swap savings
+
+Fetches user savings for a specific date range. If no date range is provided, it will return the cumulative savings for the last 30 days.
+
+```http request
+GET https://api.kamino.finance/kamino-swap/users/:wallet/savings
+```
+#### Example request:
+
+- https://api.kamino.finance/kamino-swap/users/7QnXf4d1YQ6k8oTzCLXjEiikGFm3KRZgmFJmry9vZxdW/savings?start=2025-04-15T00%3A00Z&end=2025-04-30T10%3A00Z
+
+#### Example response:
+
+```json
+{
+  "cumulativeSavingsUsd": "100.34"
+}
+```
+
+---
+
 ### Get user swap volume leaderboard metrics
 
 ```http request
