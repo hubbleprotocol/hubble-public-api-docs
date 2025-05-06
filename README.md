@@ -4365,6 +4365,32 @@ Example response:
 ]
 ```
 
+### Get KMNO circulating supply
+
+Get unlocked circulating supply of KMNO:
+
+Example request:
+- https://api.kamino.finance/kmno/circulating-supply
+
+Example response:
+
+```
+1395205483.5
+```
+
+### Get KMNO total supply
+
+Get total supply of KMNO:
+
+Example request:
+- https://api.kamino.finance/kmno/total-supply
+
+Example response:
+
+```
+9999983187.806662
+```
+
 ## KSwap
 
 ### Get Token by Mint
