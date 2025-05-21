@@ -527,6 +527,33 @@ Example response:
 ]
 ```
 
+#### Get principal token yields
+
+```http request
+GET https://api.kamino.finance/yields/principal-tokens
+```
+
+Example request: https://api.kamino.finance/yields/principal-tokens
+
+Example response:
+
+```json
+[
+  {
+    "apy": "0.072988771",
+    "tokenMint": "DW4q8NsS7zagbs6iuE7feU4WZNMTiM6MnfvkoM4aLnGq"
+  },
+  {
+    "apy": "0.064834048",
+    "tokenMint": "3xAQNTiicszwtqWgYpBYCwPAfrjbuDMSoBwuVrC4cKFp"
+  },
+  {
+    "apy": "0.090211501",
+    "tokenMint": "7bQUK2uG4kS3DyH3347w5QTMKBt3RrGP9r1J6YbHi68w"
+  }
+]
+```
+
 #### Get epochs
 
 ```http request
