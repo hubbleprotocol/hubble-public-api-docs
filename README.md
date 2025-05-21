@@ -4946,7 +4946,7 @@ The following endpoints allow users to interact with the referral system on Kami
 ```http request
 GET https://api.kamino.finance/users/:pubkey/referral-message
 ```
-  
+
 Example response:
 
 ```json
@@ -4973,10 +4973,10 @@ import nacl_util from 'tweetnacl-util';
 async function signMessageWithWalletProvider(provider: any) {
   const message = 'my-referral-code';
   const encodedMessage = new TextEncoder().encode(message);
-  
+
   // Request the user's public key and sign the message
   const signedMessage = await provider.signMessage(encodedMessage, 'utf8');
-  
+
   return {
     walletAddress: signedMessage.publicKey.toBase58(),
     signature: bs58.encode(Buffer.from(signedMessage.signature)),
