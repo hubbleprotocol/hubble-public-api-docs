@@ -3536,6 +3536,44 @@ Example response:
 ]
 ```
 
+#### Get all kvault allocation transactions
+
+Get all allocation transactions (`invest` ixs) for the specified KVault. 
+Positive token amounts represent deposits, negative mean withdraws from the kvault.
+
+```http request
+// GET https://api.kamino.finance/kvaults/:vaultPubkey/allocation-transactions
+```
+
+Example request:
+
+- https://api.kamino.finance/kvaults/A1USdzqDHmw5oz97AkqAGLxEQZfFjASZFuy4T6Qdvnpo/allocation-transactions
+
+Example response:
+
+```json
+[
+  {
+    "createdOn": "2025-07-04T11:52:30.000Z",
+    "tx": "5Gqv3h8QsWASLgkXRx73fgj9bK4ejYrbG6h3qL95MiEEEJPSbBmfTjp4cFdLvwe9DNKyteZWCwLT4h1KiNicUrFi",
+    "market": "DxXdAyU3kCjnyggvHmY5nAwg5cRbbmdyX3npfDMjjMek",
+    "reserve": "Ga4rZytCpq1unD4DbEJ5bkHeUz9g3oh9AAFEi6vSauXp",
+    "solPrice": "150.50102776",
+    "tokenPrice": "0.99995575",
+    "tokenAmount": "86378.893083"
+  },
+  {
+    "createdOn": "2025-07-04T11:52:29.000Z",
+    "tx": "3CeKwuyZkikwCMAPG1HtAjkbgnEQADbK89kQnKQrgumZcBcXtZJhhmsMGxJKzwwZmHVUi89A4fcGMRFuMXYR8ibS",
+    "market": "ByYiZxp8QrdN9qbdtaAiePN8AAr3qvTPppNJDpf5DVJ5",
+    "reserve": "9TD2TSv4pENb8VwfbVYg25jvym7HN6iuAR6pFNSrKjqQ",
+    "solPrice": "150.50102776",
+    "tokenPrice": "0.99995575",
+    "tokenAmount": "-5985.323256"
+  }
+]
+```
+
 #### Get kvault metrics
 
 ```http request
@@ -3597,14 +3635,53 @@ Example response:
 ```json
 [
   {
-    "timestamp": "2024-10-20T11:30:00.000Z",
-    "tvl": "4.99758925",
-    "apy": "0.060121900226019375"
+    "timestamp": "2025-07-03T00:00:00.000Z",
+    "tvl": "19863016.33455871687624385919504308668070354518022856",
+    "solTvl": "130414.84862826603367716431425678083232921174232297",
+    "apy": "0.10686463258588239124",
+    "sharePrice": "1.01092897998356834377701965316659046348",
+    "interest": "97626.92618552135357358024959884403386949",
+    "interestUsd": "97613.94679985786040507093812842421815332",
+    "interestSol": "673.3738062658288612361006813770589558212"
   },
   {
-    "timestamp": "2024-10-20T11:35:00.000Z",
-    "tvl": "5.23758925",
-    "apy": "0.070121900226019375"
+    "timestamp": "2025-07-04T00:00:00.000Z",
+    "tvl": "22041935.58219547470375869285618175104470167111288875",
+    "solTvl": "147463.28018348567915855624912056398537646913458751",
+    "apy": "0.0534769079857769307",
+    "sharePrice": "1.01096795109741679254322611096254024563",
+    "interest": "98719.25182826413468093582551815503720236",
+    "interestUsd": "98706.1944166449775965473653726282456157",
+    "interestSol": "680.5560738141290511200645422259630228634"
+  }
+]
+```
+
+#### Get kvault allocation volume history
+
+```http request
+GET https://api.kamino.finance/kvaults/:vaultPubkey/allocation-volume/history?start={date}&end=${date}
+```
+
+Example request:
+
+- https://api.kamino.finance/kvaults/A1USdzqDHmw5oz97AkqAGLxEQZfFjASZFuy4T6Qdvnpo/allocation-volume/history?env=mainnet-beta&start=2025-05-05T00%3A00Z&end=2025-07-04T15%3A00Z
+
+Example response:
+
+```json
+[
+  {
+    "timestamp": "2025-07-02T00:00:00.000Z",
+    "volumeUsd": "20067545.566658128482"
+  },
+  {
+    "timestamp": "2025-07-03T00:00:00.000Z",
+    "volumeUsd": "35383449.19119728189281"
+  },
+  {
+    "timestamp": "2025-07-04T00:00:00.000Z",
+    "volumeUsd": "16858251.41688073015361"
   }
 ]
 ```
