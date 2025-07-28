@@ -2083,6 +2083,37 @@ Example response:
 ]
 ```
 
+#### Get KLend market reserves account data
+
+Fetch reserve account data for given klend markets.
+
+```http request
+GET https://api.kamino.finance/kamino-market/reserves/account-data?markets={list of markets}&programId={(optional) klend program id}
+```
+
+Example request:
+- https://api.kamino.finance/kamino-market/reserves/account-data?markets=7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF,DxXdAyU3kCjnyggvHmY5nAwg5cRbbmdyX3npfDMjjMek,ByYiZxp8QrdN9qbdtaAiePN8AAr3qvTPppNJDpf5DVJ5&programId=KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD
+
+Example response (account data in base64):
+
+```json
+[
+  {
+    "market": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+    "reserves": [
+      {
+        "pubkey": "9JB9EMxEp9gZy3i1jqD2yvNYWKRZCP6f3drdQw853swH",
+        "data": "K/LMyhr3O38BAAAAAAAAAJbIABUAAAAAAD8AAAAAAABmeujUWFWpdVBTSSyASh5w0QBYGag6K..."
+      },
+      {
+        "pubkey": "G9T3ajJ5NL4m5v3bbu5KuSmVojWgaMGufDorLAHgJuYE",
+        "data": "K/LMyhr3O38BAAAAAAAAAJbIABUAAAAAAD8AAAAAAABmeujUWFWpdVBTSSyASh5w0QBYGag6K..."
+      }
+    ]
+  }
+]
+```
+
 #### Get KLend reserve history
 
 ```http request
