@@ -4526,6 +4526,26 @@ Example response:
 9999983187.806662
 ```
 
+### Get user staking boosts
+
+Get currently active staking boosts for a specific user and season:
+
+Example request:
+- https://api.kamino.finance/users/12gk8nN1jBbDeVa4xZ7x3Wh6M3e6wqz7F7Yv4Da6uzm/staking-boosts?source=Season4
+
+Example response:
+
+```json
+[
+    {
+        "boost": "0.3",
+        "name": "staking_boost",
+        "farm": "2sFZDpBn4sA42uNbAD6QzQ98rPSmqnPyksYe6SJKVvay"
+    }
+]
+```
+
+
 ## KSwap
 
 ### Get Token by Mint
