@@ -3659,31 +3659,55 @@ GET https://api.kamino.finance/kvaults/:vaultPubkey/metrics/history?start={date}
 
 Example request:
 
-- https://api.kamino.finance/kvaults/6grCt9ChoQEJrR2e118z78PerPjF9GckYHZNnKDMfBKt/metrics/history?start=2024-10-20T00%3A00Z&end=2024-10-22T00%3A00Z'
+- https://api.kamino.finance/kvaults/BqBsS4myH82S4yfqeKjXSF7yErWwSi5WTshSzKmHQgzw/metrics/history?start=2025-07-21T00%3A00Z&end=2025-08-30T00%3A00Z'
 
 Example response:
 
 ```json
 [
   {
-    "timestamp": "2025-07-03T00:00:00.000Z",
-    "tvl": "19863016.33455871687624385919504308668070354518022856",
-    "solTvl": "130414.84862826603367716431425678083232921174232297",
-    "apy": "0.10686463258588239124",
-    "sharePrice": "1.01092897998356834377701965316659046348",
-    "interest": "97626.92618552135357358024959884403386949",
-    "interestUsd": "97613.94679985786040507093812842421815332",
-    "interestSol": "673.3738062658288612361006813770589558212"
-  },
-  {
-    "timestamp": "2025-07-04T00:00:00.000Z",
-    "tvl": "22041935.58219547470375869285618175104470167111288875",
-    "solTvl": "147463.28018348567915855624912056398537646913458751",
-    "apy": "0.0534769079857769307",
-    "sharePrice": "1.01096795109741679254322611096254024563",
-    "interest": "98719.25182826413468093582551815503720236",
-    "interestUsd": "98706.1944166449775965473653726282456157",
-    "interestSol": "680.5560738141290511200645422259630228634"
+    "timestamp": "2025-08-11T00:00:00.000Z",
+    "tvl": "16224174.3183464332498534942691232",
+    "solTvl": "90665.6883106493972893660046191",
+    "apy": "0.056036260042945764506",
+    "apyTheoretical": "0.056036260042945764506",
+    "apyActual": "0.045171849120614337144",
+    "apyFarmRewards": "0",
+    "apyReservesIncentives": "0.0044991184258724851604",
+    "apyIncentives": "0",
+    "sharePrice": "1.0167246330875786448",
+    "interest": "64371.239966986871881",
+    "interestUsd": "64404.950776664820569",
+    "interestSol": "394.2220193947812268",
+    "reserves": [
+      {
+        "pubkey": "ESCkPWKHmgNE7Msf77n9yzqJd5kQVWWGy3o5Mgxhvavp",
+        "supplyApy": "0.06544060751114378",
+        "rewardsApy": "0",
+        "allocationRatio": "0.37399940194139025625",
+        "rewardTokens": []
+      },
+      {
+        "pubkey": "8rM1AY8M4YP4xNVmxhKnEUnj5CRWrcbcHpcgMoDfgqVi",
+        "supplyApy": "0.020477829389837554",
+        "rewardsApy": "0",
+        "allocationRatio": "0.15400009200901688365",
+        "rewardTokens": []
+      },
+      {
+        "pubkey": "HokDw9LaDf9qNzJf4F21RjHU3K4pRBkGQENvWnRGyRbn",
+        "supplyApy": "0.060186215897683804",
+        "rewardsApy": "0.015125524788587892",
+        "allocationRatio": "0.4720005060495928601",
+        "rewardTokens": [
+          {
+            "tokenMint": "AvZZF1YaZDziPY2RCK4oJrRVrbN3mTD9NL24hPeaZeUj",
+            "apy": "0.015125524788587892"
+          }
+        ]
+      }
+    ],
+    "vaultRewards": []
   }
 ]
 ```
@@ -3727,37 +3751,47 @@ GET https://api.kamino.finance/kvaults/:vaultPubkey/users/:userPubkey/metrics/hi
 
 Example request:
 
-- https://api.kamino.finance/kvaults/GJZhNhQHFn3NpLhPgQjeyivNzAn548rGYg4EcuaxeCEf/users/sadmBTQm5HJsyzWHEjV4YwG9CiahZKVDVqAyS4Wx1zH/metrics/history?start=2024-10-20T00%3A00Z&end=2024-10-22T00%3A00Z'
+- https://api.kamino.finance/kvaults/BqBsS4myH82S4yfqeKjXSF7yErWwSi5WTshSzKmHQgzw/users/Gy8554ZVWw9txr61CMadBCTjgGvnM9idNfkwA3SHi1uT/metrics/history?start=2025-07-21T00%3A00Z&end=2025-08-30T00%3A00Z'
 
 Example response:
 
 ```json
 [
   {
-    "createdOn": "2025-01-14T11:53:54.734Z",
-    "sharesAmount": "1",
-    "usdAmount": "1.001009996801491595755991446853909208564",
-    "solAmount": "0.005352941291953978820943628975408093773161",
-    "apy": "0.07502216110843518",
-    "cumulativeInterestEarned": "0",
-    "cumulativeInterestEarnedUsd": "0",
-    "cumulativeInterestEarnedSol": "0",
-    "interestEarnedPerSecond": "0",
-    "interestEarnedPerSecondUsd": "0",
-    "interestEarnedPerSecondSol": "0"
+    "createdOn": "2025-08-07T00:00:00.000Z",
+    "sharesAmount": "523380.620791",
+    "usdAmount": "531887.37130947963892",
+    "solAmount": "3144.8864713017375881",
+    "apy": "0.065866782466224673738",
+    "apyTheoretical": "0.065866782466224673738",
+    "apyActual": "0.051621999033314343665",
+    "apyFarmRewards": "0",
+    "apyIncentives": null,
+    "apyReservesIncentives": "0.00095547101662491779049",
+    "cumulativeInterestEarned": "2830.9241415811198173",
+    "cumulativeInterestEarnedUsd": "2834.145055195839145",
+    "cumulativeInterestEarnedSol": "15.997100166553276395",
+    "interestEarnedPerSecond": "0.00090721661637342247115",
+    "interestEarnedPerSecondUsd": "0.00090735251742255520983",
+    "interestEarnedPerSecondSol": "0.0000053648964248174296686"
   },
   {
-    "createdOn": "2025-01-14T11:54:25.530Z",
-    "sharesAmount": "1",
-    "usdAmount": "1.001004212610976305808977819266756417541",
-    "solAmount": "0.005350380274689194798426453878491338313099",
-    "apy": "0.07502220627483847",
-    "cumulativeInterestEarned": "0.000000002024844825466749284216827600944849020349",
-    "cumulativeInterestEarnedUsd": "0.00000000202470104123569289035015536401690592662",
-    "cumulativeInterestEarnedSol": "0.00000000001082205287120021365776673941575854315707",
-    "interestEarnedPerSecond": "0.00000000006575025410659661267230153856437081675242",
-    "interestEarnedPerSecondUsd": "0.00000000006574558518105250324683567843211736078072",
-    "interestEarnedPerSecondSol": "0.0000000000003514109907520526580023154776522543481129"
+    "createdOn": "2025-08-11T00:00:00.000Z",
+    "sharesAmount": "523380.620791",
+    "usdAmount": "532133.96963887861019",
+    "solAmount": "2973.7286893071546196",
+    "apy": "0.056036260042945764506",
+    "apyTheoretical": "0.056036260042945764506",
+    "apyActual": "0.045171849120614337144",
+    "apyFarmRewards": "0",
+    "apyIncentives": null,
+    "apyReservesIncentives": "0.0044991184258724851604",
+    "cumulativeInterestEarned": "3315.6868144439760187",
+    "cumulativeInterestEarnedUsd": "3318.976490606897836",
+    "cumulativeInterestEarnedSol": "18.697748752558876422",
+    "interestEarnedPerSecond": "0.00074360046521802909846",
+    "interestEarnedPerSecondUsd": "0.00074363765267729465203",
+    "interestEarnedPerSecondSol": "0.0000041556764807106830114"
   }
 ]
 ```
