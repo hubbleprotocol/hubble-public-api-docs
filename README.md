@@ -2092,7 +2092,7 @@ GET https://api.kamino.finance/kamino-market/reserves/account-data?markets={list
 ```
 
 Example request:
-- https://api.kamino.finance/kamino-market/reserves/account-data?markets=7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF,DxXdAyU3kCjnyggvHmY5nAwg5cRbbmdyX3npfDMjjMek,ByYiZxp8QrdN9qbdtaAiePN8AAr3qvTPppNJDpf5DVJ5&programId=KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD
+- https://api.kamino.finance/kamino-market/reserves/account-data?markets=7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF&markets=DxXdAyU3kCjnyggvHmY5nAwg5cRbbmdyX3npfDMjjMek&markets=ByYiZxp8QrdN9qbdtaAiePN8AAr3qvTPppNJDpf5DVJ5&programId=KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD
 
 Example response (account data in base64):
 
