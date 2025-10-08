@@ -4032,7 +4032,40 @@ GET https://api.hubbleprotocol.io/kvault-tokens/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDm
 ```http request
 // GET https://api.hubbleprotocol.io/kvault-tokens/:mint/metadata/image.svg
 GET https://api.hubbleprotocol.io/kvault-tokens/BabJ4KTDUDqaBRWLFza3Ek3zEcjXaPDmeRGRwusQyLPS/metadata/image.svg
+```
 
+#### Get kvaults summary
+
+Get an aggreate summary of all public kvaults.
+
+```http request
+GET https://api.kamino.finance/kvaults/summary
+```
+
+Example request:
+
+- https://api.kamino.finance/kvaults/summary
+
+Example response:
+
+```json
+{
+  "earnings": {
+    "interest": {
+      "usd": "3504969.26433245395094864011798",
+      "sol": "16983.9563510912442626500059628"
+    },
+    "rewards": {
+      "usd": "339896.39063449940672",
+      "sol": "1469.5972139424303512"
+    },
+    "total": {
+      "usd": "3844865.65496695335766864011798",
+      "sol": "18453.5535650336746138500059628"
+    }
+  }
+}
+```
 
 ### Limo
 
